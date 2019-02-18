@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 public class DBManager {
 	Connection c;
 	
-	//Metodos
+	//Metodos holasoyiago
 	
 	public 
 	
