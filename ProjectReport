@@ -1,0 +1,5 @@
+Hello Rodrigo, today (20-02-19) our work has consisted on starting the user interface class, the manager 
+and the pojos. We wrote all the system.out and bufferReaders in order to ask the questions to fill the 
+tables that we've created. We created 4 Pojo classes: Patient, Doctor, Nurse and device. 
+Also, we created the SQLManager class with the methods connect, disconnect, createTables and insert 
+(of each polo class). 
