@@ -9,19 +9,20 @@ import ER.POJOS.*;
 
 
 public class SQLManager {
-	 private Connection c;
+	  Connection c;
 	 
 	 
 	 
 	 public SQLManager() {
 		super();
+		connect();
 	}
 
 
-	public boolean connection() {
+	public boolean connect() {
 	 try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:./db/company.db");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/ER.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			return true;
 			
@@ -36,7 +37,7 @@ public class SQLManager {
 		 catch (Exception e) {
 				return false; } }
 	 
-	 public void CreateTables() {
+	 public void createTables() {
 		 try {
 			Statement stmt1=c.createStatement();
 			String sql1= "CREATE TABLE patients " + 
@@ -122,7 +123,7 @@ public class SQLManager {
 			stmt10.close();} 
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace(); }  }
+			System.out.println("The tables were already created"); }  }
 	 
 	 public void insertPatient(Patient p) {
 		 try {

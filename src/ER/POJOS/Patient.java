@@ -35,6 +35,16 @@ public class Patient implements Serializable {
 	}
 
 
+	public Patient(String name, Double weight, Double height, String genre, LocalDate dob) {
+		super();
+		this.name = name;
+		this.weight = weight;
+		this.height = height;
+		this.genre = genre;
+		this.dob = dob;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

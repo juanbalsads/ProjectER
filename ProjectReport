@@ -3,3 +3,10 @@ and the pojos. We wrote all the system.out and bufferReaders in order to ask the
 tables that we've created. We created 4 Pojo classes: Patient, Doctor, Nurse and device. 
 Also, we created the SQLManager class with the methods connect, disconnect, createTables and insert 
 (of each polo class). 
+
+
+(27-02-19)
+Hello Rodrigo, this week we created the tables, inserted and selected one entity in a main method.
+Before next class, we intend to have all the pojos and the insert and  select method of each one.
+
+  
