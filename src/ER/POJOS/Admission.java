@@ -1,6 +1,9 @@
 package ER.POJOS;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import ER.POJOS.*;
 
 public class Admission implements Serializable{
@@ -10,8 +13,8 @@ public class Admission implements Serializable{
 	 */
 	private static final long serialVersionUID = 5626892191426340232L;
 
-	private Integer id; 
-	private Patient patients;
+	private Integer id;
+	private LocalDateTime arrivalTime;
 	private String symptoms;
 	private String tests;
 	
@@ -19,9 +22,21 @@ public class Admission implements Serializable{
 		super();
 	}
 
-	public Admission(Patient patients, String symptoms, String tests) {
+	
+	
+	public Admission(LocalDateTime arrivalTime, String symptoms, String tests) {
 		super();
-		this.patients = patients;
+		this.arrivalTime = arrivalTime;
+		this.symptoms = symptoms;
+		this.tests = tests;
+	}
+
+
+
+	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests) {
+		super();
+		this.id = id;
+		this.arrivalTime = arrivalTime;
 		this.symptoms = symptoms;
 		this.tests = tests;
 	}
@@ -59,13 +74,14 @@ public class Admission implements Serializable{
 		this.id = id;
 	}
 
-	public Patient getPatients() {
-		return patients;
+	public String getArrivalTime() {
+		return arrivalTime.toString();
 	}
 
-	public void setPatients(Patient patients) {
-		this.patients = patients;
+	public void setArrivalTime(LocalDateTime arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
+
 
 	public String getSymptoms() {
 		return symptoms;
@@ -85,8 +101,10 @@ public class Admission implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Admission [id=" + id + ", patients=" + patients + ", symptoms=" + symptoms + ", tests=" + tests + "]";
+		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms="
+				+ symptoms + ", tests=" + tests + "]";
 	}
+
 	
 	
 	
