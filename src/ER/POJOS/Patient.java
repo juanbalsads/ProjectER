@@ -122,8 +122,8 @@ public class Patient implements Serializable {
 	}
 
 
-	public LocalDate getDob() {
-		return dob;
+	public String getDob() {
+		return dob.toString();
 	}
 
 

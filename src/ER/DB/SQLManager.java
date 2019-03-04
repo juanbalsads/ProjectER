@@ -1,9 +1,13 @@
 package ER.DB;
 import java.sql.Connection;
 import java.time.*;
+import java.sql.*;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.*;
 
 import ER.POJOS.*;
 import java.sql.*
@@ -121,19 +125,32 @@ public class SQLManager {
 					"(patient INTERGER REFERENCES Patient(id), " + 
 					"allergies TEXT REFERENCES Allergies(id)) ";
 			stmt10.executeUpdate(sql10);
-			stmt10.close();} 
+			stmt10.close();
+			
+			Statement stmt11= c.createStatement();
+			String sql11= "CREATE TABLE Room " + 
+					"(room INTEGER PRIMARY KEY AUTOINCREMENT ";
+			stmt11.executeUpdate(sql11);
+			stmt11.close();
+		 
+		 } 
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("The tables were already created"); }  }
 	 
 	 public void insertPatient(Patient p) {
 		 try {
-		 Statement stmt1 = c.createStatement();
-			String sql1 = "INSERT INTO Patients (id, name, weight, height, genre, dob) "
-					+ "VALUES ('" + p.getId()+ "', '" + p.getName()+"', '" +p.getWeight()+"', '" +p.getHeight()+
-					"', '" +p.getGenre()+ "', '" +p.getDob()+"');";
-			stmt1.executeUpdate(sql1);
-			stmt1.close();} 
+			 String sql = "INSERT INTO patients (name, weight , height , genre, dob) "
+						+ "VALUES (?,?,?,?,?);";
+				PreparedStatement prep = c.prepareStatement(sql);
+				prep.setString(1, p.getName());
+				prep.setDouble(2, p.getWeight());
+				prep.setDouble(3, p.getHeight());
+				prep.setString(4, p.getGenre());
+				prep.setDate(5, Date.valueOf(p.getDob()));
+				prep.executeUpdate();
+				prep.close();
+		 } 
 		 catch (Exception e) {
 				e.printStackTrace();} }
 	 
@@ -215,7 +232,96 @@ public class SQLManager {
 			 e.printStackTrace();
 		 }
 	 }
-	 
-	 
+	
+	 public void insertAdmission(Admission a) {
+		 try {
+			 String sql = "INSERT INTO Admission (id, arrival_time , symptoms , test) "
+						+ "VALUES (?,?,?,?);";
+				PreparedStatement prep = c.prepareStatement(sql);
+				prep.setInt(1, a.getId());
+				prep.setDate(2, Date.valueOf(a.getArrivalTime()));
+				prep.setString(3, a.getSymptoms());
+				prep.setString(4, a.getTests());
+				prep.executeUpdate();
+				prep.close();
+			 
+			 
+		 Statement stmt1 = c.createStatement();
+			String sql1 = "INSERT INTO Admission (id, arrival_time, symptoms, test) "
+					+ "VALUES ('" + a.getId()+ "', '" + a.getArrivalTime()+"', '" +a.getSymptoms()+"', '"+ a.getTests()+"');";
+			stmt1.executeUpdate(sql1);
+			stmt1.close();}
+		 catch (Exception e) {
+				e.printStackTrace();}}
+		 
+	public void insertDevice(Device d) {
+			 try {
+			 Statement stmt1 = c.createStatement();
+				String sql1 = "INSERT INTO Devices (id, name) "
+						+ "VALUES ('" + d.getId()+ "', '" + d.getName()+"');";
+				stmt1.executeUpdate(sql1);
+				stmt1.close();}
+		 catch (Exception e) {
+				e.printStackTrace();}}
+	
+	public void insertRoom(Room r) {
+		 try {
+		 Statement stmt1 = c.createStatement();
+			String sql1 = "INSERT INTO Room (id) "
+					+ "VALUES ('" + r.getId()+ "');";
+			stmt1.executeUpdate(sql1);
+			stmt1.close();}
+	 catch (Exception e) {
+			e.printStackTrace();}}
+	
+	public void selectRooms() {
+		 try {
+			 Statement stmt1 = c.createStatement();
+				String sql1 = "SELECT * FROM Room";
+				ResultSet rs = stmt1.executeQuery(sql1);
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					Room room = new Room(id);
+					System.out.println(room); }}
+		 catch (Exception e) {
+				e.printStackTrace();}}
+	
+	public void selectAdmissions() {
+		 try {
+				Statement stmt1 = c.createStatement();
+				String sql1 = "SELECT * FROM Admission";
+				ResultSet rs = stmt1.executeQuery(sql1);
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					LocalDateTime arrivalTime=  rs.getTimestamp("arrival_time").toLocalDateTime();
+					String symptoms = rs.getString("symptoms");
+					String test = rs.getString("test");
+					Admission admission = new Admission(id, arrivalTime, symptoms, test);
+					System.out.println(admission);
+				}
+				rs.close();
+				stmt1.close();
+			 }
+		 catch (Exception e) {
+				e.printStackTrace();}}
+	
+	public void selectAllergies() {
+		 try {
+			 Statement stmt1 = c.createStatement();
+				String sql1 = "SELECT * FROM Allergies";
+				ResultSet rs = stmt1.executeQuery(sql1);
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					String name = rs.getString("name");
+					Allergy allergy = new Allergy(id, name);
+					System.out.println(allergy);
+				}
+				rs.close();
+				stmt1.close();
+			 }
+		 catch (Exception e) {
+				e.printStackTrace();}}
+			 
+		 
 	 
 }
