@@ -1,7 +1,5 @@
 package ER.DB;
 import java.sql.Connection;
-import java.io.*;
-import java.util.*;
 import java.time.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -187,43 +185,7 @@ public class SQLManager {
 			 
 			 rs.close();
 			 stmt.close();
-			 /*
-			 Statement stmt1 = c.createStatement();
-			 String sql1 = "SELECT name FROM patients";
-			 ResultSet rs1 = stmt1.executeQuery(sql1);
-			 rs1.close();
-			 stmt1.close();
-			 
-			 Statement stmt2 = c.createStatement();
-			 String sql2 = "SELECT weight FROM patients";
-			 ResultSet rs2 = stmt2.executeQuery(sql2);
-			 rs2.close();
-			 stmt2.close();
-			 
-			 Statement stmt3 = c.createStatement();
-			 String sql3 = "SELECT height FROM patients";
-			 ResultSet rs3 = stmt3.executeQuery(sql3);
-			 rs3.close();
-			 stmt3.close();
-			 
-			 Statement stmt4 = c.createStatement();
-			 String sql4 = "SELECT genre FROM patients";
-			 ResultSet rs4 = stmt4.executeQuery(sql4);
-			 rs4.close();
-			 stmt4.close();
-			 
-			 Statement stmt5 = c.createStatement();
-			 String sql5 = "SELECT dob FROM patients";
-			 ResultSet rs5 = stmt5.executeQuery(sql5);
-			 rs5.close();
-			 stmt5.close();
-			 
-			 Statement stmt6 = c.createStatement();
-			 String sql6 = "SELECT dob FROM patients";
-			 ResultSet rs6 = stmt6.executeQuery(sql6);
-			 rs6.close();
-			 stmt6.close();
-			 */
+			
 			 
 		 }
 		 catch(Exception e){
@@ -246,25 +208,7 @@ public class SQLManager {
 		 }
 		 rs.close();
 		 stmt.close();
-		 /*
-		 Statement stmt1 = c.createStatement();
-		 String sql1 = "SELECT id FROM nurses";
-		 ResultSet rs1 = stmt1.executeQuery(sql1);
-		 rs1.close();
-		 stmt1.close();
-		 
-		 Statement stmt2 = c.createStatement();
-		 String sql2 = "SELECT name FROM nurses";
-		 ResultSet rs2 = stmt1.executeQuery(sql2);
-		 rs2.close();
-		 stmt2.close();
-		 
-		 Statement stmt3 = c.createStatement();
-		 String sql3 = "SELECT speciallity FROM nurses";
-		 ResultSet rs3 = stmt1.executeQuery(sql1);
-		 rs3.close();
-		 stmt3.close();
-		 */
+		
 		 }
 		 
 		 catch(Exception e) {
