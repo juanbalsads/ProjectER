@@ -233,6 +233,56 @@ public class SQLManager {
 		 }
 	 }
 	
+	 
+	 public void selectDoctors() {
+		 try {
+		 Statement stmt = c.createStatement();
+		 String sql = "SELECT * FROM doctors";
+		 ResultSet rs = stmt.executeQuery(sql);
+		 
+		 while (rs.next()) {
+			 int id = rs.getInt("id");
+			 String name = rs.getString("name");
+			 String speciallity = rs.getString("speciallity");
+			 Doctor doctor = new Doctor (id,name,speciallity);
+			 System.out.println(doctor);
+		 }
+		 rs.close();
+		 stmt.close();
+		
+		 }
+		 
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	 }
+	 
+	 public void selectDevices() {
+		 try {
+		 Statement stmt = c.createStatement();
+		 String sql = "SELECT * FROM devices";
+		 ResultSet rs = stmt.executeQuery(sql);
+		 
+		 while (rs.next()) {
+			 int id = rs.getInt("id");
+			 String name = rs.getString("name");
+			 int quantity = rs.getInt("quantity");
+			 Device device = new Device (id,name,quantity);
+			 System.out.println(device);
+		 }
+		 rs.close();
+		 stmt.close();
+		
+		 }
+		 
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	 }
+	 
+	 
+	 
+	 
 	 public void insertAdmission(Admission a) {
 		 try {
 			 String sql = "INSERT INTO Admission (id, arrival_time , symptoms , test) "
@@ -286,6 +336,8 @@ public class SQLManager {
 		 catch (Exception e) {
 				e.printStackTrace();}}
 	
+
+	
 	public void selectAdmissions() {
 		 try {
 				Statement stmt1 = c.createStatement();
@@ -304,6 +356,9 @@ public class SQLManager {
 			 }
 		 catch (Exception e) {
 				e.printStackTrace();}}
+	
+	
+	
 	
 	public void selectAllergies() {
 		 try {
