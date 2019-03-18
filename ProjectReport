@@ -10,3 +10,9 @@ Hello Rodrigo, this week we created the tables, inserted and selected one entity
 Before next class, we intend to have all the pojos and the insert and  select method of each one.
 
   
+ (06-03-19)
+ Hello Rodrigo, this week we have organized our presentation for next Wednesday dividing the work.
+ Also, we have achieved our aim to finish all the insert and select methods for each pojo; and we
+ have started with the update and delete methods of each pojo, having finished the ones of patient, 
+ nurse and doctor. We tried insert, select, delete and update with the pojo patient in a simple main
+ and it works correctly. 

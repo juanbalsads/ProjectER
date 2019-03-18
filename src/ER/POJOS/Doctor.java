@@ -17,8 +17,6 @@ public class Doctor implements Serializable {
 	public Doctor() {
 		super();
 	}
-	
-	
 
 	public Doctor(Integer id, String name, String specialty, boolean availability) {
 		super();
@@ -27,8 +25,6 @@ public class Doctor implements Serializable {
 		this.specialty = specialty;
 		this.availability = availability;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -104,17 +100,11 @@ public class Doctor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ "]";
+		return "Doctor [name=" + name + "]";
 	}
-	
-
-
 
 	
-
-
-
+	
 	
 	
 }

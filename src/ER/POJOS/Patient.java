@@ -11,12 +11,13 @@ public class Patient implements Serializable {
 	 */
 	private static final long serialVersionUID = -5716647307754030719L;
 	
-	private Integer id;
+	private Integer SSN;
 	private String name;
 	private Double weight; 
 	private Double height; 
 	private String genre;
 	private LocalDate dob;
+	private String bloodType;
 	
 	
 	public Patient() {
@@ -24,61 +25,26 @@ public class Patient implements Serializable {
 	}
 
 
-	public Patient(Integer id, String name, Double weight, Double height, String genre, LocalDate dob) {
+	public Patient(Integer id, String name, Double weight, Double height, String genre, LocalDate dob,
+			String bloodType) {
 		super();
-		this.id = id;
+		this.SSN = id;
 		this.name = name;
 		this.weight = weight;
 		this.height = height;
 		this.genre = genre;
 		this.dob = dob;
-	}
-
-
-	public Patient(String name, Double weight, Double height, String genre, LocalDate dob) {
-		super();
-		this.name = name;
-		this.weight = weight;
-		this.height = height;
-		this.genre = genre;
-		this.dob = dob;
-	}
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Patient other = (Patient) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+		this.bloodType = bloodType;
 	}
 
 
 	public Integer getId() {
-		return id;
+		return SSN;
 	}
 
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.SSN = id;
 	}
 
 
@@ -122,8 +88,8 @@ public class Patient implements Serializable {
 	}
 
 
-	public String getDob() {
-		return dob.toString();
+	public LocalDate getDob() {
+		return dob;
 	}
 
 
@@ -132,11 +98,53 @@ public class Patient implements Serializable {
 	}
 
 
+	public String getBloodType() {
+		return bloodType;
+	}
+
+
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((SSN == null) ? 0 : SSN.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Patient other = (Patient) obj;
+		if (SSN == null) {
+			if (other.SSN != null)
+				return false;
+		} else if (!SSN.equals(other.SSN))
+			return false;
+		return true;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre=" + genre
-				+ ", dob=" + dob + "]";
+		return "Patient [id=" + SSN + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre=" + genre
+				+ ", dob=" + dob + ", bloodType=" + bloodType + "]";
 	}
+	
+	
+
+
+	
 	
 	
 	

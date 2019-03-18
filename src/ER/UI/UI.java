@@ -1,10 +1,12 @@
 package ER.UI;
 import java.io.*;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +17,8 @@ import ER.DB.*;
 	public class UI {
 
 private static SQLManager manager;
-
-	public static void main(String args[]) {
+	
+public static void main(String args[]) {
 	
 		try {
 		
@@ -55,8 +57,9 @@ private static SQLManager manager;
 		prep.setString(4, genre);
 		prep.setDate(5, Date.valueOf(dob));
 		prep.executeUpdate();
-		prep.close();
+		prep.close(); 
 		
+		/*Patient patient=null;
 		Statement stmt1 = c.createStatement();
 		String sql1 = "SELECT * FROM patients";
 		ResultSet rs = stmt1.executeQuery(sql1);
@@ -67,12 +70,86 @@ private static SQLManager manager;
 			Double height1 = rs.getDouble("height");
 			String genre1 = rs.getString("genre");
 			LocalDate dob1=  rs.getDate("dob").toLocalDate();
-			Patient patient = new Patient(id1, name1, weight1, height1, genre1, dob1);
+			patient = new Patient(id1, name1, weight1, height1, genre1, dob1);
 			System.out.println(patient);
 		}
 		rs.close();
 		stmt1.close();
 		System.out.println("Search finished.");
+		
+		
+		
+		System.out.println("Choose a patient, type its ID: ");
+			int p_id = Integer.parseInt(reader.readLine());
+			System.out.println("New name:");
+			String newName= reader.readLine();
+				if(newName.equals("")) {
+					newName= patient.getName();}
+		System.out.println("New weight:");
+			Double newWeight1;
+			String newWeight = reader.readLine();
+				if(newWeight.equals("")) {
+					newWeight1= patient.getWeight();}
+				else {
+					newWeight1= Double.parseDouble(newWeight);}
+		System.out.println("New height:");
+			Double newHeight1;
+			String newHeight = reader.readLine();
+				if(newHeight.equals("")) {
+					newHeight1= patient.getHeight();}
+				else {
+					newHeight1= Double.parseDouble(newHeight);}
+		System.out.println("New genre:");
+			String newGenre= reader.readLine();
+				if(newGenre.equals("")) {
+					newGenre= patient.getGenre();}
+		System.out.println("New dob:");
+			String newDob= reader.readLine();
+				if(newDob.equals("")) {
+					newDob= patient.getDob();}
+		PreparedStatement prep;
+			String sql;	
+			sql = "UPDATE patients SET name=?, weight=?, height=?, genre=?, dob=? WHERE id=?";
+				prep = c.prepareStatement(sql);
+				prep.setString(1, newName);
+				prep.setDouble(2, newWeight1);
+				prep.setDouble(3, newHeight1);
+				prep.setString(4, newGenre);
+				prep.setDate(5, Date.valueOf(newDob));
+				prep.setInt(6, p_id);
+				prep.executeUpdate();
+		System.out.println("Update finished.");
+				
+		
+		
+		System.out.println("Choose a patient to delete, type its ID: ");
+		p_id = Integer.parseInt(reader.readLine());
+		sql = "DELETE FROM patients WHERE id=?";
+		prep = c.prepareStatement(sql);
+		prep.setInt(1, p_id);
+		prep.executeUpdate();
+		System.out.println("Deletion finished.");*/
+	
+		
+		 /*stmt1 = c.createStatement();
+		 sql1 = "SELECT * FROM patients";
+		 rs = stmt1.executeQuery(sql1);
+		while (rs.next()) {
+			int id1 = rs.getInt("id");
+			String name1 = rs.getString("name");
+			Double weight1 = rs.getDouble("weight");
+			Double height1 = rs.getDouble("height");
+			String genre1 = rs.getString("genre");
+			LocalDate dob1=  rs.getDate("dob").toLocalDate();
+			patient = new Patient(id1, name1, weight1, height1, genre1, dob1);
+			System.out.println(patient);
+		}
+		rs.close();
+		stmt1.close();
+		System.out.println("Search finished.");*/
+		
+		//manager.selectPatients();
+		
 		
 		c.close();
 		
