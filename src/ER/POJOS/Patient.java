@@ -3,6 +3,7 @@ package ER.POJOS;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.*;
 
 public class Patient implements Serializable {
 
@@ -18,15 +19,17 @@ public class Patient implements Serializable {
 	private String genre;
 	private LocalDate dob;
 	private String bloodType;
-	
+	private List<Drug> allergies;
+	private Admission admission;
 	
 	public Patient() {
 		super();
+		this.allergies= new ArrayList<Drug>();
 	}
 
 
 	public Patient(Integer id, String name, Double weight, Double height, String genre, LocalDate dob,
-			String bloodType) {
+			String bloodType, Admission admission) {
 		super();
 		this.SSN = id;
 		this.name = name;
@@ -35,17 +38,10 @@ public class Patient implements Serializable {
 		this.genre = genre;
 		this.dob = dob;
 		this.bloodType = bloodType;
+		this.allergies= new ArrayList<Drug>();
+		this.admission= admission;
 	}
 
-
-	public Integer getId() {
-		return SSN;
-	}
-
-
-	public void setId(Integer id) {
-		this.SSN = id;
-	}
 
 
 	public String getName() {
@@ -106,6 +102,40 @@ public class Patient implements Serializable {
 	public void setBloodType(String bloodType) {
 		this.bloodType = bloodType;
 	}
+	
+	
+
+
+	public Integer getSSN() {
+		return SSN;
+	}
+
+
+	public void setSSN(Integer sSN) {
+		SSN = sSN;
+	}
+
+
+	public List<Drug> getAllergies() {
+		return allergies;
+	}
+
+
+	public void setAllergies(List<Drug> allergies) {
+		this.allergies = allergies;
+	}
+	
+	
+
+
+	public Admission getAdmission() {
+		return admission;
+	}
+
+
+	public void setAdmission(Admission admission) {
+		this.admission = admission;
+	}
 
 
 	@Override
@@ -137,9 +167,16 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [id=" + SSN + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre=" + genre
-				+ ", dob=" + dob + ", bloodType=" + bloodType + "]";
+		return "Patient [SSN=" + SSN + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre="
+				+ genre + ", dob=" + dob + ", bloodType=" + bloodType + ", allergies=" + allergies + ", admission="
+				+ admission + "]";
 	}
+
+
+	
+
+
+
 	
 	
 

@@ -1,8 +1,10 @@
 package ER.POJOS;
 
-import java.io.Serializable;
 
-public class Allergy implements Serializable{
+import java.io.Serializable;
+import java.util.*;
+
+public class Drug implements Serializable{
 
 	/**
 	 * 
@@ -11,16 +13,26 @@ public class Allergy implements Serializable{
 
 	private Integer id;
 	private String name;
+	private List<Admission> admissions ;
+	private List<Patient> patients;
 	
-	public Allergy() {
+	
+	public Drug() {
 		super();
+		this.admissions = new ArrayList<Admission>();
+		this.patients = new ArrayList<Patient>();
 	}
 
-	public Allergy(Integer id, String name) {
+	public Drug(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.admissions = new ArrayList<Admission>();
+		this.patients = new ArrayList<Patient>();
 	}
+	
+
+
 
 	@Override
 	public int hashCode() {
@@ -38,7 +50,7 @@ public class Allergy implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Allergy other = (Allergy) obj;
+		Drug other = (Drug) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -62,11 +74,30 @@ public class Allergy implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+	
+
+	public List<Admission> getAdmissions() {
+		return admissions;
+	}
+
+	public void setAdmissions(List<Admission> admissions) {
+		this.admissions = admissions;
+	}
+
+	public List<Patient> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
+	}
 
 	@Override
 	public String toString() {
-		return "Allergy [id=" + id + ", name=" + name + "]";
+		return "Drug [id=" + id + ", name=" + name + ", admissions=" + admissions + ", patients=" + patients + "]";
 	}
-	
+
 	
 }

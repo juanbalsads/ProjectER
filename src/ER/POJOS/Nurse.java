@@ -1,6 +1,9 @@
 package ER.POJOS;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Nurse implements Serializable{
 
@@ -13,10 +16,17 @@ public class Nurse implements Serializable{
 	private String name;
 	private String specialty;
 	private boolean availability;
+	private List<Admission> patients;
 	
 	public Nurse() {
 		super();
+		this.patients = new ArrayList<Admission>();
 	}
+	
+	
+
+
+
 
 	public Nurse(Integer id, String name, String specialty, boolean availability) {
 		super();
@@ -24,6 +34,16 @@ public class Nurse implements Serializable{
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
+		this.patients = new ArrayList<Admission>();
+	}
+	
+
+	public List<Admission> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(List<Admission> patients) {
+		this.patients = patients;
 	}
 
 	public Integer getId() {
@@ -86,8 +106,10 @@ public class Nurse implements Serializable{
 	@Override
 	public String toString() {
 		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ "]";
+				+ ", patients=" + patients + "]";
 	}
+
+
 	
 	
 	

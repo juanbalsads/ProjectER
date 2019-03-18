@@ -1,6 +1,7 @@
 package ER.POJOS;
 
 import java.io.Serializable;
+import java.util.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,22 +15,44 @@ public class Admission implements Serializable{
 	private static final long serialVersionUID = 5626892191426340232L;
 
 	private Integer id;
+	private Patient patient;
 	private LocalDateTime arrivalTime;
 	private String symptoms;
 	private String tests;
 	private boolean release;
+	private Nurse nurse;
+	private Doctor doctor;
+	private Box box;
+	private List<Drug> drugs;
+	
+	
 	
 	public Admission() {
 		super();
+		this.drugs= new ArrayList<Drug>();
 	}
 
-	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests, boolean release) {
+	public Admission(Integer id, Patient patient, LocalDateTime arrivalTime, String symptoms, String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
 		this.id = id;
+		this.patient= patient;
 		this.arrivalTime = arrivalTime;
 		this.symptoms = symptoms;
 		this.tests = tests;
 		this.release = release;
+		this.nurse = nurse;
+		this.doctor= doctor;
+		this.box= box;
+		
+		this.drugs= new ArrayList<Drug>();
+	}
+
+	public Nurse getNurse() {
+		return nurse;
+	}
+
+	public void setNurse(Nurse nurse) {
+		this.nurse = nurse;
 	}
 
 	public Integer getId() {
@@ -38,6 +61,16 @@ public class Admission implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 	public LocalDateTime getArrivalTime() {
@@ -71,6 +104,33 @@ public class Admission implements Serializable{
 	public void setRelease(boolean release) {
 		this.release = release;
 	}
+	
+
+	public List<Drug> getDrugs() {
+		return drugs;
+	}
+
+	public void setDrugs(List<Drug> drugs) {
+		this.drugs = drugs;
+	}
+	
+	
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	public Box getBox() {
+		return box;
+	}
+
+	public void setBox(Box box) {
+		this.box = box;
+	}
 
 	@Override
 	public int hashCode() {
@@ -99,9 +159,14 @@ public class Admission implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms=" + symptoms + ", tests=" + tests
-				+ ", release=" + release + "]";
+		return "Admission [id=" + id + ", patient=" + patient + ", arrivalTime=" + arrivalTime + ", symptoms="
+				+ symptoms + ", tests=" + tests + ", release=" + release + ", nurse=" + nurse + ", doctor=" + doctor
+				+ ", box=" + box + ", drugs=" + drugs + "]";
 	}
+
+
+	
+	
 
 	
 	

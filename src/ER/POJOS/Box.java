@@ -2,7 +2,7 @@ package ER.POJOS;
 
 import java.io.Serializable;
 
-public class Room implements Serializable {
+public class Box implements Serializable {
 
 	/**
 	 * 
@@ -11,15 +11,17 @@ public class Room implements Serializable {
 
 	private Integer id; 
 	private boolean availability;
+	private Admission admission;
 	
-	public Room() {
+	public Box() {
 		super();
 	}
 
-	public Room(Integer id, boolean release) {
+	public Box(Integer id, boolean release, Admission admission) {
 		super();
 		this.id = id;
 		this.availability = release;
+		this.admission= admission;
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class Room implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Room other = (Room) obj;
+		Box other = (Box) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -55,18 +57,30 @@ public class Room implements Serializable {
 		this.id = id;
 	}
 
-	public boolean getAvailability() {
+	
+
+	public boolean isAvailability() {
 		return availability;
 	}
 
-	public void setAvailabily(boolean release) {
-		this.availability = release;
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
+	}
+
+	public Admission getAdmission() {
+		return admission;
+	}
+
+	public void setAdmission(Admission admission) {
+		this.admission = admission;
 	}
 
 	@Override
 	public String toString() {
-		return "Room [id=" + id + ", release=" + availability + "]";
+		return "Box [id=" + id + ", availability=" + availability + ", admission=" + admission + "]";
 	}
+
+	
 
 	
 	
