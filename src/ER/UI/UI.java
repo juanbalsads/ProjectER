@@ -148,7 +148,7 @@ public static void main(String args[]) {
 		stmt1.close();
 		System.out.println("Search finished.");*/
 		
-		manager.selectPatients();
+		//manager.selectPatients();
 		
 		
 		c.close();

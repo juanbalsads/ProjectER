@@ -12,24 +12,50 @@ public class Nurse implements Serializable{
 	private Integer id;
 	private String name;
 	private String specialty;
+	private boolean availability;
 	
 	public Nurse() {
 		super();
 	}
-	
-	public Nurse(Integer id, String name, String specialty) {
+
+	public Nurse(Integer id, String name, String specialty, boolean availability) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.specialty = specialty;
+		this.availability = availability;
 	}
 
-	
-	
-	public Nurse(String name, String specialty) {
-		super();
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSpecialty() {
+		return specialty;
+	}
+
+	public void setSpecialty(String specialty) {
 		this.specialty = specialty;
+	}
+
+	public boolean isAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
 	}
 
 	@Override
@@ -57,34 +83,14 @@ public class Nurse implements Serializable{
 		return true;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSpecialty() {
-		return specialty;
-	}
-
-	public void setSpecialty(String specialty) {
-		this.specialty = specialty;
-	}
-
 	@Override
 	public String toString() {
-		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + "]";
+		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
+				+ "]";
 	}
+	
+	
+	
 	
 	
 	

@@ -46,96 +46,73 @@ public class SQLManager {
 	 
 	 public void createTables() {
 		 try {
-			Statement stmt1=c.createStatement();
-			String sql1= "CREATE TABLE patients " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL, " + 
-					"weight REAL, " + 
-					"height REAL, " + 
-					"genre TEXT, " + 
-					"dob DATE) " ;
-			stmt1.executeUpdate(sql1);
-			stmt1.close();
-			
-			Statement stmt2=c.createStatement();
-			String sql2= "CREATE TABLE Doctors " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL, " + 
-					"speciality TEXT NOT NULL)";
-			stmt2.executeUpdate(sql2);
-			stmt2.close();
-			
-			Statement stmt3= c.createStatement();
-			String sql3= "CREATE TABLE Nurses " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL, " + 
-					"speciality TEXT NOT NULL) "; 
-			stmt3.executeUpdate(sql3);
-			stmt3.close();
-			
-			Statement stmt4= c.createStatement();
-			String sql4= "CREATE TABLE Devices " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT, " + 
-					"quantity INTEGER DEFAULT 0)";
-			stmt4.executeUpdate(sql4);
-			stmt4.close();
-			
-			Statement stmt5= c.createStatement();
-			String sql5= "CREATE TABLE Admission " + 
-					"(id INTEGER PRIMARY KEY, " + 
-					"arrival_time DATETIME, " + 
-					"symptoms TEXT, " + 
-					"test TEXT) ";
-			stmt5.executeUpdate(sql5);
-			stmt5.close();
-			
-			Statement stmt6= c.createStatement();
-			String sql6= "CREATE TABLE Allergies " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL) ";
-			stmt6.executeUpdate(sql6);
-			stmt6.close();
-			
-			Statement stmt7= c.createStatement();
-			String sql7= "CREATE TABLE Admission_Doctor " + 
-					"(admission INTEGER REFERENCES Admission(id), " + 
-					"doctor INTEGER REFERENCES Doctors(id), " + 
-					"PRIMARY KEY (admission, doctor)) ";
-			stmt7.executeUpdate(sql7);
-			stmt7.close();
-			
-			Statement stmt8= c.createStatement();
-			String sql8= "CREATE TABLE Admission_Nurses " + 
-					"(admission INTEGER REFERENCES Admission(id_number), " + 
-					"nurse INTEGER REFERENCES Nurses(id), " + 
-					"PRIMARY KEY (admission, nurse)) ";
-			stmt8.executeUpdate(sql8);
-			stmt8.close();
-			
-			Statement stmt9= c.createStatement();
-			String sql9= "CREATE TABLE Admission_Devices " + 
-					"(admission INTEGER REFERENCES Admission(id), " + 
-					"resources_equipment INTEGER REFERENCES Devices(id), " + 
-					"quantity INTEGER, " + 
-					"PRIMARY KEY (admission,resources_equipment )) ";
-			stmt9.executeUpdate(sql9);
-			stmt9.close();
-			
-			Statement stmt10= c.createStatement();
-			String sql10= "CREATE TABLE Patient_Allergies " + 
-					"(patient INTERGER REFERENCES Patient(id), " + 
-					"allergies TEXT REFERENCES Allergies(id)) ";
-			stmt10.executeUpdate(sql10);
-			stmt10.close();
-			
-			Statement stmt11= c.createStatement();
-			String sql11= "CREATE TABLE Room " + 
-					"(room INTEGER PRIMARY KEY AUTOINCREMENT ";
-			stmt11.executeUpdate(sql11);
-			stmt11.close();
-		 
-		 } 
+		 Statement stmt1=c.createStatement();
+		 String sql1= "CREATE TABLE patients " + 
+		 "(SSN INTEGER PRIMARY KEY, " + 
+		 "name TEXT NOT NULL, " + 
+		 "weight REAL, " + 
+		 "height REAL, " + 
+		 "genre TEXT, " + 
+		 "dob DATE, "+ 
+		 "blood_type TEXT) ";
+		 stmt1.executeUpdate(sql1);
+		 stmt1.close();
+		 Statement stmt2=c.createStatement();
+		 String sql2= "CREATE TABLE Doctors " + 
+		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+		 "name TEXT NOT NULL, " + 
+		 "speciality TEXT NOT NULL" +
+		 "availability BOOLEAN )";
+		 stmt2.executeUpdate(sql2);
+		 stmt2.close();
+		 Statement stmt3= c.createStatement();
+		 String sql3= "CREATE TABLE Nurses " + 
+		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+		 "name TEXT NOT NULL, " + 
+		 "speciality TEXT NOT NULL, " +
+		 "availability BOOLEAN )";
+		 stmt3.executeUpdate(sql3);
+		 stmt3.close();
+		 Statement stmt11= c.createStatement();
+		 String sql11= "CREATE TABLE Room " + 
+		 "(room INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		 "availability BOOLEAN )";
+		 stmt11.executeUpdate(sql11);
+		 stmt11.close();
+		 Statement stmt5= c.createStatement();
+		 String sql5= "CREATE TABLE Admission " + 
+		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+		 "arrival_time DATETIME, " + 
+		 "symptoms TEXT, " + 
+		 "test TEXT, " +
+		 "release BOOLEAN, " +
+		 "doctors INTEGER REFERENCES Doctors(id), " +
+		 "nurses INTEGER REFERENCES Nurses(id)) ";
+		 stmt5.executeUpdate(sql5);
+		 stmt5.close();
+		 Statement stmt6= c.createStatement();
+		 String sql6= "CREATE TABLE Drugs " + 
+		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+		 "name TEXT NOT NULL) ";
+		 stmt6.executeUpdate(sql6);
+		 stmt6.close();
+		 Statement stmt10= c.createStatement();
+		 String sql10= "CREATE TABLE Patient_Drugs " + 
+		 "(patient INTERGER REFERENCES Patient(SSN), " + 
+		 "drug TEXT REFERENCES drugs(id), " +
+		 "PRIMARY KEY (patient, drug))";
+		 stmt10.executeUpdate(sql10);
+		 stmt10.close();
+		 Statement stmt12= c.createStatement();
+		 String sql12= "CREATE TABLE Admission_Drugs " + 
+		 "(admission INTEGER REFERENCES Admission(id) , " +
+		 "drug INTEGER REFERENCES Drugs(id), " +
+		 "dosage DOUBLE, "+
+		 "PRIMARY KEY (admission, drug)) ";
+		 stmt12.executeUpdate(sql12);
+		 stmt12.close(); 
+		  
+		 }
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("The tables were already created"); }  }
@@ -144,7 +121,7 @@ public class SQLManager {
 	 
 	 //ASK PATIENT
 	 
-	 public Patient askPatient() {
+	/* public Patient askPatient() {
 		 try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("\nInsert the patient's name:");
@@ -175,7 +152,7 @@ public class SQLManager {
 				String name = reader.readLine();
 			System.out.println("Insert the speciality:");
 				String speciality = reader.readLine();
-			Doctor d= new Doctor (name, speciality);
+			//Doctor d= new Doctor (name, speciality);
 			return d;
 		 } 
 		 catch (Exception e) {
@@ -198,14 +175,14 @@ public class SQLManager {
 				e.printStackTrace();
 				return null;}}
 	 
-	 
+	 /*
 	 
 
 /*---------------------------------INSERT METHODS--------------------------------------*/	 
 	 
 	 //INSERT PATIENTS
 	 
-	 public void insertPatient(Patient p) {
+	/* public void insertPatient(Patient p) {
 		 try {
 			 String sql = "INSERT INTO patients (name, weight , height , genre, dob) "
 						+ "VALUES (?,?,?,?,?);";
@@ -300,12 +277,13 @@ public class SQLManager {
 				 stmt1.executeUpdate(sql1);
 				 stmt1.close();}
 		 catch (Exception e) {
-				e.printStackTrace();}}
+				e.printStackTrace();}} */
 		
 		
 /*---------------------------------SELECT METHODS--------------------------------------*/		
 		
 	 //SELECT PATIENT
+	 /*
 		
 	 public void selectPatients() {
 		 try {
@@ -430,11 +408,15 @@ public class SQLManager {
 					System.out.println(room); }}
 		 catch (Exception e) {
 				e.printStackTrace();}}
+				
+				*/
+	 
 	
 /*---------------------------------OBTAIN METHODS--------------------------------------*/
 	
 	//OBTAIN PATIENTS
 	
+	 /*
 	public Patient obtainPatient(int id_patient) {
 		 try {
 			 Statement stmt = c.createStatement();
@@ -574,10 +556,11 @@ public class SQLManager {
 				 e.printStackTrace();
 				 return null;}}
 	
+	*/
 /*---------------------------------DELETE METHODS--------------------------------------*/
 	
 	//DELETE PATIENTS	
-	
+	/*
 	public void deletePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -621,11 +604,11 @@ public class SQLManager {
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
-
+*/
 /*---------------------------------UPDATE METHODS--------------------------------------*/
 	
 	//UPDATE PATIENTS				 
-	
+	/*
 	public void updatePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -729,7 +712,7 @@ public class SQLManager {
 		catch(Exception e){
 			 e.printStackTrace();}}
 
-		 
+		 */
 		 
 		
 }

@@ -17,28 +17,59 @@ public class Admission implements Serializable{
 	private LocalDateTime arrivalTime;
 	private String symptoms;
 	private String tests;
+	private boolean release;
 	
 	public Admission() {
 		super();
 	}
 
-	
-	
-	public Admission(LocalDateTime arrivalTime, String symptoms, String tests) {
-		super();
-		this.arrivalTime = arrivalTime;
-		this.symptoms = symptoms;
-		this.tests = tests;
-	}
-
-
-
-	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests) {
+	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests, boolean release) {
 		super();
 		this.id = id;
 		this.arrivalTime = arrivalTime;
 		this.symptoms = symptoms;
 		this.tests = tests;
+		this.release = release;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getArrivalTime() {
+		return arrivalTime;
+	}
+
+	public void setArrivalTime(LocalDateTime arrivalTime) {
+		this.arrivalTime = arrivalTime;
+	}
+
+	public String getSymptoms() {
+		return symptoms;
+	}
+
+	public void setSymptoms(String symptoms) {
+		this.symptoms = symptoms;
+	}
+
+	public String getTests() {
+		return tests;
+	}
+
+	public void setTests(String tests) {
+		this.tests = tests;
+	}
+
+	public boolean isRelease() {
+		return release;
+	}
+
+	public void setRelease(boolean release) {
+		this.release = release;
 	}
 
 	@Override
@@ -66,45 +97,15 @@ public class Admission implements Serializable{
 		return true;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getArrivalTime() {
-		return arrivalTime.toString();
-	}
-
-	public void setArrivalTime(LocalDateTime arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
-
-
-	public String getSymptoms() {
-		return symptoms;
-	}
-
-	public void setSymptoms(String symptoms) {
-		this.symptoms = symptoms;
-	}
-
-	public String getTests() {
-		return tests;
-	}
-
-	public void setTests(String tests) {
-		this.tests = tests;
-	}
-
 	@Override
 	public String toString() {
-		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms="
-				+ symptoms + ", tests=" + tests + "]";
+		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms=" + symptoms + ", tests=" + tests
+				+ ", release=" + release + "]";
 	}
 
+	
+	
+	
 	
 	
 	

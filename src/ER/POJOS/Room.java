@@ -10,19 +10,17 @@ public class Room implements Serializable {
 	private static final long serialVersionUID = 8727419477663469192L;
 
 	private Integer id; 
+	private boolean availability;
 	
 	public Room() {
 		super();
 	}
 
-	
-	
-	public Room(Integer id) {
+	public Room(Integer id, boolean release) {
 		super();
 		this.id = id;
+		this.availability = release;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -49,24 +47,29 @@ public class Room implements Serializable {
 		return true;
 	}
 
-
-
 	public Integer getId() {
 		return id;
 	}
-
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	public boolean getAvailability() {
+		return availability;
+	}
 
+	public void setAvailabily(boolean release) {
+		this.availability = release;
+	}
 
 	@Override
 	public String toString() {
-		return "Room [id=" + id  + "]";
+		return "Room [id=" + id + ", release=" + availability + "]";
 	}
+
+	
+	
 	
 	
 	
