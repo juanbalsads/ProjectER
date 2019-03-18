@@ -1,6 +1,7 @@
 package ER.POJOS;
 
 
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -99,5 +100,4 @@ public class Drug implements Serializable{
 		return "Drug [id=" + id + ", name=" + name + ", admissions=" + admissions + ", patients=" + patients + "]";
 	}
 
-	
 }
