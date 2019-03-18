@@ -263,7 +263,7 @@ public class SQLManager {
 				while (rs.next()) {
 					int id = rs.getInt("id");
 					String name = rs.getString("name");
-					Allergy allergy = new Allergy(id, name);
+					Drug allergy = new Drug(id, name);
 					System.out.println(allergy);
 				}
 				rs.close();

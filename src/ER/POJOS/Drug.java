@@ -2,7 +2,7 @@ package ER.POJOS;
 
 import java.io.Serializable;
 
-public class Allergy implements Serializable{
+public class Drug implements Serializable{
 
 	/**
 	 * 
@@ -12,11 +12,11 @@ public class Allergy implements Serializable{
 	private Integer id;
 	private String name;
 	
-	public Allergy() {
+	public Drug() {
 		super();
 	}
 
-	public Allergy(Integer id, String name) {
+	public Drug(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -38,7 +38,7 @@ public class Allergy implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Allergy other = (Allergy) obj;
+		Drug other = (Drug) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
