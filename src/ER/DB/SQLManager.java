@@ -45,94 +45,81 @@ public class SQLManager {
 		 try {
 			Statement stmt1=c.createStatement();
 			String sql1= "CREATE TABLE patients " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+					"(SSN INTEGER PRIMARY KEY, " + 
 					"name TEXT NOT NULL, " + 
 					"weight REAL, " + 
 					"height REAL, " + 
 					"genre TEXT, " + 
-					"dob DATE) " ;
+					"dob DATE, "+ 
+					"blood_type TEXT) ";
 			stmt1.executeUpdate(sql1);
 			stmt1.close();
 			
 			Statement stmt2=c.createStatement();
 			String sql2= "CREATE TABLE Doctors " + 
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL, " + 
-					"speciality TEXT NOT NULL)";
+					"name TEXT NOT NULL, " + 
+					"speciality TEXT NOT NULL" +
+					"availability BOOLEAN )";
 			stmt2.executeUpdate(sql2);
 			stmt2.close();
 			
 			Statement stmt3= c.createStatement();
 			String sql3= "CREATE TABLE Nurses " + 
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT NOT NULL, " + 
-					"speciality TEXT NOT NULL) "; 
+					"name TEXT NOT NULL,�" + 
+					"speciality TEXT NOT NULL, " +
+					"availability BOOLEAN )";
 			stmt3.executeUpdate(sql3);
 			stmt3.close();
 			
-			Statement stmt4= c.createStatement();
-			String sql4= "CREATE TABLE Devices " + 
-					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-					"name TEXT, " + 
-					"quantity INTEGER DEFAULT 0)";
-			stmt4.executeUpdate(sql4);
-			stmt4.close();
+			Statement stmt11= c.createStatement();
+			String sql11= "CREATE TABLE Room " + 
+					"(room INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					"availability BOOLEAN )";
+			stmt11.executeUpdate(sql11);
+			stmt11.close();
 			
 			Statement stmt5= c.createStatement();
 			String sql5= "CREATE TABLE Admission " + 
-					"(id INTEGER PRIMARY KEY, " + 
+					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 					"arrival_time DATETIME, " + 
 					"symptoms TEXT, " + 
-					"test TEXT) ";
+					"test TEXT, " +
+					"release BOOLEAN, " +
+					"doctors INTEGER REFERENCES Doctors(id), " +
+					"nurses INTEGER REFERENCES Nurses(id)) ";
+			
 			stmt5.executeUpdate(sql5);
 			stmt5.close();
 			
 			Statement stmt6= c.createStatement();
-			String sql6= "CREATE TABLE Allergies " + 
+			String sql6= "CREATE TABLE Drugs " + 
 					"(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 					"name TEXT NOT NULL) ";
 			stmt6.executeUpdate(sql6);
 			stmt6.close();
 			
-			Statement stmt7= c.createStatement();
-			String sql7= "CREATE TABLE Admission_Doctor " + 
-					"(admission INTEGER REFERENCES Admission(id), " + 
-					"doctor INTEGER REFERENCES Doctors(id), " + 
-					"PRIMARY KEY (admission, doctor)) ";
-			stmt7.executeUpdate(sql7);
-			stmt7.close();
-			
-			Statement stmt8= c.createStatement();
-			String sql8= "CREATE TABLE Admission_Nurses " + 
-					"(admission INTEGER REFERENCES Admission(id_number), " + 
-					"nurse INTEGER REFERENCES Nurses(id), " + 
-					"PRIMARY KEY (admission, nurse)) ";
-			stmt8.executeUpdate(sql8);
-			stmt8.close();
-			
-			Statement stmt9= c.createStatement();
-			String sql9= "CREATE TABLE Admission_Devices " + 
-					"(admission INTEGER REFERENCES Admission(id), " + 
-					"resources_equipment INTEGER REFERENCES Devices(id), " + 
-					"quantity INTEGER, " + 
-					"PRIMARY KEY (admission,resources_equipment )) ";
-			stmt9.executeUpdate(sql9);
-			stmt9.close();
-			
 			Statement stmt10= c.createStatement();
-			String sql10= "CREATE TABLE Patient_Allergies " + 
-					"(patient INTERGER REFERENCES Patient(id), " + 
-					"allergies TEXT REFERENCES Allergies(id)) ";
+			String sql10= "CREATE TABLE Patient_Drugs " + 
+					"(patient INTERGER REFERENCES Patient(SSN), " + 
+					"drug TEXT REFERENCES drugs(id), " +
+					"PRIMARY KEY (patient, drug))";
 			stmt10.executeUpdate(sql10);
 			stmt10.close();
 			
-			Statement stmt11= c.createStatement();
-			String sql11= "CREATE TABLE Room " + 
-					"(room INTEGER PRIMARY KEY AUTOINCREMENT ";
-			stmt11.executeUpdate(sql11);
-			stmt11.close();
+			
+			Statement stmt12= c.createStatement();
+			String sql12= "CREATE TABLE Admission_Drugs " + 
+					"(admission INTEGER REFERENCES Admission(id) , " +
+					"drug INTEGER REFERENCES Drugs(id), " +
+					"dosage DOUBLE, "+
+					"PRIMARY KEY (admission, drug)) ";
+			stmt12.executeUpdate(sql12);
+			stmt12.close(); 
 		 
 		 } 
+		 
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("The tables were already created"); }  }

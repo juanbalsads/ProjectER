@@ -65,7 +65,7 @@ public class Drug implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Allergy [id=" + id + ", name=" + name + "]";
+		return "Drug [id=" + id + ", name=" + name + "]";
 	}
 	
 	

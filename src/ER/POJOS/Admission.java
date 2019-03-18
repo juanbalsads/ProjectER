@@ -17,53 +17,19 @@ public class Admission implements Serializable{
 	private LocalDateTime arrivalTime;
 	private String symptoms;
 	private String tests;
+	private boolean release; 
 	
-	public Admission() {
-		super();
-	}
-
-	
-	
-	public Admission(LocalDateTime arrivalTime, String symptoms, String tests) {
-		super();
-		this.arrivalTime = arrivalTime;
-		this.symptoms = symptoms;
-		this.tests = tests;
-	}
-
-
-
-	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests) {
+	public Admission(Integer id, LocalDateTime arrivalTime, String symptoms, String tests, boolean release) {
 		super();
 		this.id = id;
 		this.arrivalTime = arrivalTime;
 		this.symptoms = symptoms;
 		this.tests = tests;
+		this.release = release;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Admission other = (Admission) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public Admission() {
+		super();
 	}
 
 	public Integer getId() {
@@ -74,14 +40,13 @@ public class Admission implements Serializable{
 		this.id = id;
 	}
 
-	public String getArrivalTime() {
-		return arrivalTime.toString();
+	public LocalDateTime getArrivalTime() {
+		return arrivalTime;
 	}
 
 	public void setArrivalTime(LocalDateTime arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-
 
 	public String getSymptoms() {
 		return symptoms;
@@ -99,12 +64,69 @@ public class Admission implements Serializable{
 		this.tests = tests;
 	}
 
-	@Override
-	public String toString() {
-		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms="
-				+ symptoms + ", tests=" + tests + "]";
+	public boolean isRelease() {
+		return release;
 	}
 
+	public void setRelease(boolean release) {
+		this.release = release;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((arrivalTime == null) ? 0 : arrivalTime.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (release ? 1231 : 1237);
+		result = prime * result + ((symptoms == null) ? 0 : symptoms.hashCode());
+		result = prime * result + ((tests == null) ? 0 : tests.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Admission other = (Admission) obj;
+		if (arrivalTime == null) {
+			if (other.arrivalTime != null)
+				return false;
+		} else if (!arrivalTime.equals(other.arrivalTime))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (release != other.release)
+			return false;
+		if (symptoms == null) {
+			if (other.symptoms != null)
+				return false;
+		} else if (!symptoms.equals(other.symptoms))
+			return false;
+		if (tests == null) {
+			if (other.tests != null)
+				return false;
+		} else if (!tests.equals(other.tests))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Admission [id=" + id + ", arrivalTime=" + arrivalTime + ", symptoms=" + symptoms + ", tests=" + tests
+				+ ", release=" + release + "]";
+	}
+	
+	
+
+	
 	
 	
 	
