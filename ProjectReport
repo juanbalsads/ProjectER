@@ -15,4 +15,11 @@ Before next class, we intend to have all the pojos and the insert and  select me
  Also, we have achieved our aim to finish all the insert and select methods for each pojo; and we
  have started with the update and delete methods of each pojo, having finished the ones of patient, 
  nurse and doctor. We tried insert, select, delete and update with the pojo patient in a simple main
- and it works correctly. 
+ and it works correctly.
+ 
+ (18 - 03 - 19)
+ Hello Rodrigo, this last weeks we have ended our presentation. This Monday, we have established all
+ the relations between the pojos but we haven't tested them to make sure that they work. Our plan for
+ next week is to have them ready to function. 
+ 
+ 
