@@ -17,7 +17,7 @@ public class Patient implements Serializable {
 	private Double weight; 
 	private Double height; 
 	private String genre;
-	private LocalDate dob;
+	private Date dob;
 	private String bloodType;
 	private List<Drug> allergies;
 	private Admission admission;
@@ -28,7 +28,7 @@ public class Patient implements Serializable {
 	}
 
 
-	public Patient(Integer id, String name, Double weight, Double height, String genre, LocalDate dob,
+	public Patient(Integer id, String name, Double weight, Double height, String genre, Date dob,
 			String bloodType, Admission admission) {
 		super();
 		this.SSN = id;
@@ -39,6 +39,20 @@ public class Patient implements Serializable {
 		this.dob = dob;
 		this.bloodType = bloodType;
 		this.allergies= new ArrayList<Drug>();
+		this.admission= admission;
+	}
+
+	
+	public Patient(String name, Double weight, Double height, String genre, Date dob,
+			String bloodType, List<Drug> allergy, Admission admission) {
+		super();
+		this.name = name;
+		this.weight = weight;
+		this.height = height;
+		this.genre = genre;
+		this.dob = dob;
+		this.bloodType = bloodType;
+		this.allergies= allergy;
 		this.admission= admission;
 	}
 
@@ -84,12 +98,12 @@ public class Patient implements Serializable {
 	}
 
 
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
 
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 

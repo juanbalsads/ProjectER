@@ -30,6 +30,14 @@ public class Doctor implements Serializable {
 		this.availability = availability;
 		this.doctors= new ArrayList<Admission>();
 	}
+	
+	public Doctor(String name, String specialty, boolean availability) {
+		super();
+		this.name = name;
+		this.specialty = specialty;
+		this.availability = availability;
+		this.doctors= new ArrayList<Admission>();
+	}
 
 	public List<Admission> getDoctors() {
 		return doctors;
@@ -63,7 +71,7 @@ public class Doctor implements Serializable {
 		this.specialty = specialty;
 	}
 
-	public boolean isAvailability() {
+	public boolean getAvailability() {
 		return availability;
 	}
 

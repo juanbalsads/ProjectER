@@ -59,7 +59,7 @@ public class Box implements Serializable {
 
 	
 
-	public boolean isAvailability() {
+	public boolean getAvailability() {
 		return availability;
 	}
 

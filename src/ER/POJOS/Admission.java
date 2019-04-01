@@ -2,6 +2,7 @@ package ER.POJOS;
 
 import java.io.Serializable;
 import java.util.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -16,8 +17,7 @@ public class Admission implements Serializable{
 
 	private Integer id;
 	private Patient patient;
-	private LocalDateTime arrivalTime;
-	private String symptoms;
+	private Date arrivalTime;
 	private String tests;
 	private boolean release;
 	private Nurse nurse;
@@ -32,12 +32,11 @@ public class Admission implements Serializable{
 		this.drugs= new ArrayList<Drug>();
 	}
 
-	public Admission(Integer id, Patient patient, LocalDateTime arrivalTime, String symptoms, String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
+	public Admission(Integer id, Patient patient, Date arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
 		this.id = id;
 		this.patient= patient;
 		this.arrivalTime = arrivalTime;
-		this.symptoms = symptoms;
 		this.tests = tests;
 		this.release = release;
 		this.nurse = nurse;
@@ -63,8 +62,6 @@ public class Admission implements Serializable{
 		this.id = id;
 	}
 	
-	
-
 	public Patient getPatient() {
 		return patient;
 	}
@@ -73,20 +70,12 @@ public class Admission implements Serializable{
 		this.patient = patient;
 	}
 
-	public LocalDateTime getArrivalTime() {
+	public Date getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(LocalDateTime arrivalTime) {
+	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
-	}
-
-	public String getSymptoms() {
-		return symptoms;
-	}
-
-	public void setSymptoms(String symptoms) {
-		this.symptoms = symptoms;
 	}
 
 	public String getTests() {
@@ -159,8 +148,7 @@ public class Admission implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Admission [id=" + id + ", patient=" + patient + ", arrivalTime=" + arrivalTime + ", symptoms="
-				+ symptoms + ", tests=" + tests + ", release=" + release + ", nurse=" + nurse + ", doctor=" + doctor
+		return "Admission [id=" + id + ", patient=" + patient + ", arrivalTime=" + arrivalTime + ", tests=" + tests + ", release=" + release + ", nurse=" + nurse + ", doctor=" + doctor
 				+ ", box=" + box + ", drugs=" + drugs + "]";
 	}
 

@@ -37,6 +37,14 @@ public class Nurse implements Serializable{
 		this.patients = new ArrayList<Admission>();
 	}
 	
+	public Nurse(String name, String specialty, boolean availability) {
+		super();
+		this.name = name;
+		this.specialty = specialty;
+		this.availability = availability;
+		this.patients = new ArrayList<Admission>();
+	}
+	
 
 	public List<Admission> getPatients() {
 		return patients;
@@ -70,7 +78,7 @@ public class Nurse implements Serializable{
 		this.specialty = specialty;
 	}
 
-	public boolean isAvailability() {
+	public boolean getAvailability() {
 		return availability;
 	}
 
