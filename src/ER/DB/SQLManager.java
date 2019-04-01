@@ -382,7 +382,7 @@ public class SQLManager {
 	 
 	 //SELECT ADMISSION
 	 
-	public void selectAdmissions() {
+	/*public void selectAdmissions() {
 		try {
 			Statement stmt1 = c.createStatement();
 			String sql1 = "SELECT * FROM Admission";
@@ -402,7 +402,7 @@ public class SQLManager {
 
 	 //SELECT ALLERGIES
 
-	/*public void selectAllergies() {
+	public void selectAllergies() {
 		try {
 			Statement stmt1 = c.createStatement();
 			String sql1 = "SELECT * FROM Allergies";
