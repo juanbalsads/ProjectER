@@ -22,4 +22,9 @@ Before next class, we intend to have all the pojos and the insert and  select me
  the relations between the pojos but we haven't tested them to make sure that they work. Our plan for
  next week is to have them ready to function. 
  
+ (03-04-2019)
+ Hello Rodrigo, last week we didn't send you our progress report because we had the midterm exam, so 
+ now I'll be talking about the updates we made in this last two weeks. We have been working on the update,
+ obtain and delete methods of the pojos but we haven't finished them; neither tested them. For next week,
+ our aim is to have them finished and hopefully working correctly. 
  

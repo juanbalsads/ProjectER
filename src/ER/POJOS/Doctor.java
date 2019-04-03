@@ -21,7 +21,12 @@ public class Doctor implements Serializable {
 		super();
 		this.doctors= new ArrayList<Admission>();
 	}
-
+	
+	public Doctor(Integer id) {
+		super();
+		this.id = id;
+	}
+	
 	public Doctor(Integer id, String name, String specialty, boolean availability) {
 		super();
 		this.id = id;

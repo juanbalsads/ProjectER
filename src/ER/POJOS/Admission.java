@@ -32,6 +32,12 @@ public class Admission implements Serializable{
 		this.drugs= new ArrayList<Drug>();
 	}
 
+	public Admission(Integer id) {
+		super();
+		this.id = id;
+		
+		this.drugs = new ArrayList <Drug>();
+	}
 	public Admission(Integer id, Patient patient, Date arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
 		this.id = id;

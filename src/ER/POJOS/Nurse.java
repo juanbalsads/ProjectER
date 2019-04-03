@@ -23,9 +23,11 @@ public class Nurse implements Serializable{
 		this.patients = new ArrayList<Admission>();
 	}
 	
-	
-
-
+	public Nurse(int id) {
+		super();
+		this.id = id;
+		this.patients = new ArrayList<Admission>();
+	}
 
 
 	public Nurse(Integer id, String name, String specialty, boolean availability) {

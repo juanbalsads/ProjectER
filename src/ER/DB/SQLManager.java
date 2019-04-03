@@ -19,7 +19,7 @@ import java.sql.*
 
 public class SQLManager {
 	  Connection c;
-	 
+	  BufferedReader reader;
 	 
 	 
 	 public SQLManager() {
@@ -381,14 +381,16 @@ public class SQLManager {
 	
 	 
 	 //SELECT ADMISSION
-	 
-	/*public void selectAdmissions() {
+	/* 
+	public void selectAdmissions() {
 		try {
+			Patient p = new Patient ();
 			Statement stmt1 = c.createStatement();
 			String sql1 = "SELECT * FROM Admission";
 			ResultSet rs = stmt1.executeQuery(sql1);
 				while (rs.next()) {
 					int id = rs.getInt("id");
+					
 					LocalDateTime arrivalTime=  rs.getTimestamp("arrival_time").toLocalDateTime();
 					String test = rs.getString("test");
 					String symptoms = rs.getString("symptoms");
@@ -416,21 +418,29 @@ public class SQLManager {
 				stmt1.close();}
 		catch (Exception e) {
 			e.printStackTrace();}}
-		
-	//SELECT ROOM
+	*/	
+	//SELECT BOX
 	
 	public void selectRooms() {
 		 try {
 			 Statement stmt1 = c.createStatement();
-				String sql1 = "SELECT * FROM Room";
+				String sql1 = "SELECT * FROM Boxes";
 				ResultSet rs = stmt1.executeQuery(sql1);
 				while (rs.next()) {
 					int id = rs.getInt("id");
-					Room room = new Room(id);
-					System.out.println(room); }}
+					boolean availability = rs.getBoolean("availability");
+					System.out.println("Write the id of the admission: ");
+					reader = new BufferedReader (new InputStreamReader(System.in));
+					int admission_id = Integer.parseInt(reader.readLine());
+					Admission a = new Admission (admission_id);
+					Box b = new Box(id,availability,a);
+					System.out.println(b); }
+				}
 		 catch (Exception e) {
-				e.printStackTrace();}}
-	*/			
+				e.printStackTrace();
+				}
+	}
+			
 				
 	 
 	
@@ -438,7 +448,7 @@ public class SQLManager {
 	
 	//OBTAIN PATIENTS
 	
-	 /*
+	 
 	public Patient obtainPatient(int id_patient) {
 		 try {
 			 Statement stmt = c.createStatement();
@@ -452,6 +462,7 @@ public class SQLManager {
 				 	Double height = rs.getDouble("height");
 				 	String genre = rs.getString("genre");
 				 	LocalDate dob = rs.getDate ("dob").toLocalDate();
+				 	String bloodType = rs.getString("blood_type");
 				 	patient = new Patient (id,name,weight,height,genre,dob);}
 			 	rs.close();
 			 	stmt.close();
@@ -459,7 +470,7 @@ public class SQLManager {
 		 catch(Exception e){
 			 e.printStackTrace();
 			 return null;}}
-	 
+	 /*
 	//OBTAIN DOCTOR
 	 
 	 public Doctor obtainDoctor(int id_doctor) {
@@ -559,18 +570,23 @@ public class SQLManager {
 			 catch(Exception e){
 				 e.printStackTrace();
 				 return null;}}
+	*/	 
+	//OBTAIN BOX
 		 
-	//OBTAIN ROOM
-		 
-		 public Room obtainRoom(int id_room) {
+		 public Box obtainRoom(int id_box) {
 			 try {
 				 Statement stmt = c.createStatement();
 				 String sql = "SELECT * FROM Room WHERE id= "+id_room+ " ";
-				 Room room=null;
+				 Box box=null;
+				 Admission admission = null;
 				 ResultSet rs = stmt.executeQuery(sql); 
 				 while (rs.next() ) {
-					 	int id = rs.getInt("id");
-					 	room = new Room (id);}
+					 	int box_id = rs.getInt("box");
+					 	boolean availability = rs.getBoolean("availability");
+					 	
+					 	
+					 	box = new Box (box_id,availability);
+					 	}
 				 	rs.close();
 				 	stmt.close();
 				 	return room;}
@@ -578,11 +594,11 @@ public class SQLManager {
 				 e.printStackTrace();
 				 return null;}}
 	
-	*/
+	
 /*---------------------------------DELETE METHODS--------------------------------------*/
 	
 	//DELETE PATIENTS	
-	/*
+	
 	public void deletePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -622,15 +638,35 @@ public class SQLManager {
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, n_id);
 				prep.executeUpdate();
-				System.out.println("Deletion finished.");}
+				System.out.println("Deletion finished.");
+			}
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
-*/
+	//DELETE BOX
+	
+	public void deleteBox() {
+		try {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Choose a box to delete, type its ID: ");
+		int box_id= Integer.parseInt(reader.readLine());
+		String sql= "DELETE FROM Box WHERE id=?";
+		PreparedStatement prep =c.prepareStatement(sql);
+		prep.setInt(1, box_id);
+		prep.executeUpdate();
+		System.out.println("Deletion finished.");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+
 /*---------------------------------UPDATE METHODS--------------------------------------*/
 	
 	//UPDATE PATIENTS				 
-	/*
+	
 	public void updatePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -663,9 +699,15 @@ public class SQLManager {
 				String newDob= reader.readLine();
 					if(newDob.equals("")) {
 						newDob= patient.getDob();}
+			System.out.println("New bloodtype:");
+			    String newBloodType = reader.readLine();
+			        if(newBloodType.equals("")){
+			        	newBloodType=patient.getBloodType();
+			        }
+			
 			PreparedStatement prep;
 			String sql;	
-			sql = "UPDATE patients SET name=?, weight=?, height=?, genre=?, dob=? WHERE id=?";
+			sql = "UPDATE patients SET name=?, weight=?, height=?, genre=?, dob=?, blood_type=? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				prep.setString(1, newName);
 				prep.setDouble(2, newWeight1);
@@ -673,19 +715,21 @@ public class SQLManager {
 				prep.setString(4, newGenre);
 				prep.setDate(5, Date.valueOf(newDob));
 				prep.setInt(6, p_id);
+				prep.setString(7, newBloodType);
 				prep.executeUpdate();
 			System.out.println("Update finished.");}
 		catch(Exception e){
 			 e.printStackTrace();}}
 	
-	//OBTAIN DOCTORS
 	
-	public void updateDoctors() {
+	//UPDATE DOCTORS
+	public void updateDoctor() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a doctor, type its ID: ");
-				int d_id = Integer.parseInt(reader.readLine());
-				Doctor doctor=obtainDoctor(d_id);
+				int n_id = Integer.parseInt(reader.readLine());
+				Doctor doctor = new Doctor(n_id);
+				
 			System.out.println("New name:");
 				String newName= reader.readLine();
 					if(newName.equals("")) {
@@ -694,26 +738,37 @@ public class SQLManager {
 				String newSpecialty= reader.readLine();
 					if(newSpecialty.equals("")) {
 						newSpecialty= doctor.getSpecialty();}
+			System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    Boolean availability = true;
+		            if(yes_no.equals("YES")) {
+		            	availability = true;
+		            }
+		            if(yes_no.equals("NO")) {
+		            	availability = false;
+		            }
 			PreparedStatement prep;
 			String sql;	
-			sql = "UPDATE Doctors SET name=?, speciality=? WHERE id=?";
+			sql = "UPDATE Doctor SET name=?, speciality=?, availability=? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				prep.setString(1, newName);
-				prep.setString(4, newSpecialty);
-				prep.setInt(6, d_id);
+				prep.setString(2, newSpecialty);
+				prep.setBoolean(3, availability);
+				prep.setInt(4, n_id);
 				prep.executeUpdate();
 			System.out.println("Update finished.");}
 		catch(Exception e){
 			 e.printStackTrace();}}
-	
-	//OBTAIN DOCTORS
-	
+
+		 
+    //UPDATE NURSES
 	public void updateNurse() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a nurse, type its ID: ");
 				int n_id = Integer.parseInt(reader.readLine());
-				Nurse nurse=obtainNurse(n_id);
+				Nurse nurse = new Nurse(n_id);
+				
 			System.out.println("New name:");
 				String newName= reader.readLine();
 					if(newName.equals("")) {
@@ -722,19 +777,53 @@ public class SQLManager {
 				String newSpecialty= reader.readLine();
 					if(newSpecialty.equals("")) {
 						newSpecialty= nurse.getSpecialty();}
+			System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    Boolean availability = true;
+		            if(yes_no.equals("YES")) {
+		            	availability = true;
+		            }
+		            if(yes_no.equals("NO")) {
+		            	availability = false;
+		            }
 			PreparedStatement prep;
 			String sql;	
-			sql = "UPDATE Nurses SET name=?, speciality=? WHERE id=?";
+			sql = "UPDATE Nurses SET name=?, speciality=?, availability=? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				prep.setString(1, newName);
-				prep.setString(4, newSpecialty);
-				prep.setInt(6, n_id);
+				prep.setString(2, newSpecialty);
+				prep.setBoolean(3, availability);
+				prep.setInt(4, n_id);
 				prep.executeUpdate();
 			System.out.println("Update finished.");}
 		catch(Exception e){
 			 e.printStackTrace();}}
 
-		 */
+	//UPDATE BOX
+		 public void updateBox() {
+			 try {
+				 BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
+				 System.out.println("Choose box, type its ID: ");
+				 int box_id = Integer.parseInt(reader.readLine());
+				 String sql="UPDATE Box SET box=?, availability = ?";
+				 PreparedStatement prep = c.prepareStatement(sql);
+				 System.out.println("Write if the box is available or occupied: ");
+				 String yes_no = reader.readLine();
+				    Boolean availability = true;
+			            if(yes_no.equals("YES")) {
+			            	availability = true;
+			            }
+			            if(yes_no.equals("NO")) {
+			            	availability = false;
+			            }
+			     prep.setInt(1, box_id);
+				 prep.setBoolean(2, availability);
+				 prep.executeUpdate();
+				 System.out.println("Update finished.");
+				 }
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }}
 		 
 		
 }
