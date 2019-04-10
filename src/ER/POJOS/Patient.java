@@ -42,6 +42,18 @@ public class Patient implements Serializable {
 		this.admission= admission;
 	}
 
+	public Patient(Integer id, String name, Double weight, Double height, String genre, Date dob,
+			String bloodType) {
+		super();
+		this.SSN = id;
+		this.name = name;
+		this.weight = weight;
+		this.height = height;
+		this.genre = genre;
+		this.dob = dob;
+		this.bloodType = bloodType;
+		this.allergies= new ArrayList<Drug>();
+	}
 	
 	public Patient(String name, Double weight, Double height, String genre, Date dob,
 			String bloodType, List<Drug> allergy, Admission admission) {
@@ -54,6 +66,7 @@ public class Patient implements Serializable {
 		this.bloodType = bloodType;
 		this.allergies= allergy;
 		this.admission= admission;
+		this.allergies= new ArrayList<Drug>();
 	}
 
 

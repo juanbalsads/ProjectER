@@ -50,7 +50,7 @@ public class SQLManager {
 		 try {
 		 Statement stmt1=c.createStatement();
 		 String sql1= "CREATE TABLE patients " + 
-		 "(SSN INTEGER PRIMARY KEY, " + 
+		 "(ssn INTEGER PRIMARY KEY, " + 
 		 "name TEXT NOT NULL, " + 
 		 "weight REAL, " + 
 		 "height REAL, " + 
@@ -84,6 +84,7 @@ public class SQLManager {
 		 Statement stmt5= c.createStatement();
 		 String sql5= "CREATE TABLE Admission " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+		 "patient INTEGER REFERENCES patients (ssn), " + 
 		 "arrival_time DATETIME, " + 
 		 "test TEXT, " +
 		 "release BOOLEAN, " +
@@ -100,7 +101,7 @@ public class SQLManager {
 		 stmt6.close();
 		 Statement stmt10= c.createStatement();
 		 String sql10= "CREATE TABLE Patient_Drugs " + 
-		 "(patient INTERGER REFERENCES Patient(SSN), " + 
+		 "(patient INTERGER REFERENCES Patient(ssn), " + 
 		 "drug TEXT REFERENCES drugs(id), " +
 		 "PRIMARY KEY (patient, drug))";
 		 stmt10.executeUpdate(sql10);
@@ -126,6 +127,8 @@ public class SQLManager {
 	 public Patient askPatient() {
 		 try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Insert the patient's ssn:");
+			int ssn = Integer.parseInt(reader.readLine());
 			System.out.println("Insert the patient's name:");
 				String name = reader.readLine();
 			System.out.println("Insert weight:");
@@ -141,16 +144,9 @@ public class SQLManager {
 			    Date dob2= Date.valueOf(date);
 			System.out.println("Insert the patient's blood type:");
 				String bloodType = reader.readLine();
-			System.out.println("Insert the patient's allergies:");
-			String allergy=reader.readLine();
-			List<Drug> listAllergies=new ArrayList();
-				while(!allergy.equals("")) {
-					//Allergy a= obtainAllergyByName(allergy);
-					//listaAllergies.add(a);
-					 allergy=reader.readLine();
-				}
+				System.out.println("Type the patient's allergies:");
 				
-			Patient p= new Patient (name, weight, height, genre, dob2, bloodType,listAllergies, null);
+			Patient p= new Patient (ssn, name, weight, height, genre, dob2, bloodType);
 			return p;
 		 } 
 		 catch (Exception e) {
@@ -189,30 +185,38 @@ public class SQLManager {
 				e.printStackTrace();
 				return null;}}
 	 
-	// public Nurse askAdmissionDrug() {}
-	 
 	 
 
+	 
+	
+	 
+	// public Nurse askAdmissionDrug() {}
+	 
+
+	 
+	 
 /*---------------------------------INSERT METHODS--------------------------------------*/	 
 	 
 	 //INSERT PATIENTS
 	 
 	 public void insertPatient(Patient p) {
 		 try {
-			 String sql = "INSERT INTO patients (name, weight , height , genre, dob, blood_type) "
-						+ "VALUES (?,?,?,?,?,?);";
+			 String sql = "INSERT INTO patients (ssn, name, weight, height, genre, dob, blood_type) "
+						+ "VALUES (?,?,?,?,?,?,?);";
 				PreparedStatement prep = c.prepareStatement(sql);
-				prep.setString(1, p.getName());
-				prep.setDouble(2, p.getWeight());
-				prep.setDouble(3, p.getHeight());
-				prep.setString(4, p.getGenre());
-				prep.setDate(5, p.getDob());
-				prep.setString(6, p.getBloodType());
+				prep.setInt(1, p.getSSN());
+				prep.setString(2, p.getName());
+				prep.setDouble(3, p.getWeight());
+				prep.setDouble(4, p.getHeight());
+				prep.setString(5, p.getGenre());
+				prep.setDate(6, p.getDob());
+				prep.setString(7, p.getBloodType());
 				prep.executeUpdate();
 				prep.close();
 		 } 
 		 catch (Exception e) {
-				e.printStackTrace();} }
+				e.printStackTrace();
+				System.out.println("error");} }
 	 
 	 //INSERT DOCTORS
 	 
@@ -227,7 +231,8 @@ public class SQLManager {
 				 	prep.executeUpdate();
 				 	prep.close();} 
 		 catch (Exception e) {
-				e.printStackTrace();} }
+				e.printStackTrace();
+			} }
 	 
 	 //INSERT NURSES
 	 
@@ -261,23 +266,7 @@ public class SQLManager {
 			 	} 
 		 catch (Exception e) {
 				e.printStackTrace();} }
-	 //INSERT ADMISSION
-	 
-	 public void insertAdmission(Admission a) {
-		 try {
-			 	String sql = "INSERT INTO Admission (id, arrival_time , test, release, doctor, nurse, box) "
-						+ "VALUES (?,?,?,?,?,?);";
-				PreparedStatement prep = c.prepareStatement(sql);
-				prep.setInt(1, a.getId());
-				prep.setDate(2, a.getArrivalTime());
-				prep.setString(3, a.getTests());
-				prep.setInt(4, a.getDoctor().getId());
-				prep.setInt(5, a.getNurse().getId());
-				prep.setInt(6, a.getBox().getId());
-				prep.executeUpdate();
-				prep.close(); }
-		 catch (Exception e) {
-				e.printStackTrace();}}
+
 		 
 	 //INSERT DRUG
 	
@@ -313,6 +302,24 @@ public class SQLManager {
 				e.printStackTrace();}
 			 } 
 		
+		 //INSERT ADMISSION
+		 
+		 public void insertAdmission(Admission a) {
+			 try {
+				 	String sql = "INSERT INTO Admission (id, arrival_time , test, release, doctor, nurse, box) "
+							+ "VALUES (?,?,?,?,?,?);";
+					PreparedStatement prep = c.prepareStatement(sql);
+					prep.setInt(1, a.getId());
+					prep.setDate(2, a.getArrivalTime());
+					prep.setString(3, a.getTests());
+					prep.setInt(4, a.getDoctor().getId());
+					prep.setInt(5, a.getNurse().getId());
+					prep.setInt(6, a.getBox().getId());
+					prep.executeUpdate();
+					prep.close(); }
+			 catch (Exception e) {
+					e.printStackTrace();}}
+		
 		//Falta el insert admission-drugs porque falta el metodo de ASK
 		
 /*---------------------------------SELECT METHODS--------------------------------------*/		
@@ -326,7 +333,7 @@ public class SQLManager {
 			 String sql = "SELECT * FROM Patients";
 			 ResultSet rs = stmt.executeQuery(sql); 
 			 while (rs.next() ) {
-				 int id = rs.getInt("id");
+				 int id = rs.getInt("ssn");
 				 	String name = rs.getString("name");
 				 	Double weight = rs.getDouble("weight");
 				 	Double height = rs.getDouble("height");
@@ -380,8 +387,65 @@ public class SQLManager {
 			 e.printStackTrace(); }}
 	
 	 
+
+	 //-------OBTAIN DOCTOR----//
+	 public Doctor obtainDoctor(int id) {
+		 try {
+			 Statement stmt = c.createStatement();
+			 String sql = "SELECT * FROM Doctors WHERE id="+id;
+			 ResultSet rs = stmt.executeQuery(sql);
+			 rs.next();
+			 		int iddoc = rs.getInt("id");
+			 		String name = rs.getString("name");
+			 		String speciality = rs.getString("speciality");
+			 		Boolean availability=rs.getBoolean("availability");
+			 		Doctor doctor = new Doctor (iddoc,name,speciality, availability);
+			 	rs.close();
+			 	stmt.close();
+			 	return doctor;}
+		 
+		 catch(Exception e) {
+			 e.printStackTrace();
+			 return null;}}
+	 
+	 //-------OBTAIN NURSE----//
+	 public Nurse obtainNurse(int id) {
+		 try {
+			 Statement stmt = c.createStatement();
+			 String sql = "SELECT * FROM Nurses WHERE id="+id;
+			 ResultSet rs = stmt.executeQuery(sql);
+			 rs.next();
+			 		int idnu = rs.getInt("id");
+			 		String name = rs.getString("name");
+			 		String speciality = rs.getString("speciality");
+			 		Boolean availability=rs.getBoolean("availability");
+			 		Nurse nurse = new Nurse (idnu,name,speciality, availability);
+			 	rs.close();
+			 	stmt.close();
+			 	return nurse;}
+		 catch(Exception e) {
+			 e.printStackTrace();
+			 return null;}}
+	 
+	 //-------OBTAIN BOX----//
+	 public Box obtainBox(int id) {
+		 try {
+			 Statement stmt = c.createStatement();
+			 String sql = "SELECT * FROM boxes WHERE id="+id;
+			 ResultSet rs = stmt.executeQuery(sql);
+			 rs.next();
+			 		int idbox = rs.getInt("id");
+			 		Boolean availability=rs.getBoolean("availability");
+			 		Box box = new Box (idbox, availability, null);
+			 	rs.close();
+			 	stmt.close();
+			 	return box;}
+		 catch(Exception e) {
+			 e.printStackTrace();
+			 return null;}}
+	 
 	 //SELECT ADMISSION
-	/* 
+	
 	public void selectAdmissions() {
 		try {
 			Patient p = new Patient ();
@@ -390,19 +454,24 @@ public class SQLManager {
 			ResultSet rs = stmt1.executeQuery(sql1);
 				while (rs.next()) {
 					int id = rs.getInt("id");
-					
-					LocalDateTime arrivalTime=  rs.getTimestamp("arrival_time").toLocalDateTime();
+					Date arrivalTime=  rs.getDate("arrival_time");
 					String test = rs.getString("test");
-					String symptoms = rs.getString("symptoms");
-					
-					Admission admission = new Admission(id, arrivalTime, symptoms, test);						
+					boolean release=rs.getBoolean("release");
+					int doctorID= rs.getInt("doctor");
+					Doctor d= obtainDoctor(doctorID);
+					int nurseID= rs.getInt("nurse");
+					Nurse n= obtainNurse(nurseID);
+					int boxID= rs.getInt("box");
+					Box b= obtainBox(boxID);
+			
+					Admission admission = new Admission(id, null, arrivalTime, test, release, n, d, b );						
 					System.out.println(admission);}
 				rs.close();
 				stmt1.close();}
 		catch (Exception e) {
 			e.printStackTrace();}}
 
-	 //SELECT ALLERGIES
+	/* //SELECT ALLERGIES
 
 	public void selectAllergies() {
 		try {
@@ -421,6 +490,7 @@ public class SQLManager {
 	*/	
 	//SELECT BOX
 	
+	/*
 	public void selectRooms() {
 		 try {
 			 Statement stmt1 = c.createStatement();
@@ -441,14 +511,14 @@ public class SQLManager {
 				}
 	}
 			
-				
+		*/		
 	 
 	
 /*---------------------------------OBTAIN METHODS--------------------------------------*/
 	
 	//OBTAIN PATIENTS
 	
-	 
+	 /*
 	public Patient obtainPatient(int id_patient) {
 		 try {
 			 Statement stmt = c.createStatement();
@@ -572,7 +642,7 @@ public class SQLManager {
 				 return null;}}
 	*/	 
 	//OBTAIN BOX
-		 
+		/*8 
 		 public Box obtainRoom(int id_box) {
 			 try {
 				 Statement stmt = c.createStatement();
@@ -593,7 +663,7 @@ public class SQLManager {
 			 catch(Exception e){
 				 e.printStackTrace();
 				 return null;}}
-	
+	*/
 	
 /*---------------------------------DELETE METHODS--------------------------------------*/
 	
@@ -603,8 +673,9 @@ public class SQLManager {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a patient to delete, type its ID: ");
+				selectPatients();
 				int p_id = Integer.parseInt(reader.readLine());
-				String sql = "DELETE FROM patients WHERE id=?";
+				String sql = "DELETE FROM patients WHERE ssn=?";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, p_id);
 				prep.executeUpdate();
@@ -666,7 +737,7 @@ public class SQLManager {
 /*---------------------------------UPDATE METHODS--------------------------------------*/
 	
 	//UPDATE PATIENTS				 
-	
+	/*
 	public void updatePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -825,5 +896,5 @@ public class SQLManager {
 			 e.printStackTrace();
 		 }}
 		 
-		
+		*/
 }
