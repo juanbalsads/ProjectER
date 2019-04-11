@@ -1,12 +1,16 @@
 package ER.POJOS;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="Nurses")
 
 public class Nurse implements Serializable{
 
+	@Id
 	/**
 	 * 
 	 */
@@ -16,6 +20,7 @@ public class Nurse implements Serializable{
 	private String name;
 	private String specialty;
 	private boolean availability;
+	@OneToMany(mappedBy="admission")
 	private List<Admission> patients;
 	
 	public Nurse() {

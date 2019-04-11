@@ -3,10 +3,14 @@ package ER.POJOS;
 
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.*;
 
+@Entity 
+@Table(name="Drugs") 
 public class Drug implements Serializable{
 
+	@Id
 	/**
 	 * 
 	 */
@@ -14,6 +18,11 @@ public class Drug implements Serializable{
 
 	private Integer id;
 	private String name;
+	@ManyToMany
+	@JoinTable(name="Admission_Drugs",           
+	joinColumns={@JoinColumn(name="", referencedColumnName="id")},           
+	inverseJoinColumns={@JoinColumn(name="proj_id", referencedColumnName="id")})
+	@OneToMany(mappedBy="drug") 
 	private List<Admission> admissions ;
 	private List<Patient> patients;
 	

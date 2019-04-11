@@ -2,8 +2,14 @@ package ER.POJOS;
 
 import java.io.Serializable;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Boxes")
+
 public class Box implements Serializable {
 
+	@Id
 	/**
 	 * 
 	 */
@@ -11,6 +17,7 @@ public class Box implements Serializable {
 
 	private Integer id; 
 	private boolean availability;
+	 @OneToOne(fetch=FetchType.LAZY, mappedBy="box")
 	private Admission admission;
 	
 	public Box() {

@@ -2,14 +2,21 @@ package ER.POJOS;
 
 import java.io.Serializable;
 import java.util.*;
+
+import javax.persistence.*;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import ER.POJOS.*;
 
-public class Admission implements Serializable{
+@Entity
+@Table(name="Admission")
 
+
+public class Admission implements Serializable{
+	@Id
 	/**
 	 * 
 	 */
@@ -20,9 +27,14 @@ public class Admission implements Serializable{
 	private Date arrivalTime;
 	private String tests;
 	private boolean release;
+	@JoinColumn(name="nurse_id")
 	private Nurse nurse;
+	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
+	@OneToOne(fetch=FetchType.LAZY)    
+	@JoinColumn(name="box_id")
 	private Box box;
+	@OneToMany(mappedBy="admission")
 	private List<Drug> drugs;
 	
 	
