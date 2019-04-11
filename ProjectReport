@@ -28,3 +28,7 @@ Before next class, we intend to have all the pojos and the insert and  select me
  obtain and delete methods of the pojos but we haven't finished them; neither tested them. For next week,
  our aim is to have them finished and hopefully working correctly. 
  
+  (10-04-2019)
+Hello Rodrigo, this week we continued with the jdbc methods, trying to integrate them in a menu and testing
+ some of them in a main, our intention is to finish with jdbc next week. Also, we started the jpaManager and 
+ most of the annotations of the pojos fo jpa. 

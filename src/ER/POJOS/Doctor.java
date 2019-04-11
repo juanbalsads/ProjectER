@@ -1,25 +1,32 @@
 package ER.POJOS;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity 
-@Table(name="Doctors")
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
+@Entity
+@Table(name = "doctors")
 public class Doctor implements Serializable {
 
-	@Id
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6231174409516146935L;
 
+	@Id
+	@GeneratedValue(generator="doctors")
+	@TableGenerator(name="doctors", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="doctors")
 	private Integer id;
 	private String name;
 	private String specialty;
 	private boolean availability;
-	@OneToMany(mappedBy="admission") 
 	private List<Admission> doctors;
 	
 	public Doctor() {
