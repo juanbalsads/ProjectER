@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -14,9 +18,7 @@ import javax.persistence.TableGenerator;
 @Table(name = "doctors")
 public class Doctor implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6231174409516146935L;
 
 	@Id
@@ -27,11 +29,12 @@ public class Doctor implements Serializable {
 	private String name;
 	private String specialty;
 	private boolean availability;
-	private List<Admission> doctors;
+	@OneToMany(mappedBy = "doctor")	
+	private List<Admission> admission;
 	
 	public Doctor() {
 		super();
-		this.doctors= new ArrayList<Admission>();
+		this.admission= new ArrayList<Admission>();
 	}
 	
 	public Doctor(Integer id) {
@@ -45,7 +48,7 @@ public class Doctor implements Serializable {
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
-		this.doctors= new ArrayList<Admission>();
+		this.admission= new ArrayList<Admission>();
 	}
 	
 	public Doctor(String name, String specialty, boolean availability) {
@@ -53,15 +56,15 @@ public class Doctor implements Serializable {
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
-		this.doctors= new ArrayList<Admission>();
+		this.admission= new ArrayList<Admission>();
 	}
 
 	public List<Admission> getDoctors() {
-		return doctors;
+		return admission;
 	}
 
-	public void setDoctors(List<Admission> doctors) {
-		this.doctors = doctors;
+	public void setDoctors(List<Admission> admission) {
+		this.admission = admission;
 	}
 
 	public Integer getId() {
@@ -139,7 +142,7 @@ public class Doctor implements Serializable {
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ ", doctors=" + doctors + "]";
+				+ ", doctors=" + admission + "]";
 	}
 
 

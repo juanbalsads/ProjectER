@@ -7,7 +7,8 @@ public class DosageId implements Serializable {
 	private Integer admission_id;
 	private Integer drug_id;
 	
-	public int hashCode() {
+	
+	/*public int hashCode() {
 		return (int)(admissionId + drugId);
 		
 	}
@@ -15,7 +16,7 @@ public class DosageId implements Serializable {
 	public boolean equals(Object object) {
 		if(object instanceof DosageId)
 	    
-		   }
+		   }*/
 
 
 }

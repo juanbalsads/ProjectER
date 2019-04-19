@@ -16,25 +16,31 @@ import ER.POJOS.*;
 
 
 public class Admission implements Serializable{
+	
 	@Id
-	/**
-	 * 
-	 */
+	@GeneratedValue(generator = "admission")
+	@TableGenerator(name = "admission", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "admission")
 	private static final long serialVersionUID = 5626892191426340232L;
 
 	private Integer id;
+	@OneToOne(fetch=FetchType.LAZY)    
+	@JoinColumn(name="patient_id")//Juan:should I put the name of the other attribute in the table?
+	                              //or should I make this up?
 	private Patient patient;
 	private Date arrivalTime;
 	private String tests;
 	private boolean release;
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse_id")
 	private Nurse nurse;
+	@OneToMany(fetch = FetchType.LAZY)//One doctor for many admissions(this is the many side?)
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box_id")
 	private Box box;
-	@OneToMany(mappedBy="admission")
+	@OneToMany(mappedBy="admission")//Clearify type of relationship
 	private List<Drug> drugs;
 	
 	

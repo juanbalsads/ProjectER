@@ -5,11 +5,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.TableGenerator;
+
 public class Patient implements Serializable {
 
-	/**
-	 * 
-	 */
+	@Id
+	@GeneratedValue(generator="patients")
+	@TableGenerator(name="patients", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="patinets")
 	private static final long serialVersionUID = -5716647307754030719L;
 	
 	private Integer SSN;
@@ -20,6 +27,7 @@ public class Patient implements Serializable {
 	private Date dob;
 	private String bloodType;
 	private List<Drug> allergies;
+	@OneToOne(fetch=FetchType.LAZY, mappedBy= "patient") 
 	private Admission admission;
 	
 	public Patient() {

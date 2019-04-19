@@ -10,9 +10,9 @@ import javax.persistence.*;
 public class Box implements Serializable {
 
 	@Id
-	/**
-	 * 
-	 */
+	@GeneratedValue(generator = "boxes")
+	@TableGenerator(name = "boxes", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "boxes")
 	private static final long serialVersionUID = 8727419477663469192L;
 
 	private Integer id; 

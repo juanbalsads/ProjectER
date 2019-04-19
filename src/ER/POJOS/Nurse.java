@@ -11,9 +11,9 @@ import java.util.List;
 public class Nurse implements Serializable{
 
 	@Id
-	/**
-	 * 
-	 */
+	@GeneratedValue(generator="nurses")
+	@TableGenerator(name="nurses", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="nurses")
 	private static final long serialVersionUID = 6033711001187345264L;
 	
 	private Integer id;
