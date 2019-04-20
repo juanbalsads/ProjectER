@@ -18,27 +18,32 @@ public class Drug implements Serializable{
 
 	private Integer id;
 	private String name;
+	
 	@ManyToMany
 	@JoinTable(name="Admission_Drugs",           
-	joinColumns={@JoinColumn(name="", referencedColumnName="id")},           
-	inverseJoinColumns={@JoinColumn(name="proj_id", referencedColumnName="id")})
-	@OneToMany(mappedBy="drug") 
-	private List<Admission> admissions ;
-	private List<Patient> patients;
+	joinColumns={@JoinColumn(name="drug_id", referencedColumnName="id")},           
+	inverseJoinColumns={@JoinColumn(name="admission_id", referencedColumnName="id")})
+	private List<Admission> admission;
+	
+	@ManyToMany
+	@JoinTable(name="Patient_Drugs",           
+	joinColumns={@JoinColumn(name="allergy_drug", referencedColumnName="id")},           
+	inverseJoinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")})
+	private List<Patient> patient;
 	
 	
 	public Drug() {
 		super();
-		this.admissions = new ArrayList<Admission>();
-		this.patients = new ArrayList<Patient>();
+		this.admission = new ArrayList<Admission>();
+		this.patient = new ArrayList<Patient>();
 	}
 
 	public Drug(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.admissions = new ArrayList<Admission>();
-		this.patients = new ArrayList<Patient>();
+		this.admission = new ArrayList<Admission>();
+		this.patient = new ArrayList<Patient>();
 	}
 	
 
@@ -88,25 +93,25 @@ public class Drug implements Serializable{
 	
 	
 
-	public List<Admission> getAdmissions() {
-		return admissions;
+	public List<Admission> getAdmission() {
+		return admission;
 	}
 
-	public void setAdmissions(List<Admission> admissions) {
-		this.admissions = admissions;
+	public void setAdmissions(List<Admission> admission) {
+		this.admission = admission;
 	}
 
-	public List<Patient> getPatients() {
-		return patients;
+	public List<Patient> getPatient() {
+		return patient;
 	}
 
-	public void setPatients(List<Patient> patients) {
-		this.patients = patients;
+	public void setPatients(List<Patient> patient) {
+		this.patient = patient;
 	}
 
 	@Override
 	public String toString() {
-		return "Drug [id=" + id + ", name=" + name + ", admissions=" + admissions + ", patients=" + patients + "]";
+		return "Drug [id=" + id + ", name=" + name + ", admission=" + admission + ", patient=" + patient + "]";
 	}
 
 }

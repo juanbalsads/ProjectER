@@ -8,6 +8,7 @@ import java.util.*;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 
@@ -26,7 +27,10 @@ public class Patient implements Serializable {
 	private String genre;
 	private Date dob;
 	private String bloodType;
+	
+	@ManyToMany(mappedBy="patient")
 	private List<Drug> allergies;
+	
 	@OneToOne(fetch=FetchType.LAZY, mappedBy= "patient") 
 	private Admission admission;
 	

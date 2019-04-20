@@ -31,30 +31,34 @@ public class Admission implements Serializable{
 	private Date arrivalTime;
 	private String tests;
 	private boolean release;
-	@OneToMany(fetch = FetchType.LAZY)
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse_id")
 	private Nurse nurse;
-	@OneToMany(fetch = FetchType.LAZY)//One doctor for many admissions(this is the many side?)
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
+	
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box_id")
 	private Box box;
-	@OneToMany(mappedBy="admission")//Clearify type of relationship
-	private List<Drug> drugs;
+	
+	@ManyToMany(mappedBy="admission")
+	private List<Drug> drug;
 	
 	
 	
 	public Admission() {
 		super();
-		this.drugs= new ArrayList<Drug>();
+		this.drug= new ArrayList<Drug>();
 	}
 
 	public Admission(Integer id) {
 		super();
 		this.id = id;
 		
-		this.drugs = new ArrayList <Drug>();
+		this.drug = new ArrayList <Drug>();
 	}
 	public Admission(Integer id, Patient patient, Date arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
@@ -67,7 +71,7 @@ public class Admission implements Serializable{
 		this.doctor= doctor;
 		this.box= box;
 		
-		this.drugs= new ArrayList<Drug>();
+		this.drug= new ArrayList<Drug>();
 	}
 
 	public Nurse getNurse() {
@@ -119,12 +123,12 @@ public class Admission implements Serializable{
 	}
 	
 
-	public List<Drug> getDrugs() {
-		return drugs;
+	public List<Drug> getDrug() {
+		return drug;
 	}
 
-	public void setDrugs(List<Drug> drugs) {
-		this.drugs = drugs;
+	public void setDrug(List<Drug> drug) {
+		this.drug = drug;
 	}
 	
 	
@@ -173,7 +177,7 @@ public class Admission implements Serializable{
 	@Override
 	public String toString() {
 		return "Admission [id=" + id + ", patient=" + patient + ", arrivalTime=" + arrivalTime + ", tests=" + tests + ", release=" + release + ", nurse=" + nurse + ", doctor=" + doctor
-				+ ", box=" + box + ", drugs=" + drugs + "]";
+				+ ", box=" + box + ", drugs=" + drug + "]";
 	}
 
 

@@ -29,6 +29,7 @@ public class Doctor implements Serializable {
 	private String name;
 	private String specialty;
 	private boolean availability;
+	
 	@OneToMany(mappedBy = "doctor")	
 	private List<Admission> admission;
 	

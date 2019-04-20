@@ -20,18 +20,19 @@ public class Nurse implements Serializable{
 	private String name;
 	private String specialty;
 	private boolean availability;
-	@OneToMany(mappedBy="admission")
-	private List<Admission> patients;
+	
+	@OneToMany(mappedBy="nurse")
+	private List<Admission> admission;
 	
 	public Nurse() {
 		super();
-		this.patients = new ArrayList<Admission>();
+		this.admission = new ArrayList<Admission>();
 	}
 	
 	public Nurse(int id) {
 		super();
 		this.id = id;
-		this.patients = new ArrayList<Admission>();
+		this.admission = new ArrayList<Admission>();
 	}
 
 
@@ -41,7 +42,7 @@ public class Nurse implements Serializable{
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
-		this.patients = new ArrayList<Admission>();
+		this.admission = new ArrayList<Admission>();
 	}
 	
 	public Nurse(String name, String specialty, boolean availability) {
@@ -49,16 +50,16 @@ public class Nurse implements Serializable{
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
-		this.patients = new ArrayList<Admission>();
+		this.admission = new ArrayList<Admission>();
 	}
 	
 
 	public List<Admission> getPatients() {
-		return patients;
+		return admission;
 	}
 
 	public void setPatients(List<Admission> patients) {
-		this.patients = patients;
+		this.admission = patients;
 	}
 
 	public Integer getId() {
@@ -121,7 +122,7 @@ public class Nurse implements Serializable{
 	@Override
 	public String toString() {
 		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ ", patients=" + patients + "]";
+				+ ", patients=" + admission + "]";
 	}
 
 
