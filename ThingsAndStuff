@@ -1,0 +1,19 @@
+DOUBS
+///in JPAManager when creating how should i look for another class(CREteadmission---Patient)
+
+///When creating all the pojos in JPAManager the id creates automatically so I shoudns ask it by console, but when calling
+the constructor to create the instance what should I put in id?In doctors it doesnt set automatically.
+
+///IN my opinion I think that booleans like availability for doctors and nurses should be take out
+as we have set that they can have many admission. It doesnt make sense to put an available attribute
+as no matter if the are available couse the are going to take another admission
+
+///In other availabilities such as box availabilty it should when creating it should be by default 
+available, and we should create a method to change it(Ive already done it in create methods, explain)  
+
+PROGRESS
+I've end all the relationShips between entities with all that is needed to be written(ManyToMany might be wrong so ask)
+create all the CREATE and REAd methods
+create all LIST to print a list of all entities
+create SEARCHOBJ methods (can be deleted)
+create all the DELETE methods

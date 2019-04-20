@@ -23,6 +23,10 @@ public class Box implements Serializable {
 	public Box() {
 		super();
 	}
+	public Box(Integer id, boolean availability) {
+		super();
+		this.availability = availability;
+	}
 
 	public Box(Integer id, boolean release, Admission admission) {
 		super();

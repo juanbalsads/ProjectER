@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import ER.POJOS.*;
-import ER.DB.*;
+import ER.jdbc.*;
 
 
 

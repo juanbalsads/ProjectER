@@ -24,10 +24,11 @@ public class Admission implements Serializable{
 	private static final long serialVersionUID = 5626892191426340232L;
 
 	private Integer id;
+	
 	@OneToOne(fetch=FetchType.LAZY)    
-	@JoinColumn(name="patient_id")//Juan:should I put the name of the other attribute in the table?
-	                              //or should I make this up?
+	@JoinColumn(name="patient_id")//Juan:should I put the name of the other attribute in the table?	                              
 	private Patient patient;
+	
 	private Date arrivalTime;
 	private String tests;
 	private boolean release;

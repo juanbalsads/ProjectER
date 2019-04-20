@@ -1,4 +1,4 @@
-package ER.DB;
+package ER.jdbc;
 import java.sql.Connection;
 import java.util.*;
 import java.time.*;
