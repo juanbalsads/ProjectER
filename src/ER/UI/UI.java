@@ -25,8 +25,18 @@ import ER.jdbc.*;
 private static SQLManager manager= new SQLManager();
 	
 public static void main(String args[]) {
+	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	try {
+		System.out.println("Write");
+		String leido = reader.readLine();
+		System.out.println(leido.equals(""));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
-		try {
+	
+		/*try {
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			printMenu();
@@ -73,5 +83,6 @@ public static void main(String args[]) {
 				}}
 			} 
 		catch(Exception e) {
-			e.printStackTrace();}}
+			e.printStackTrace();}*/
+			}
 		}

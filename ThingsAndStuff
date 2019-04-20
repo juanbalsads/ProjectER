@@ -17,3 +17,6 @@ create all the CREATE and REAd methods
 create all LIST to print a list of all entities
 create SEARCHOBJ methods (can be deleted)
 create all the DELETE methods
+/ask if after all the SELECT we have to put the table names couse in them the first is in capital letter
+/and I am not putting them in capital letters 
+Create almost all the UPDATE but thse who have a relationship

@@ -88,24 +88,29 @@ public class JPAManager {
 				int id = Integer.parseInt(reader.readLine());
 				System.out.print("Patient`s SSD: ");
 				int SSD = Integer.parseInt(reader.readLine());
-				Patient patient = searchPatient(SSD);		
+				Query q = em.createNativeQuery("SELECT * FROM patients WHERE SSD = ?", Patient.class);
+				q.setParameter(1, SSD);
+				Patient p = (Patient) q.getSingleResult();			
 				System.out.print("Doctor´s id in charge: ");
 				int doctor_id = Integer.parseInt(reader.readLine());
-				Doctor doctor = searchDoctor(doctor_id);
+				q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
+				q.setParameter(1, doctor_id);
+				Doctor doctor = (Doctor) q.getSingleResult();	
 				System.out.print("Nurse´s id in charge: ");
 				int nurse_id =  Integer.parseInt(reader.readLine());
-				Nurse nurse = searchNurse(nurse_id);
+				q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
+				q.setParameter(1,nurse_id);
+				Nurse nurse = (Nurse) q.getSingleResult();	
 				System.out.print("Box: ");
 				int box_id = Integer.parseInt(reader.readLine());
-				Box box = searchBox(box_id);
-				
-				
+				q = em.createNativeQuery("SELECT * FROM boxes WHERE id = ?", Box.class);
+				q.setParameter(1,box_id);
+				Box box = (Box) q.getSingleResult();		
 				System.out.print("Arrival time (yyyy-MM-dd HH:mm): ");
 				String dateS = reader.readLine();
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 				LocalDateTime localDate = LocalDateTime.parse(dateS, formatterWithTime);		
-				Date arrivalTime = Date.valueOf(localDate.toString());
-				
+				Date arrivalTime = Date.valueOf(localDate.toString());	
 				System.out.print("Test: ");
 				String tests = reader.readLine();
 				
@@ -113,7 +118,7 @@ public class JPAManager {
 				System.out.println("The patient is going to be internated");
 				boolean release = false;
 				Admission adm1 = 
-						new Admission(id,patient,arrivalTime,tests,release, nurse,doctor, box);
+						new Admission(id,p,arrivalTime,tests,release, nurse,doctor, box);
 	 
 				em.getTransaction().begin();
 				em.persist(adm1);
@@ -135,21 +140,19 @@ public class JPAManager {
 				System.out.println("Write the name of the specialty: ");
 				String speciality = reader.readLine();
 				boolean availability = true;
-				/*System.out.println("Is the doctor available?:");
+				System.out.println("Is the doctor available?:");
 				String yes_no = reader.readLine();
-				boolean availability = true;
 				if(yes_no.equals(true)) {
 					availability = true;
 				}
 				else{
 					availability = false;
-				}*/
+				}
 				
 				Doctor d = new Doctor(id,name,speciality,availability);
 				em.getTransaction().begin();
 				em.persist(d);
 				em.getTransaction().commit();
-				em.close();
 				disconnectEntity();
 			
 		}catch(Exception e) {
@@ -167,20 +170,18 @@ public class JPAManager {
 				System.out.println("Write the name of the specialty: ");
 				String speciality = reader.readLine();
 				boolean availability = true;
-				/*System.out.println("Is the nurse available?:");
+				System.out.println("Is the nurse available?:");
 				String yes_no = reader.readLine();
-				boolean availability = true;
 				if(yes_no.equals(true)) {
 					availability = true;
 				}
 				else{
 					availability = false;
-				}*/
+				}
 				Nurse n = new Nurse(id,name,speciality,availability);
 				em.getTransaction().begin();
 				em.persist(n);
 				em.getTransaction().commit();
-				em.close();
 				disconnectEntity();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -200,7 +201,6 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(b);
 				em.getTransaction().commit();
-				em.close();
 				disconnectEntity();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -224,32 +224,7 @@ public class JPAManager {
 			}
 		}
 		
-		///SEARCH METHODS
-		public Patient searchPatient(int SSD) {
-			Query q = em.createNativeQuery("SELECT * FROM patients WHERE SSD = ?", Patient.class);
-			q.setParameter(1, SSD);
-			Patient p = (Patient) q.getSingleResult();	
-			return p;
-		}
-		public Doctor searchDoctor(int id) {
-			Query q = em.createNativeQuery("SELECT * FROM doctors WHERE id = ?", Doctor.class);
-			q.setParameter(1, id);
-			Doctor d = (Doctor) q.getSingleResult();	
-			return d;
-		}
-		public Nurse searchNurse(int id) {
-			Query q = em.createNativeQuery("SELECT * FROM nurses WHERE id = ?", Nurse.class);
-			q.setParameter(1, id);
-			Nurse n = (Nurse) q.getSingleResult();	
-			return n;
-		}
-		public Box searchBox(int id) {
-			Query q = em.createNativeQuery("SELECT * FROM boxes WHERE id = ?", Box.class);
-			q.setParameter(1, id);
-			Box b = (Box) q.getSingleResult();	
-			return b;
-		}
-		
+
 		////CREATE////
 	
 	     ///READ: Patient(D),Nurse(D)
@@ -262,12 +237,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the admission's ID: ");
 				int adm_id = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM admissions WHERE id = ?", Admission.class);
+				Query q = em.createNativeQuery("SELECT * FROM Admissions WHERE id = ?", Admission.class);
 				q.setParameter(1, adm_id);
 				Admission admission = (Admission) q.getSingleResult();
-				System.out.println(admission.toString());
-				em.close();
-				
+				System.out.println(admission.toString());				
 				disconnectEntity();
 			
 			}catch(IOException e) {
@@ -281,11 +254,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the patient's SSD: ");
 				int pat_SSD = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM patients WHERE id = ?", Patient.class);
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
 				q.setParameter(1, pat_SSD);
 				Patient p = (Patient) q.getSingleResult();
 				System.out.println(p.toString());
-				em.close();
 				
 				disconnectEntity();
 			
@@ -300,12 +272,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the doctor's id: ");
 				int d_id = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM doctors WHERE id = ?", Doctor.class);
+				Query q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q.setParameter(1, d_id);
 				Doctor d = (Doctor) q.getSingleResult();
 				System.out.println(d.toString());
-				em.close();
-				
 				disconnectEntity();
 			
 			}catch(IOException e) {
@@ -319,12 +289,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the nurse`s id: ");
 				int n_id = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM nurses WHERE id = ?", Nurse.class);
+				Query q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
 				q.setParameter(1, n_id);
 				Nurse n = (Nurse) q.getSingleResult();
 				System.out.println(n.toString());
-				em.close();
-				
 				disconnectEntity();
 			
 			}catch(IOException e) {
@@ -337,12 +305,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the box`s id: ");
 				int b_id = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM boxes WHERE id = ?", Box.class);
+				Query q = em.createNativeQuery("SELECT * FROM Boxes WHERE id = ?", Box.class);
 				q.setParameter(1, b_id);
 				Box b = (Box) q.getSingleResult();
 				System.out.println(b.toString());
-				em.close();
-				
 				disconnectEntity();
 			
 			}catch(IOException e) {
@@ -356,14 +322,10 @@ public class JPAManager {
 			try {
 				System.out.print("Write the drugs`s id: ");
 				int dr_id = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM drugs WHERE id = ?", Drug.class);
+				Query q = em.createNativeQuery("SELECT * FROM Drugs WHERE id = ?", Drug.class);
 				q.setParameter(1, dr_id);
 				Drug dr = (Drug) q.getSingleResult();
 				System.out.println(dr.toString());
-				em.close();
-				
-				disconnectEntity();
-			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -376,7 +338,7 @@ public class JPAManager {
 		
 		public void listPatients() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM patients", Patient.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 			List<Patient> pats = (List<Patient>) q1.getResultList();
 			for (Patient pat : pats) {
 				System.out.println(pat);
@@ -385,7 +347,7 @@ public class JPAManager {
 		}
 		public void listAdmissions() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM admissions", Admission.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
 			List<Admission> adms = (List<Admission>) q1.getResultList();
 			for (Admission adm : adms) {
 				System.out.println(adm);
@@ -395,7 +357,7 @@ public class JPAManager {
 		
 		public void listDoctors() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM doctors", Doctor.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Doctors", Doctor.class);
 			List<Doctor> docs = (List<Doctor>) q1.getResultList();
 			for (Doctor doc : docs) {
 				System.out.println(doc);
@@ -404,7 +366,7 @@ public class JPAManager {
 		}
 		public void listNurses() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM nurses", Nurse.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Nurses", Nurse.class);
 			List<Nurse> nurs = (List<Nurse>) q1.getResultList();
 			for (Nurse nur : nurs) {
 				System.out.println(nur);
@@ -413,7 +375,7 @@ public class JPAManager {
 		}
 		public void listDrugs() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM drugs", Drug.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Drugs", Drug.class);
 			List<Drug> drugs = (List<Drug>) q1.getResultList();
 			for (Drug drug : drugs) {
 				System.out.println(drug);
@@ -422,7 +384,7 @@ public class JPAManager {
 		}
 		public void listBoxes() {
 			connectEntity();
-			Query q1 = em.createNativeQuery("SELECT * FROM boxes", Box.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM Boxes", Box.class);
 			List<Box> boxes = (List<Box>) q1.getResultList();
 			for (Box box : boxes) {
 				System.out.println(box);
@@ -442,15 +404,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose a patient to delete. Type its SSD:");
 				int p_SSD = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM patients WHERE id = ?", Patient.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
 				q2.setParameter(1,p_SSD);
 				Patient pdelete = (Patient) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(pdelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -463,15 +423,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose a nurse to delete. Type its id:");
 				int n_id = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM nurses WHERE id = ?", Nurse.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
 				q2.setParameter(1,n_id);
 				Nurse ndelete = (Nurse) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(ndelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -485,15 +443,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose a doctor to delete. Type its id:");
 				int d_id = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM doctors WHERE id = ?", Doctor.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q2.setParameter(1,d_id);
 				Doctor ddelete = (Doctor) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(ddelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -506,15 +462,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose an admission to delete. Type its id:");
 				int adm_id = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM admissions WHERE id = ?", Admission.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Admissions WHERE id = ?", Admission.class);
 				q2.setParameter(1,adm_id);
 				Admission admdelete = (Admission) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(admdelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -527,15 +481,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose an box to delete. Type its id:");
 				int b_id = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM boxes WHERE id = ?", Box.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Boxes WHERE id = ?", Box.class);
 				q2.setParameter(1,b_id);
 				Box bdmdelete = (Box) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(bdmdelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -548,15 +500,13 @@ public class JPAManager {
 			try {
 				System.out.print("Choose an drug to delete. Type its id:");
 				int d_id = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM drugs WHERE id = ?", Drug.class);
+				Query q2 = em.createNativeQuery("SELECT * FROM Drugs WHERE id = ?", Drug.class);
 				q2.setParameter(1,d_id);
 				Drug ddmdelete = (Drug) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(ddmdelete);
 
 				em.getTransaction().commit();
-
-				em.close();
 				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -565,43 +515,229 @@ public class JPAManager {
 		
 		
 		
-		///UPDATE: Patient()//
+		///UPDATE: Patient(D--what to do with relation entity such as admission),Nurse(D)
+	    ///,Doctor(D),drug(),box(D),
 	    ///admission(),dosage(NOtD)??
-		///Doesn't make sense to create an Update for doctors, nurses if you change your name and speciality
-		///you can delete it an create a new one, same with drugs and box
 		
-		/*public void updatePatient() {
-			boolean bol = true ;
+		public void updateAdmission() {
+			listAdmissions();
+			System.out.println("Choose admission to modify. Type its id:");
+			try {
+				int adm_id = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Admission WHERE id = ?", Admission.class);
+				q.setParameter(1,adm_id);
+				Admission adm = (Admission) q.getSingleResult();
+				
+				
+				System.out.println("New dob (yyyy-MM-dd HH:mm):");
+				String newArrivalTimeS= reader.readLine();
+					if(newArrivalTimeS.equals("")) {
+						newArrivalTimeS= adm.getArrivalTime().toString();}
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+				    LocalDate date = LocalDate.parse(newArrivalTimeS, formatter);
+				    Date newDob = Date.valueOf(date);
+				///PROBLEM
+				
+			
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		public void updatePatient() {
 			connectEntity();
 
 			//System.out.println("Company's departments:");
 			//Query q1 = em.createNativeQuery("SELECT * FROM departments WHERE name LIKE ?", Department.class);
+			
 			listPatients();
-			System.out.print("Choose a patient to modify. Type it's SSD:");
-			int p_SSD = Integer.parseInt(reader.readLine());
-			Query q2 = em.createNativeQuery("SELECT * FROM patients WHERE id = ?", Doctor.class);
-			q2.setParameter(1,p_SSD);
-			Patient doc = (Patient) q2.getSingleResult();
-			while(bol) {
-				System.out.println("Write the attribute you want to change:");
-				System.out.println("1.height");
-				System.out.println("2.weight");
-				System.out.println("3.allergies");
+			System.out.print("Choose a patient to modify. Type its SSD:");
+			try {
+				int p_SSD = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
+				q.setParameter(1,p_SSD);
+				Patient p = (Patient) q.getSingleResult();
+				System.out.println("New name:");
+				String newName= reader.readLine();
+					if(newName.equals("")) {
+						newName= p.getName();}
 				
+				System.out.println("New weight:");
+				Double newWeight;
+				String newWeightS = reader.readLine();
+					if(newWeightS.equals("")) {
+						newWeight= p.getWeight();}
+					else {
+						newWeight= Double.parseDouble(newWeightS);}
+			    System.out.println("New height:");
+				Double newHeight;
+				String newHeightS = reader.readLine();
+					if(newHeightS.equals("")) {
+						newHeight= p.getHeight();}
+					else {
+						newHeight= Double.parseDouble(newHeightS);}
+			
+				System.out.println("New genre:");
+				String newGenre= reader.readLine();
+					if(newGenre.equals("")) {
+						newGenre= p.getGenre();}
+			    
+				System.out.println("New dob (yyyy-MM-dd):");
+				String newDobS= reader.readLine();
+					if(newDobS.equals("")) {
+						newDobS= p.getDob().toString();}
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				    LocalDate date = LocalDate.parse(newDobS, formatter);
+				    Date newDob = Date.valueOf(date);
+		    
+				System.out.println("New bloodtype:");
+			    String newBloodType = reader.readLine();
+			        if(newBloodType.equals("")){
+			        	newBloodType=p.getBloodType();}
+				
+				em.getTransaction().begin();
+				p.setName(newName);
+				p.setWeight(newWeight);
+				p.setHeight(newHeight);
+				p.setGenre(newGenre);
+				p.setDob(newDob);
+				p.setBloodType(newBloodType);
+				em.getTransaction().commit();
+				disconnectEntity();					
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+					
+		}
+		public void updateDoctor() {
+			connectEntity();
+			listDoctors();
+			System.out.print("Choose doctor to modify. Type its id:");
+			try {
+				int d_id = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
+				q.setParameter(1,d_id);
+				Doctor d = (Doctor) q.getSingleResult();			
+			    System.out.println("New name:");
+				String newName= reader.readLine();
+					if(newName.equals("")) {
+						newName= d.getName();}
+			    System.out.println("New speciality:");
+				String newSpecialty= reader.readLine();
+					if(newSpecialty.equals("")) {
+						newSpecialty= d.getSpecialty();}
+			    System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    Boolean availability = true;
+		            if(yes_no.equalsIgnoreCase("YES")) {
+		            	availability = true;
+		            }
+		            if(yes_no.equalsIgnoreCase("NO")) {
+		            	availability = false;
+		            }
+				
+		        em.getTransaction().begin();
+			    d.setName(newName);
+				d.setSpecialty(newSpecialty);
+				d.setAvailability(availability);
+			     em.getTransaction().commit();
+				disconnectEntity();	    
+			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		public void updateNurse() {
+			connectEntity();
+			listNurses();
+			System.out.print("Choose nurse to modify. Type its id:");
+			try {
+				int n_id = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
+				q.setParameter(1,n_id);
+				Nurse n = (Nurse) q.getSingleResult();			
+			    System.out.println("New name:");
+				String newName= reader.readLine();
+					if(newName.equals("")) {
+						newName= n.getName();}
+			    System.out.println("New speciality:");
+				String newSpecialty= reader.readLine();
+					if(newSpecialty.equals("")) {
+						newSpecialty= n.getSpecialty();}
+			    System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    Boolean availability = true;
+		            if(yes_no.equalsIgnoreCase("YES")) {
+		            	availability = true;
+		            }
+		            if(yes_no.equalsIgnoreCase("NO")) {
+		            	availability = false;
+		            }
+				
+		        em.getTransaction().begin();
+			    n.setName(newName);
+				n.setSpecialty(newSpecialty);
+				n.setAvailability(availability);
+			     em.getTransaction().commit();
+				disconnectEntity();	    
+			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void updateBox() {
+			connectEntity();
+			listBoxes();
+			System.out.print("Choose box to modify. Type its id:");
+			try {			
+				int box_id = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Boxes WHERE id = ?", Box.class);
+				q.setParameter(1,box_id);
+				Box b = (Box) q.getSingleResult();
+				 System.out.println("Write if the box is available or occupied: ");
+				 String yes_no = reader.readLine();
+				    Boolean availability = true;
+			            if(yes_no.equalsIgnoreCase("YES")) {
+			            	availability = true;
+			            }
+			            if(yes_no.equalsIgnoreCase("NO")) {
+			            	availability = false;
+			            }
+			            
+				  em.getTransaction().begin();
+		          b.setAvailability(availability);
+				  em.getTransaction().commit();
+			      disconnectEntity();	      
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
 			}
 			
-			
-
-			em.getTransaction().begin();
-			// Make changes
-			dep.setAddress(newLocation);
-			// End transaction
-			em.getTransaction().commit();
-			
-			// Close the entity manager
-			em.close();
-			
-		}*/
+		public void updateDrug() {
+			connectEntity();
+			listDrugs();
+			System.out.print("Choose drug to modify. Type its id:");
+			try {			
+				int drug_id = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Drugs WHERE id = ?", Drug.class);
+				q.setParameter(1,drug_id);
+				Drug d = (Drug) q.getSingleResult();
+				System.out.println("new name: ");
+				String newName= reader.readLine();
+				if(newName.equals("")) {
+					newName= d.getName();}        
+				  em.getTransaction().begin();
+		          d.setName(newName);
+				  em.getTransaction().commit();
+			      disconnectEntity();	      
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			}
 		
 		
 		
