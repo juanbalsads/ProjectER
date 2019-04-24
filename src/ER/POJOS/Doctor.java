@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,21 +16,18 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "Doctors")
 public class Doctor implements Serializable {
-
-
 	private static final long serialVersionUID = -6231174409516146935L;
-
 	@Id
-	@GeneratedValue(generator="doctors")
-	@TableGenerator(name="doctors", table="sqlite_sequence",
-	    pkColumnName="name", valueColumnName="seq", pkColumnValue="doctors")
+	@GeneratedValue(generator="Doctors")
+	@TableGenerator(name="Doctors", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Doctors")
 	private Integer id;
 	private String name;
+	@Column(name= "speciality")
 	private String specialty;
 	private boolean availability;
-	
 	@OneToMany(mappedBy = "doctor")	
 	private List<Admission> admission;
 	

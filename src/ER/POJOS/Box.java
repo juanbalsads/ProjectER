@@ -8,13 +8,12 @@ import javax.persistence.*;
 @Table(name="Boxes")
 
 public class Box implements Serializable {
-
-	@Id
-	@GeneratedValue(generator = "boxes")
-	@TableGenerator(name = "boxes", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "boxes")
 	private static final long serialVersionUID = 8727419477663469192L;
-
+	@Id
+	@GeneratedValue(generator = "Boxes")
+	@TableGenerator(name = "Boxes", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Boxes")
+	@Column(name = "box")
 	private Integer id; 
 	private boolean availability;
 	 @OneToOne(fetch=FetchType.LAZY, mappedBy="box")

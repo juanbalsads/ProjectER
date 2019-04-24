@@ -88,7 +88,7 @@ public class JPAManager {
 				int id = Integer.parseInt(reader.readLine());
 				System.out.print("Patient`s SSD: ");
 				int SSD = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM patients WHERE SSD = ?", Patient.class);
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE SSD = ?", Patient.class);
 				q.setParameter(1, SSD);
 				Patient p = (Patient) q.getSingleResult();			
 				System.out.print("Doctor´s id in charge: ");
@@ -228,7 +228,7 @@ public class JPAManager {
 		////CREATE////
 	
 	     ///READ: Patient(D),Nurse(D)
-	    ///,Doctor(D),drug(),box(D),
+	    ///,Doctor(D),drug(D),box(D),
 	    ///admission(D),dosage(NOtD)??
 		
 		public void readAdmission() {

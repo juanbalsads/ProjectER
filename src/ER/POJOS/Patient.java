@@ -5,27 +5,32 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+@Entity
+@Table(name="Patients")
 
 public class Patient implements Serializable {
-
-	@Id
-	@GeneratedValue(generator="patients")
-	@TableGenerator(name="patients", table="sqlite_sequence",
-	    pkColumnName="name", valueColumnName="seq", pkColumnValue="patinets")
 	private static final long serialVersionUID = -5716647307754030719L;
-	
+	@Id
+	@GeneratedValue(generator="Patients")
+	@TableGenerator(name="Patients", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Patients")
+	@Column(name = "ssn")
 	private Integer SSN;
 	private String name;
 	private Double weight; 
 	private Double height; 
 	private String genre;
 	private Date dob;
+	@Column(name="blood_type")
 	private String bloodType;
 	
 	@ManyToMany(mappedBy="patient")
@@ -208,7 +213,7 @@ public class Patient implements Serializable {
 	public String toString() {
 		return "Patient [SSN=" + SSN + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre="
 				+ genre + ", dob=" + dob + ", bloodType=" + bloodType + ", allergies=" + allergies + ", admission="
-				+ admission + "]";
+				 + "]";
 	}
 
 

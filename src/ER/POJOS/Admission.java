@@ -12,37 +12,35 @@ import java.time.LocalDateTime;
 import ER.POJOS.*;
 
 @Entity
-@Table(name="Admission")
+@Table(name="Admissions")
 
 
 public class Admission implements Serializable{
-	
-	@Id
-	@GeneratedValue(generator = "admission")
-	@TableGenerator(name = "admission", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "admission")
 	private static final long serialVersionUID = 5626892191426340232L;
-
-	private Integer id;
-	
+	@Id
+	@GeneratedValue(generator = "Admissions")
+	@TableGenerator(name = "Admissions", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Admissions")
+	private Integer id;	
 	@OneToOne(fetch=FetchType.LAZY)    
-	@JoinColumn(name="patient_id")//Juan:should I put the name of the other attribute in the table?	                              
+	@JoinColumn(name="patient")//Juan:should I put the name of the other attribute in the table?	                              
 	private Patient patient;
-	
+	@Column(name="arrival_time")
 	private Date arrivalTime;
+	@Column(name="test")
 	private String tests;
 	private boolean release;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="nurse_id")
+	@JoinColumn(name="nurse")
 	private Nurse nurse;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name="doctor")
 	private Doctor doctor;
 	
 	@OneToOne(fetch=FetchType.LAZY)    
-	@JoinColumn(name="box_id")
+	@JoinColumn(name="box")
 	private Box box;
 	
 	@ManyToMany(mappedBy="admission")

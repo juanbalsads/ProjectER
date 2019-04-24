@@ -31,7 +31,7 @@ public class SQLManager {
 	public boolean connect() {
 	 try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:./db/ER.db");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/ProjectER.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			return true;
 			
@@ -49,7 +49,7 @@ public class SQLManager {
 	 public void createTables() {
 		 try {
 		 Statement stmt1=c.createStatement();
-		 String sql1= "CREATE TABLE patients " + 
+		 String sql1= "CREATE TABLE if not exists Patients " + 
 		 "(ssn INTEGER PRIMARY KEY, " + 
 		 "name TEXT NOT NULL, " + 
 		 "weight REAL, " + 
@@ -60,15 +60,15 @@ public class SQLManager {
 		 stmt1.executeUpdate(sql1);
 		 stmt1.close();
 		 Statement stmt2=c.createStatement();
-		 String sql2= "CREATE TABLE Doctors " + 
+		 String sql2= "CREATE TABLE if not exists Doctors " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "name TEXT NOT NULL, " + 
-		 "speciality TEXT NOT NULL" +
+		 "speciality TEXT NOT NULL, " +
 		 "availability BOOLEAN )";
 		 stmt2.executeUpdate(sql2);
 		 stmt2.close();
 		 Statement stmt3= c.createStatement();
-		 String sql3= "CREATE TABLE Nurses " + 
+		 String sql3= "CREATE TABLE if not exists Nurses " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "name TEXT NOT NULL, " + 
 		 "speciality TEXT NOT NULL, " +
@@ -76,13 +76,13 @@ public class SQLManager {
 		 stmt3.executeUpdate(sql3);
 		 stmt3.close();
 		 Statement stmt11= c.createStatement();
-		 String sql11= "CREATE TABLE Boxes " + 
+		 String sql11= "CREATE TABLE if not exists Boxes " + 
 		 "(box INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		 "availability BOOLEAN )";
 		 stmt11.executeUpdate(sql11);
 		 stmt11.close();
 		 Statement stmt5= c.createStatement();
-		 String sql5= "CREATE TABLE Admission " + 
+		 String sql5= "CREATE TABLE if not exists Admissions " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "patient INTEGER REFERENCES patients (ssn), " + 
 		 "arrival_time DATETIME, " + 
@@ -94,20 +94,20 @@ public class SQLManager {
 		 stmt5.executeUpdate(sql5);
 		 stmt5.close();
 		 Statement stmt6= c.createStatement();
-		 String sql6= "CREATE TABLE Drugs " + 
+		 String sql6= "CREATE TABLE if not exists Drugs " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "name TEXT NOT NULL) ";
 		 stmt6.executeUpdate(sql6);
 		 stmt6.close();
 		 Statement stmt10= c.createStatement();
-		 String sql10= "CREATE TABLE Patient_Drugs " + 
+		 String sql10= "CREATE TABLE if not exists Patient_Drugs " + 
 		 "(patient INTERGER REFERENCES Patient(ssn), " + 
 		 "drug TEXT REFERENCES drugs(id), " +
 		 "PRIMARY KEY (patient, drug))";
 		 stmt10.executeUpdate(sql10);
 		 stmt10.close();
 		 Statement stmt12= c.createStatement();
-		 String sql12= "CREATE TABLE Admission_Drugs " + 
+		 String sql12= "CREATE TABLE if not exists Admission_Drugs " + 
 		 "(admission INTEGER REFERENCES Admission(id) , " +
 		 "drug INTEGER REFERENCES Drugs(id), " +
 		 "dosage DOUBLE, "+
@@ -118,7 +118,7 @@ public class SQLManager {
 		 }
 		 catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("The tables were already created"); }  }
+			e.printStackTrace(); }  }
 	 
 /*----------------------------------ASK METHODS--------------------------------------*/	
 	 
@@ -201,7 +201,7 @@ public class SQLManager {
 	 
 	 public void insertPatient(Patient p) {
 		 try {
-			 String sql = "INSERT INTO patients (ssn, name, weight, height, genre, dob, blood_type) "
+			 String sql = "INSERT INTO Patients (ssn, name, weight, height, genre, dob, blood_type) "
 						+ "VALUES (?,?,?,?,?,?,?);";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, p.getSSN());
@@ -306,7 +306,7 @@ public class SQLManager {
 		 
 		 public void insertAdmission(Admission a) {
 			 try {
-				 	String sql = "INSERT INTO Admission (id, arrival_time , test, release, doctor, nurse, box) "
+				 	String sql = "INSERT INTO Admissions (id, arrival_time , test, release, doctor, nurse, box) "
 							+ "VALUES (?,?,?,?,?,?);";
 					PreparedStatement prep = c.prepareStatement(sql);
 					prep.setInt(1, a.getId());
@@ -431,7 +431,7 @@ public class SQLManager {
 	 public Box obtainBox(int id) {
 		 try {
 			 Statement stmt = c.createStatement();
-			 String sql = "SELECT * FROM boxes WHERE id="+id;
+			 String sql = "SELECT * FROM Boxes WHERE id="+id;
 			 ResultSet rs = stmt.executeQuery(sql);
 			 rs.next();
 			 		int idbox = rs.getInt("id");
@@ -450,7 +450,7 @@ public class SQLManager {
 		try {
 			Patient p = new Patient ();
 			Statement stmt1 = c.createStatement();
-			String sql1 = "SELECT * FROM Admission";
+			String sql1 = "SELECT * FROM Admissions";
 			ResultSet rs = stmt1.executeQuery(sql1);
 				while (rs.next()) {
 					int id = rs.getInt("id");
@@ -721,7 +721,7 @@ public class SQLManager {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Choose a box to delete, type its ID: ");
 		int box_id= Integer.parseInt(reader.readLine());
-		String sql= "DELETE FROM Box WHERE id=?";
+		String sql= "DELETE FROM Boxes WHERE id=?";
 		PreparedStatement prep =c.prepareStatement(sql);
 		prep.setInt(1, box_id);
 		prep.executeUpdate();

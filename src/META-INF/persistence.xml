@@ -6,16 +6,16 @@
 	<!-- Persistence Provider -->
 	<!-- RESOURCE-LOCAL: Application-managed transactions -->
 	<!-- JTA: Container-managed transactions -->
-	<persistence-unit name="ER" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="projectER" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
  
 		<!-- Entity Class -->
-		<class>sample.db.pojos.Admission</class>
-		<class>sample.db.pojos.Box</class>
-		<class>sample.db.pojos.Doctor</class>
-		<class>sample.db.pojos.Drug</class>
-		<class>sample.db.pojos.Nurse</class>
-		<class>sample.db.pojos.Patient</class>
+		<class>ER.POJOS.Admission</class>
+		<class>ER.POJOS.Box</class>
+		<class>ER.POJOS.Doctor</class>
+		<class>ER.POJOS.Drug</class>
+		<class>ER.POJOS.Nurse</class>
+		<class>ER.POJOS.Patient</class>
  
 		<properties>	
 			<!-- Connection properties -->

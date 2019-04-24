@@ -9,16 +9,13 @@ import java.util.*;
 @Entity 
 @Table(name="Drugs") 
 public class Drug implements Serializable{
-
-	@Id
-	@GeneratedValue(generator="drugs")
-	@TableGenerator(name="drugs", table="sqlite_sequence",
-	    pkColumnName="name", valueColumnName="seq", pkColumnValue="drugs")
 	private static final long serialVersionUID = 5425426797359584897L;
-
+	@Id
+	@GeneratedValue(generator="Drugs")
+	@TableGenerator(name="Drugs", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Drugs")
 	private Integer id;
-	private String name;
-	
+	private String name;	
 	@ManyToMany
 	@JoinTable(name="Admission_Drugs",           
 	joinColumns={@JoinColumn(name="drug_id", referencedColumnName="id")},           

@@ -9,15 +9,14 @@ import java.util.List;
 @Table(name="Nurses")
 
 public class Nurse implements Serializable{
-
-	@Id
-	@GeneratedValue(generator="nurses")
-	@TableGenerator(name="nurses", table="sqlite_sequence",
-	    pkColumnName="name", valueColumnName="seq", pkColumnValue="nurses")
 	private static final long serialVersionUID = 6033711001187345264L;
-	
+	@Id
+	@GeneratedValue(generator="Nurses")
+	@TableGenerator(name="Nurses", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Nurses")
 	private Integer id;
 	private String name;
+	@Column(name="speciality")
 	private String specialty;
 	private boolean availability;
 	
