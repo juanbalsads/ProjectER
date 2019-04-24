@@ -20,17 +20,23 @@ import ER.jpa.JPAManager;
 		
 		public static void printMenu() {
 			System.out.println("WELCOME TO THE ER DATABASE: \n"+ 
-		"Choose your option\n"+"1.- Create Patient\n"+"2.- Delete Patient\n"+"3.- Show Patient\n"
-		+"4.- Create Doctor\n"+"5.- Delete Doctoe\n"+"6.- Show Doctors\n"+"0.- Exit\n");}
+		"Choose your option\n"+"1.- Create Patient\n"+"2.- Delete Patient\n"+"3.- Show Patients\n"
+		+"4.- Create Doctor\n"+"5.- Delete Doctor\n"+"6.- Show Doctors\n"+"0.- Exit\n");}
 
 private static JPAManager manager= new JPAManager();
 private static SQLManager manager1= new SQLManager();	
 public static void main(String args[]) throws NumberFormatException, IOException {
 			manager1.createTables();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			while(true) {
+			System.out.println("\n\n\n");
 			printMenu();
 			int selection=Integer.parseInt(reader.readLine());
 			switch (selection) {
+			case 0:
+				manager1.disconnect();
+				manager.disconnectEntity();
+				return;
 			case 1: {
 				manager.createPatient();
 				break;}
@@ -41,17 +47,17 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				manager.listPatients();
 				break;}
 			case 4: {
-			
+				manager.createDoctor();
 				break;}
 			case 5: {
-				
+				manager.deleteDoctor();
 				break;}
 			case 6: {
-				
+				manager.listDoctors();
 				break;}
 			
 			
-				}
+				}}
 			}
 	}
 			

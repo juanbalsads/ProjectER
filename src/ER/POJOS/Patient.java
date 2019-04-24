@@ -23,8 +23,7 @@ public class Patient implements Serializable {
 	@GeneratedValue(generator="Patients")
 	@TableGenerator(name="Patients", table="sqlite_sequence",
 	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Patients")
-	@Column(name = "ssn")
-	private Integer SSN;
+	private Integer ssn;
 	private String name;
 	private Double weight; 
 	private Double height; 
@@ -48,7 +47,7 @@ public class Patient implements Serializable {
 	public Patient(Integer id, String name, Double weight, Double height, String genre, Date dob,
 			String bloodType, Admission admission) {
 		super();
-		this.SSN = id;
+		this.ssn = id;
 		this.name = name;
 		this.weight = weight;
 		this.height = height;
@@ -62,7 +61,7 @@ public class Patient implements Serializable {
 	public Patient(Integer id, String name, Double weight, Double height, String genre, Date dob,
 			String bloodType) {
 		super();
-		this.SSN = id;
+		this.ssn = id;
 		this.name = name;
 		this.weight = weight;
 		this.height = height;
@@ -151,12 +150,12 @@ public class Patient implements Serializable {
 
 
 	public Integer getSSN() {
-		return SSN;
+		return ssn;
 	}
 
 
 	public void setSSN(Integer sSN) {
-		SSN = sSN;
+		ssn = sSN;
 	}
 
 
@@ -186,7 +185,7 @@ public class Patient implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((SSN == null) ? 0 : SSN.hashCode());
+		result = prime * result + ((ssn == null) ? 0 : ssn.hashCode());
 		return result;
 	}
 
@@ -200,10 +199,10 @@ public class Patient implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Patient other = (Patient) obj;
-		if (SSN == null) {
-			if (other.SSN != null)
+		if (ssn == null) {
+			if (other.ssn != null)
 				return false;
-		} else if (!SSN.equals(other.SSN))
+		} else if (!ssn.equals(other.ssn))
 			return false;
 		return true;
 	}
@@ -211,7 +210,7 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [SSN=" + SSN + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre="
+		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre="
 				+ genre + ", dob=" + dob + ", bloodType=" + bloodType + ", allergies=" + allergies + ", admission="
 				 + "]";
 	}

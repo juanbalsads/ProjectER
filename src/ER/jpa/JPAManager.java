@@ -43,7 +43,7 @@ public class JPAManager {
 		///admission(D),dosage()??		
       	
 		public void createPatient() throws NumberFormatException, IOException {
-      		connectEntity();
+      		
       		try {
       			
       			System.out.println("Please, input the patient data: ");
@@ -72,7 +72,6 @@ public class JPAManager {
     				em.getTransaction().begin();
     				em.persist(pat1);
     				em.getTransaction().commit();
-    				disconnectEntity();
     				
       		
       		}catch(IOException e) {
@@ -81,7 +80,7 @@ public class JPAManager {
       		
       	}
 		public void createAdmission() throws NumberFormatException, IOException {
-			connectEntity();
+		
 			try {
 				System.out.println("Please, input the admission data:");
 				System.out.println("Id of the admission");
@@ -91,12 +90,12 @@ public class JPAManager {
 				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE SSD = ?", Patient.class);
 				q.setParameter(1, SSD);
 				Patient p = (Patient) q.getSingleResult();			
-				System.out.print("Doctor´s id in charge: ");
+				System.out.print("Doctorï¿½s id in charge: ");
 				int doctor_id = Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q.setParameter(1, doctor_id);
 				Doctor doctor = (Doctor) q.getSingleResult();	
-				System.out.print("Nurse´s id in charge: ");
+				System.out.print("Nurseï¿½s id in charge: ");
 				int nurse_id =  Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
 				q.setParameter(1,nurse_id);
@@ -123,7 +122,7 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(adm1);
 				em.getTransaction().commit();
-				disconnectEntity();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}	
@@ -131,7 +130,7 @@ public class JPAManager {
 		
 		
 		public void createDoctor(){
-			connectEntity();
+			
 			try {
 				System.out.println("Write the ID of the doctor: ");
 				int id = Integer.parseInt(reader.readLine());
@@ -153,7 +152,7 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(d);
 				em.getTransaction().commit();
-				disconnectEntity();
+				
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -161,7 +160,7 @@ public class JPAManager {
 		}
 		
 		public void createNurse(){
-			connectEntity();
+		
 			try {
 				System.out.println("Write the ID of the nurse: ");
 				int id = Integer.parseInt(reader.readLine());
@@ -182,7 +181,7 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(n);
 				em.getTransaction().commit();
-				disconnectEntity();
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -201,14 +200,14 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(b);
 				em.getTransaction().commit();
-				disconnectEntity();
+	
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
 		public void createDrug() {
-			connectEntity();
+		
 			try {
 				System.out.println("Write the ID of the drug: ");
 				int id = Integer.parseInt(reader.readLine());
@@ -218,7 +217,7 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.persist(d);
 				em.getTransaction().commit();
-				disconnectEntity();
+
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -232,7 +231,7 @@ public class JPAManager {
 	    ///admission(D),dosage(NOtD)??
 		
 		public void readAdmission() {
-			connectEntity();
+			
 			
 			try {
 				System.out.print("Write the admission's ID: ");
@@ -241,7 +240,7 @@ public class JPAManager {
 				q.setParameter(1, adm_id);
 				Admission admission = (Admission) q.getSingleResult();
 				System.out.println(admission.toString());				
-				disconnectEntity();
+				
 			
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -249,7 +248,7 @@ public class JPAManager {
 		}
 		
 		public void readPatient() {
-			connectEntity();
+		
 			
 			try {
 				System.out.print("Write the patient's SSD: ");
@@ -259,7 +258,7 @@ public class JPAManager {
 				Patient p = (Patient) q.getSingleResult();
 				System.out.println(p.toString());
 				
-				disconnectEntity();
+				
 			
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -267,7 +266,7 @@ public class JPAManager {
 		}
 		
 		public void readDoctor() {
-			connectEntity();
+		
 			
 			try {
 				System.out.print("Write the doctor's id: ");
@@ -276,7 +275,7 @@ public class JPAManager {
 				q.setParameter(1, d_id);
 				Doctor d = (Doctor) q.getSingleResult();
 				System.out.println(d.toString());
-				disconnectEntity();
+			
 			
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -284,7 +283,7 @@ public class JPAManager {
 		}
 		
 		public void readNurse() {
-			connectEntity();
+			
 			
 			try {
 				System.out.print("Write the nurse`s id: ");
@@ -293,14 +292,14 @@ public class JPAManager {
 				q.setParameter(1, n_id);
 				Nurse n = (Nurse) q.getSingleResult();
 				System.out.println(n.toString());
-				disconnectEntity();
+				
 			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
 		public void readBox() {
-			connectEntity();
+			
 			
 			try {
 				System.out.print("Write the box`s id: ");
@@ -309,7 +308,7 @@ public class JPAManager {
 				q.setParameter(1, b_id);
 				Box b = (Box) q.getSingleResult();
 				System.out.println(b.toString());
-				disconnectEntity();
+		
 			
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -317,7 +316,7 @@ public class JPAManager {
 		}
 		
 		public void readDrug() {
-			connectEntity();
+		
 			
 			try {
 				System.out.print("Write the drugs`s id: ");
@@ -337,59 +336,53 @@ public class JPAManager {
 	    ///admission(D),dosage(NOtD)??
 		
 		public void listPatients() {
-			connectEntity();
+		
 			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 			List<Patient> pats = (List<Patient>) q1.getResultList();
 			for (Patient pat : pats) {
 				System.out.println(pat);
 			}
-			disconnectEntity();
 		}
 		public void listAdmissions() {
-			connectEntity();
+			
 			Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
 			List<Admission> adms = (List<Admission>) q1.getResultList();
 			for (Admission adm : adms) {
 				System.out.println(adm);
 			}
-			disconnectEntity();
+		
 		}
 		
 		public void listDoctors() {
-			connectEntity();
+		
 			Query q1 = em.createNativeQuery("SELECT * FROM Doctors", Doctor.class);
 			List<Doctor> docs = (List<Doctor>) q1.getResultList();
 			for (Doctor doc : docs) {
 				System.out.println(doc);
 			}
-			disconnectEntity();
 		}
 		public void listNurses() {
-			connectEntity();
 			Query q1 = em.createNativeQuery("SELECT * FROM Nurses", Nurse.class);
 			List<Nurse> nurs = (List<Nurse>) q1.getResultList();
 			for (Nurse nur : nurs) {
 				System.out.println(nur);
 			}
-			disconnectEntity();
 		}
 		public void listDrugs() {
-			connectEntity();
+			
 			Query q1 = em.createNativeQuery("SELECT * FROM Drugs", Drug.class);
 			List<Drug> drugs = (List<Drug>) q1.getResultList();
 			for (Drug drug : drugs) {
 				System.out.println(drug);
 			}
-			disconnectEntity();
 		}
 		public void listBoxes() {
-			connectEntity();
 			Query q1 = em.createNativeQuery("SELECT * FROM Boxes", Box.class);
 			List<Box> boxes = (List<Box>) q1.getResultList();
 			for (Box box : boxes) {
 				System.out.println(box);
 			}
-			disconnectEntity();
+			
 		}			
 		/////////PRINTLIST///////
 		
@@ -398,26 +391,25 @@ public class JPAManager {
 	    ///admission(D),dosage(NOtD)??
 		
 		public void deletePatient(){
-			connectEntity();
+			
 			System.out.println("Patients list:");
 			listPatients();
 			try {
-				System.out.print("Choose a patient to delete. Type its SSD:");
+				System.out.print("Choose a patient to delete. Type its SSN:");
 				int p_SSD = Integer.parseInt(reader.readLine());		
-				Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
-				q2.setParameter(1,p_SSD);
+				Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
+				q2.setParameter(1, p_SSD);
 				Patient pdelete = (Patient) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(pdelete);
-
 				em.getTransaction().commit();
-				disconnectEntity();
+				em.close();
+
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		public void deleteNurse(){
-			connectEntity();
 			System.out.println("Nurse list:");
 			listNurses();
 			try {
@@ -430,14 +422,12 @@ public class JPAManager {
 				em.remove(ndelete);
 
 				em.getTransaction().commit();
-				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		
 		public void deleteDoctor(){
-			connectEntity();
 			System.out.println("Doctors list:");
 			listDoctors();
 			try {
@@ -450,13 +440,11 @@ public class JPAManager {
 				em.remove(ddelete);
 
 				em.getTransaction().commit();
-				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		public void deleteAdmission(){
-			connectEntity();
 			System.out.println("Admission list:");
 			listAdmissions();
 			try {
@@ -467,15 +455,12 @@ public class JPAManager {
 				Admission admdelete = (Admission) q2.getSingleResult();
 				em.getTransaction().begin();
 				em.remove(admdelete);
-
 				em.getTransaction().commit();
-				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		public void deleteBox(){
-			connectEntity();
 			System.out.println("Box list:");
 			listBoxes();
 			try {
@@ -488,13 +473,11 @@ public class JPAManager {
 				em.remove(bdmdelete);
 
 				em.getTransaction().commit();
-				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		public void deleteDrug(){
-			connectEntity();
 			System.out.println("Drug list:");
 			listDrugs();
 			try {
@@ -507,7 +490,6 @@ public class JPAManager {
 				em.remove(ddmdelete);
 
 				em.getTransaction().commit();
-				disconnectEntity();
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
@@ -546,7 +528,6 @@ public class JPAManager {
 			
 		}
 		public void updatePatient() {
-			connectEntity();
 
 			//System.out.println("Company's departments:");
 			//Query q1 = em.createNativeQuery("SELECT * FROM departments WHERE name LIKE ?", Department.class);
@@ -555,7 +536,7 @@ public class JPAManager {
 			System.out.print("Choose a patient to modify. Type its SSD:");
 			try {
 				int p_SSD = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 				q.setParameter(1,p_SSD);
 				Patient p = (Patient) q.getSingleResult();
 				System.out.println("New name:");
@@ -604,14 +585,12 @@ public class JPAManager {
 				p.setDob(newDob);
 				p.setBloodType(newBloodType);
 				em.getTransaction().commit();
-				disconnectEntity();					
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 					
 		}
 		public void updateDoctor() {
-			connectEntity();
 			listDoctors();
 			System.out.print("Choose doctor to modify. Type its id:");
 			try {
@@ -642,14 +621,12 @@ public class JPAManager {
 				d.setSpecialty(newSpecialty);
 				d.setAvailability(availability);
 			     em.getTransaction().commit();
-				disconnectEntity();	    
 			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
 		public void updateNurse() {
-			connectEntity();
 			listNurses();
 			System.out.print("Choose nurse to modify. Type its id:");
 			try {
@@ -680,7 +657,6 @@ public class JPAManager {
 				n.setSpecialty(newSpecialty);
 				n.setAvailability(availability);
 			     em.getTransaction().commit();
-				disconnectEntity();	    
 			
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -688,7 +664,6 @@ public class JPAManager {
 		}
 		
 		public void updateBox() {
-			connectEntity();
 			listBoxes();
 			System.out.print("Choose box to modify. Type its id:");
 			try {			
@@ -709,7 +684,6 @@ public class JPAManager {
 				  em.getTransaction().begin();
 		          b.setAvailability(availability);
 				  em.getTransaction().commit();
-			      disconnectEntity();	      
 				
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -717,7 +691,6 @@ public class JPAManager {
 			}
 			
 		public void updateDrug() {
-			connectEntity();
 			listDrugs();
 			System.out.print("Choose drug to modify. Type its id:");
 			try {			
@@ -732,7 +705,6 @@ public class JPAManager {
 				  em.getTransaction().begin();
 		          d.setName(newName);
 				  em.getTransaction().commit();
-			      disconnectEntity();	      
 				
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -743,107 +715,7 @@ public class JPAManager {
 		
 		
 		
-		/////UPDATE//////
-		
-		
 
-		/*//----------------------------------------------------------------------------
-		/*
-		//ASK ADMISSION
-		
-		
-		
-		//ASK PATIENT
-		
-		
-		
-		//ASK DOCTOR
-		
-		public Doctor askDoctor() {
-			try {
-			System.out.println("Write the ID of the doctor: ");
-			int id = Integer.parseInt(reader.readLine());
-			System.out.println("Write the name of the doctor: ");
-			String name = reader.readLine();
-			String specialty = reader.readLine();
-			String yes_no = reader.readLine();
-			boolean availability = true;
-			if(yes_no.equals(true)) {
-				availability = true;
-			}
-			else{
-				availability = false;
-			}
-			Doctor d = new Doctor(id,name,specialty,availability);
-			return d;
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
-		public Nurse askNurse() {
-			try {
-			System.out.println("Write the ID of the nurse: ");
-			int id = Integer.parseInt(reader.readLine());
-			System.out.println("Write the name of the nurse: ");
-			String name = reader.readLine();
-			String specialty = reader.readLine();
-			String yes_no = reader.readLine();
-			boolean availability = true;
-			if(yes_no.equals(true)) {
-				availability = true;
-			}
-			else{
-				availability = false;
-			}
-			Nurse n = new Nurse(id,name,specialty,availability);
-			return n;
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
-		public Box askBox() {
-			try {
-				System.out.println("Write the ID of the box-room: ");
-				int id = Integer.parseInt(reader.readLine());
-				System.out.println("Is the box-room available: ");
-				String yes_no = reader.readLine();
-				boolean availability = true;
-				if(yes_no.equals(true)) {
-					availability = true;
-				}
-				else{
-					availability = false;
-				}
-				Admission admission =
-						/*We have to call here the method askAdmission for adding it
-						 * in the Box constructor*/
-				/*Box b = new Box(id,availability,admission);
-				return b;
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
-		//ASK DRUG
-		
-		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		//----------------------------------------------------------------------------------
 	}
 
 
