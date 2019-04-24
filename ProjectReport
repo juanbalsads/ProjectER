@@ -32,3 +32,8 @@ Before next class, we intend to have all the pojos and the insert and  select me
 Hello Rodrigo, this week we continued with the jdbc methods, trying to integrate them in a menu and testing
  some of them in a main, our intention is to finish with jdbc next week. Also, we started the jpaManager and 
  most of the annotations of the pojos fo jpa. 
+ 
+ (24-04-2019)
+ Hello Rodrigo, this week we have been trying to work with all the JPA methods (create, read, update and delete)
+ to make sure that they work correctly and we have started also to write the XML-DTD language that will be sending
+ it to you by email. 
