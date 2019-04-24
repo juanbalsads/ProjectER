@@ -18,14 +18,14 @@ public class Drug implements Serializable{
 	private String name;	
 	@ManyToMany
 	@JoinTable(name="Admission_Drugs",           
-	joinColumns={@JoinColumn(name="drug_id", referencedColumnName="id")},           
-	inverseJoinColumns={@JoinColumn(name="admission_id", referencedColumnName="id")})
+	joinColumns={@JoinColumn(name="drug", referencedColumnName="id")},           
+	inverseJoinColumns={@JoinColumn(name="admission", referencedColumnName="id")})
 	private List<Admission> admission;
 	
 	@ManyToMany
 	@JoinTable(name="Patient_Drugs",           
-	joinColumns={@JoinColumn(name="allergy_drug", referencedColumnName="id")},           
-	inverseJoinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")})
+	joinColumns={@JoinColumn(name="drug", referencedColumnName="id")},           
+	inverseJoinColumns={@JoinColumn(name="patient", referencedColumnName="id")})
 	private List<Patient> patient;
 	
 	
