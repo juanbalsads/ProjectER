@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProjectER>
+	<Admission></Admission>
+	<Patient></Patient>
+	<Doctor></Doctor>
+	<Nurse></Nurse>
+	<Box></Box>
+	<Drug></Drug>
+	<Dosage></Dosage>
+</ProjectER>
