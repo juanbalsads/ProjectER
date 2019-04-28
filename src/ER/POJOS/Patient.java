@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 @Entity
 @Table(name="Patients")
-
 public class Patient implements Serializable {
 	private static final long serialVersionUID = -5716647307754030719L;
 	@Id

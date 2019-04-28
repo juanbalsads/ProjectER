@@ -30,19 +30,15 @@ public class Admission implements Serializable{
 	@Column(name="test")
 	private String tests;
 	private boolean release;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse")
 	private Nurse nurse;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor")
 	private Doctor doctor;
-	
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box")
 	private Box box;
-	
 	@ManyToMany(mappedBy="admission")
 	private List<Drug> drug;
 	

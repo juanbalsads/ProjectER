@@ -20,9 +20,11 @@ import ER.jpa.JPAManager;
 		
 		public static void printMenu() {
 			System.out.println("WELCOME TO THE ER DATABASE: \n"+ 
-		"Choose your option\n"+"1.- Create Patient\n"+"2.- Delete Patient\n"+"3.- Show Patients\n"
-		+"4.- Create Doctor\n"+"5.- Delete Doctor\n"+"6.- Show Doctors\n"+"0.- Exit\n");}
-
+		"Choose your option\n"+"1.- Create patient\n"+"2.- Delete patient\n"+"3.- Show patient\n"
+		+"4.- Create Box\n"+"5.- Delete Box\n"+"6.- Show Box\n"+"0.- Exit\n");}
+//the checking have been done in: Doctors(W),Patients(ASKRODIGOabout delete!!)
+//								  Nurses(W),Boxes(error),Admission(),Drug(W)
+//		
 private static JPAManager manager= new JPAManager();
 private static SQLManager manager1= new SQLManager();	
 public static void main(String args[]) throws NumberFormatException, IOException {
@@ -47,17 +49,17 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				manager.listPatients();
 				break;}
 			case 4: {
-				manager.createDoctor();
+				manager.createBox();
 				break;}
 			case 5: {
-				manager.deleteDoctor();
+				manager.deleteBox();
 				break;}
 			case 6: {
-				manager.listDoctors();
-				break;}
-			
-			
-				}}
+				manager.listBoxes();
+				break;
+				}			
+				}
+			}
 			}
 	}
 			

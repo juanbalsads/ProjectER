@@ -77,14 +77,14 @@ public class SQLManager {
 		 stmt3.close();
 		 Statement stmt11= c.createStatement();
 		 String sql11= "CREATE TABLE if not exists Boxes " + 
-		 "(box INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		 "availability BOOLEAN )";
 		 stmt11.executeUpdate(sql11);
 		 stmt11.close();
 		 Statement stmt5= c.createStatement();
 		 String sql5= "CREATE TABLE if not exists Admissions " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-		 "patient INTEGER REFERENCES patients (ssn), " + 
+		 "patient INTEGER REFERENCES Patients(ssn), " + 
 		 "arrival_time DATETIME, " + 
 		 "test TEXT, " +
 		 "release BOOLEAN, " +
@@ -101,8 +101,8 @@ public class SQLManager {
 		 stmt6.close();
 		 Statement stmt10= c.createStatement();
 		 String sql10= "CREATE TABLE if not exists Patient_Drugs " + 
-		 "(patient INTERGER REFERENCES Patient(ssn), " + 
-		 "drug TEXT REFERENCES drugs(id), " +
+		 "(patient INTERGER REFERENCES Patients(ssn), " + 
+		 "drug TEXT REFERENCES Drugs(id), " +
 		 "PRIMARY KEY (patient, drug))";
 		 stmt10.executeUpdate(sql10);
 		 stmt10.close();

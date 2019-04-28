@@ -6,19 +6,20 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Boxes")
-
 public class Box implements Serializable {
 	private static final long serialVersionUID = 8727419477663469192L;
 	@Id
 	@GeneratedValue(generator = "Boxes")
 	@TableGenerator(name = "Boxes", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Boxes")
-	@Column(name = "box")
 	private Integer id; 
 	private boolean availability;
 	 @OneToOne(fetch=FetchType.LAZY, mappedBy="box")
 	private Admission admission;
 	
+	 
+	 
+	 
 	public Box() {
 		super();
 	}

@@ -87,7 +87,7 @@ public class JPAManager {
 				int id = Integer.parseInt(reader.readLine());
 				System.out.print("Patient`s SSD: ");
 				int SSD = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE SSD = ?", Patient.class);
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 				q.setParameter(1, SSD);
 				Patient p = (Patient) q.getSingleResult();			
 				System.out.print("Doctor�s id in charge: ");
@@ -102,7 +102,7 @@ public class JPAManager {
 				Nurse nurse = (Nurse) q.getSingleResult();	
 				System.out.print("Box: ");
 				int box_id = Integer.parseInt(reader.readLine());
-				q = em.createNativeQuery("SELECT * FROM boxes WHERE id = ?", Box.class);
+				q = em.createNativeQuery("SELECT * FROM Boxes WHERE id = ?", Box.class);
 				q.setParameter(1,box_id);
 				Box box = (Box) q.getSingleResult();		
 				System.out.print("Arrival time (yyyy-MM-dd HH:mm): ");
@@ -253,7 +253,7 @@ public class JPAManager {
 			try {
 				System.out.print("Write the patient's SSD: ");
 				int pat_SSD = Integer.parseInt(reader.readLine());
-				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE id = ?", Patient.class);
+				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 				q.setParameter(1, pat_SSD);
 				Patient p = (Patient) q.getSingleResult();
 				System.out.println(p.toString());
