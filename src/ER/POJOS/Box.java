@@ -13,27 +13,36 @@ public class Box implements Serializable {
 	@TableGenerator(name = "Boxes", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Boxes")
 	private Integer id; 
+	private String name;
 	private boolean availability;
 	 @OneToOne(fetch=FetchType.LAZY, mappedBy="box")
 	private Admission admission;
-	
-	 
 	 
 	 
 	public Box() {
 		super();
 	}
-	public Box(Integer id, boolean availability) {
+	public Box(Integer id,String name, boolean availability) {
+		super();
+		this.id=id;
+		this.availability = availability;
+		this.name = name;
+	}
+	
+	public Box(String name, boolean availability) {
 		super();
 		this.availability = availability;
+		this.name = name;
 	}
 
-	public Box(Integer id, boolean release, Admission admission) {
+	public Box(Integer id,String name, boolean availability, Admission admission) {
 		super();
 		this.id = id;
-		this.availability = release;
+		this.availability = availability;
 		this.admission= admission;
+		this.name = name;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -85,11 +94,18 @@ public class Box implements Serializable {
 	public void setAdmission(Admission admission) {
 		this.admission = admission;
 	}
-
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	@Override
 	public String toString() {
-		return "Box [id=" + id + ", availability=" + availability + ", admission=" + admission + "]";
+		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + ", admission=" + admission + "]";
 	}
+
+
 
 	
 

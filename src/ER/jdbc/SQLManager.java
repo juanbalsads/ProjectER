@@ -78,6 +78,7 @@ public class SQLManager {
 		 Statement stmt11= c.createStatement();
 		 String sql11= "CREATE TABLE if not exists Boxes " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+		 "name TEXT NOT NULL, " +
 		 "availability BOOLEAN )";
 		 stmt11.executeUpdate(sql11);
 		 stmt11.close();
@@ -114,6 +115,21 @@ public class SQLManager {
 		 "PRIMARY KEY (admission, drug)) ";
 		 stmt12.executeUpdate(sql12);
 		 stmt12.close(); 
+		 
+		 Statement stmtSeq = c.createStatement();
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Patients', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Doctors', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Nurses', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Admissions', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Boxes', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('Drugs', 1)";
+			stmtSeq.executeUpdate(sqlSeq);
+			stmtSeq.close();
 		  
 		 }
 		 catch (SQLException e) {
@@ -288,16 +304,21 @@ public class SQLManager {
 	 
 	 //INSERT BOX
 	 
-		public void insertBox(Box b) {
+		public void insertBox() {
 			 try {
-				 String sql1 = "INSERT INTO Boxes (id, availability) "
+				 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("Write the name of the box-room: ");
+				String name= reader.readLine();
+				 System.out.println("traza");
+				 String sql1 = "INSERT INTO Boxes(name, availability) "
 						+ "VALUES (?,?);";
 				 PreparedStatement prep = c.prepareStatement(sql1);
-				 prep.setInt(1, b.getId());
-				 prep.setBoolean(2,b.getAvailability());
+				 prep.setString(1, name);
+				 prep.setBoolean(2, true);
 				 prep.executeUpdate();
 				 prep.close();
 			     }
+			 
 		 catch (Exception e) {
 				e.printStackTrace();}
 			 } 
@@ -428,7 +449,7 @@ public class SQLManager {
 			 return null;}}
 	 
 	 //-------OBTAIN BOX----//
-	 public Box obtainBox(int id) {
+	/* public Box obtainBox(int id) {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Boxes WHERE id="+id;
@@ -442,10 +463,10 @@ public class SQLManager {
 			 	return box;}
 		 catch(Exception e) {
 			 e.printStackTrace();
-			 return null;}}
+			 return null;}}*/
 	 
 	 //SELECT ADMISSION
-	
+	/*
 	public void selectAdmissions() {
 		try {
 			Patient p = new Patient ();
@@ -469,7 +490,7 @@ public class SQLManager {
 				rs.close();
 				stmt1.close();}
 		catch (Exception e) {
-			e.printStackTrace();}}
+			e.printStackTrace();}}*/
 
 	/* //SELECT ALLERGIES
 

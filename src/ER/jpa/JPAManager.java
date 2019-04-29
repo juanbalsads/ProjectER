@@ -132,8 +132,6 @@ public class JPAManager {
 		public void createDoctor(){
 			
 			try {
-				System.out.println("Write the ID of the doctor: ");
-				int id = Integer.parseInt(reader.readLine());
 				System.out.println("Write the name of the doctor: ");
 				String name = reader.readLine();
 				System.out.println("Write the name of the specialty: ");
@@ -148,7 +146,7 @@ public class JPAManager {
 					availability = false;
 				}
 				
-				Doctor d = new Doctor(id,name,speciality,availability);
+				Doctor d = new Doctor(name,speciality,availability);
 				em.getTransaction().begin();
 				em.persist(d);
 				em.getTransaction().commit();
@@ -162,8 +160,6 @@ public class JPAManager {
 		public void createNurse(){
 		
 			try {
-				System.out.println("Write the ID of the nurse: ");
-				int id = Integer.parseInt(reader.readLine());
 				System.out.println("Write the name of the nurse: ");
 				String name = reader.readLine();
 				System.out.println("Write the name of the specialty: ");
@@ -177,7 +173,7 @@ public class JPAManager {
 				else{
 					availability = false;
 				}
-				Nurse n = new Nurse(id,name,speciality,availability);
+				Nurse n = new Nurse(name,speciality,availability);
 				em.getTransaction().begin();
 				em.persist(n);
 				em.getTransaction().commit();
@@ -189,14 +185,13 @@ public class JPAManager {
 		public void createBox() {
 			connectEntity();
 			try {
-				System.out.println("Write the ID of the box-room: ");
-				int id = Integer.parseInt(reader.readLine());
-				System.out.println("Is the box-room available: ");
+				System.out.println("Write the name of the box-room: ");
+				String name= reader.readLine();
 				boolean availability = true;
 	           /*juan: SO SORRY GUYS!! 'Im going to set by default that
 	            * When creating a new box is always available
 	            * we may change this attribute when assigning an admission*/			
-				Box b = new Box(id,availability);
+				Box b = new Box(name,availability);
 				em.getTransaction().begin();
 				em.persist(b);
 				em.getTransaction().commit();
@@ -209,11 +204,9 @@ public class JPAManager {
 		public void createDrug() {
 		
 			try {
-				System.out.println("Write the ID of the drug: ");
-				int id = Integer.parseInt(reader.readLine());
 				System.out.println("Write the name of the drug: ");
 				String name = reader.readLine();
-				Drug d = new Drug(id,name);
+				Drug d = new Drug(name);
 				em.getTransaction().begin();
 				em.persist(d);
 				em.getTransaction().commit();
@@ -403,7 +396,6 @@ public class JPAManager {
 				em.getTransaction().begin();
 				em.remove(pdelete);
 				em.getTransaction().commit();
-				em.close();
 
 			}catch(IOException e) {
 				e.printStackTrace();

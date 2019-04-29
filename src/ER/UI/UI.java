@@ -22,8 +22,8 @@ import ER.jpa.JPAManager;
 			System.out.println("WELCOME TO THE ER DATABASE: \n"+ 
 		"Choose your option\n"+"1.- Create patient\n"+"2.- Delete patient\n"+"3.- Show patient\n"
 		+"4.- Create Box\n"+"5.- Delete Box\n"+"6.- Show Box\n"+"0.- Exit\n");}
-//the checking have been done in: Doctors(W),Patients(ASKRODIGOabout delete!!)
-//								  Nurses(W),Boxes(error),Admission(),Drug(W)
+//the checking have been done in: Doctors(W),Patients(W)
+//								  Nurses(W),Boxes(W),Admission(),Drug(W)
 //		
 private static JPAManager manager= new JPAManager();
 private static SQLManager manager1= new SQLManager();	

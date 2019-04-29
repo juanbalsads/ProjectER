@@ -25,7 +25,7 @@ public class Drug implements Serializable{
 	@ManyToMany
 	@JoinTable(name="Patient_Drugs",           
 	joinColumns={@JoinColumn(name="drug", referencedColumnName="id")},           
-	inverseJoinColumns={@JoinColumn(name="patient", referencedColumnName="id")})
+	inverseJoinColumns={@JoinColumn(name="patient", referencedColumnName="ssn")})
 	private List<Patient> patient;
 	
 	
@@ -43,7 +43,13 @@ public class Drug implements Serializable{
 		this.patient = new ArrayList<Patient>();
 	}
 	
-
+	public Drug(String name) {
+		super();
+		this.name = name;
+		this.admission = new ArrayList<Admission>();
+		this.patient = new ArrayList<Patient>();
+	}
+	
 
 
 	@Override
