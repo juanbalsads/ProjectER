@@ -53,8 +53,9 @@ public class Patient implements Serializable {
 		this.genre = genre;
 		this.dob = dob;
 		this.bloodType = bloodType;
-		this.allergies= new ArrayList<Drug>();
 		this.admission= admission;
+		this.allergies= new ArrayList<Drug>();
+		
 	}
 
 	public Patient(Integer id, String name, Double weight, Double height, String genre, Date dob,
