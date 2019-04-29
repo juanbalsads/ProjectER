@@ -61,9 +61,9 @@ public class Admission implements Serializable{
 		this.patient= patient;
 		this.arrivalTime = arrivalTime;
 		this.tests = tests;
+		this.doctor= doctor;
 		this.release = release;
 		this.nurse = nurse;
-		this.doctor= doctor;
 		this.box= box;
 		
 		this.drug= new ArrayList<Drug>();
