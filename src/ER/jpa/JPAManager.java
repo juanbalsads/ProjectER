@@ -82,30 +82,32 @@ public class JPAManager {
 		public void createAdmission() throws NumberFormatException, IOException {
 		
 			try {
-				System.out.println("Please, input the admission data:");
-				System.out.println("Id of the admission");
-				int id = Integer.parseInt(reader.readLine());
-				System.out.print("Patient`s SSD: ");
+				System.out.println("Please, input the admission data:\n");
+				System.out.print("Patient`s SSD:\n");
+				listPatients();
 				int SSD = Integer.parseInt(reader.readLine());
 				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 				q.setParameter(1, SSD);
 				Patient p = (Patient) q.getSingleResult();			
-				System.out.print("Doctor�s id in charge: ");
+				System.out.print("Doctor�s id in charge:\n");
+				listDoctors();
 				int doctor_id = Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q.setParameter(1, doctor_id);
 				Doctor doctor = (Doctor) q.getSingleResult();	
-				System.out.print("Nurse�s id in charge: ");
+				System.out.print("Nurse�s id in charge:\n");
+				listNurses();
 				int nurse_id =  Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
 				q.setParameter(1,nurse_id);
 				Nurse nurse = (Nurse) q.getSingleResult();	
-				System.out.print("Box: ");
+				System.out.print("Box:\n");
+				listBoxes();
 				int box_id = Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Boxes WHERE id = ?", Box.class);
 				q.setParameter(1,box_id);
 				Box box = (Box) q.getSingleResult();		
-				System.out.print("Arrival time (yyyy-MM-dd HH:mm): ");
+				System.out.print("Arrival time (yyyy-MM-dd HH:mm):\n");
 				String dateS = reader.readLine();
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 				LocalDateTime localDate = LocalDateTime.parse(dateS, formatterWithTime);		
@@ -114,10 +116,10 @@ public class JPAManager {
 				String tests = reader.readLine();
 				
 				
-				System.out.println("The patient is going to be internated");
+				System.out.println("\nThe patient is going to be internated");
 				boolean release = false;
 				Admission adm1 = 
-						new Admission(id,p,arrivalTime,tests,release, nurse,doctor, box);
+						new Admission(p,arrivalTime,tests,release, nurse,doctor, box);
 	 
 				em.getTransaction().begin();
 				em.persist(adm1);
