@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ProjectER [
-<!ELEMENT ProjectER (Admission,Box,Doctor,Dosage,Drug,Nurse,Patient)>
-<!ELEMENT Admission>
-<!ELEMENT Box>
-<!ELEMENT Doctor>
-<!ELEMENT Dosage>
-<!ELEMENT Drug>
-<!ELEMENT Nurse>
-<!ELEMENT Patient>
+  <!ELEMENT ER (#PCDATA|Admission|Patient)*>
+  <!ELEMENT Admission (ArrivalTime|Release)*>
+  <!ATTLIST Admission
+      ID CDATA #REQUIRED >
+  <!ELEMENT ArrivalTime (Day|Month|Year)*>
+  <!ELEMENT Day (#PCDATA)>
+  <!ELEMENT Month (#PCDATA)>
+  <!ELEMENT Year (#PCDATA)>
+  <!ELEMENT Release (#PCDATA)>
+  <!ELEMENT DOB (Day,Month,Year)>
+  <!ATTLIST Patient
+      SSN CDATA #REQUIRED
+      Name CDATA #IMPLIED
+      Weight CDATA #IMPLIED
+      Height CDATA #IMPLIED
+      BloodType CDATA #IMPLIED
+    >
+  <!ELEMENT DOB (#PCDATA)>
 
 ]>
