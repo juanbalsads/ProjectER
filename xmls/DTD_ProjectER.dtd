@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ProjectER [
-  <!ELEMENT ER (#PCDATA|Admission|Patient)*>
-  <!ELEMENT Admission (ArrivalTime|Release)*>
+  <!ELEMENT ER (Admission,Patient)>
+  <!ELEMENT Admission (ArrivalTime,Release)>
   <!ATTLIST Admission
       ID CDATA #REQUIRED >
   <!ELEMENT ArrivalTime (Day|Month|Year)*>
@@ -18,5 +18,4 @@
       BloodType CDATA #IMPLIED
     >
   <!ELEMENT DOB (#PCDATA)>
-
 ]>
