@@ -1,0 +1,35 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!DOCTYPE Patient [
+  <!ELEMENT Patient (SSN, Name, Weight, Height, Genre, DOB, Blood_Type, Admission)>
+  <!ELEMENT DOB (Day,Month,Year)>
+  <!ATTLIST Patient(SSN CDATA #REQUIRED, Name CDATA #REQUIRED
+      Weight CDATA #IMPLIED
+      Height CDATA #IMPLIED
+      Genre CDATA #IMPLIED
+      BloodType CDATA #IMPLIED
+    >
+  <!ELEMENT DOB (#PCDATA)>
+  <!ELEMENT Admission (ArrivalTime,Release)>
+  <!ATTLIST Admission
+      ID CDATA #REQUIRED >
+  <!ELEMENT ArrivalTime (Day,Month,Year)>
+  <!ELEMENT Day (#PCDATA)>
+  <!ELEMENT Month (#PCDATA)>
+  <!ELEMENT Year (#PCDATA)>
+  <!ELEMENT Release (#PCDATA)>
+
+]>
+
+<Patient>
+	 <SSN>1234</SSN>
+     <name>Pepe</name>
+     <Weight>97</Weight>
+     <Height>158</Height>
+     <Genre>Male</Genre>
+     <DOB>12-3-1901</DOB>
+     <Blood_Type>A</Blood_Type>
+     <Admission>5</Admission>     
+
+</Patient>
