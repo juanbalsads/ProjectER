@@ -64,6 +64,7 @@ public class SQLManager {
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "name TEXT NOT NULL, " + 
 		 "speciality TEXT NOT NULL, " +
+		 "photo BLOB, "+
 		 "availability BOOLEAN )";
 		 stmt2.executeUpdate(sql2);
 		 stmt2.close();

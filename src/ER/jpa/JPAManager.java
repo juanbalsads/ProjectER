@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ER.POJOS.*;
+import sample.db.graphics.ImageWindow;
 
 
 
@@ -155,6 +156,7 @@ public class JPAManager {
 		}
 		public Doctor askForDoctor() {
 			Doctor doc = null;
+			byte[] bytesBlob = null;
 			try {
 				System.out.println("Write the name of the doctor: ");
 				String name = reader.readLine();
@@ -163,13 +165,26 @@ public class JPAManager {
 				boolean availability = true;
 				System.out.println("Is the doctor available?:");
 				String yes_no = reader.readLine();
+				System.out.println("Write the path of the file, none if there is not photo:");
+				String fileName = reader.readLine();
+				if(!fileName.equals("none")){
+					File photopath = new File(fileName);
+					InputStream streamBlob = new FileInputStream(photopath);
+					 bytesBlob = new byte[streamBlob.available()];
+					streamBlob.read(bytesBlob);
+					streamBlob.close();
+					}
+				else {
+					bytesBlob = null;
+				}
+				
 				if(yes_no.equals(true)) {
 					availability = true;
 				}
 				else{
 					availability = false;
 				}
-				doc = new Doctor(name,speciality,availability);		
+				doc = new Doctor(name,speciality,availability,bytesBlob);		
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -792,6 +807,15 @@ public class JPAManager {
 				e.printStackTrace();
 			}
 			}
+		
+		public void ShowPicture(byte[] photoblob) {
+			ByteArrayInputStream blobIn = new ByteArrayInputStream(employee.getPhoto());
+			if (true) {
+				ImageWindow window = new ImageWindow();
+				window.showBlob(blobIn);
+			}
+			/
+		}
 		
 	
 		
