@@ -41,8 +41,19 @@ public class Drug implements Serializable{
 		this.admission = new ArrayList<Admission>();
 	}
 	
-
-
+	
+	public void addAdmission(Admission adm) {
+		if(!this.admission.contains(adm)) {
+			this.admission.add(adm);
+		}
+	}
+	
+	public void removeAdmission(Admission adm) {
+		if(this.admission.contains(adm)) {
+			this.admission.remove(adm);
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,7 +82,7 @@ public class Drug implements Serializable{
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -84,21 +95,28 @@ public class Drug implements Serializable{
 		this.name = name;
 	}
 	
-	
-	
-
 	public List<Admission> getAdmission() {
 		return admission;
-	}
-
+	} 
+	
 	public void setAdmissions(List<Admission> admission) {
 		this.admission = admission;
 	}
-
-
+	public String listAdmissions() {
+		String lista="";
+		for (Admission adm : admission) {
+			lista= lista+ adm.getId()+ ", ";
+		}
+		return lista;
+	}
+	
 	@Override
 	public String toString() {
-		return "Drug [id=" + id + ", name=" + name + ", admission=" + admission + "]";
+		return "Drug [id=" + id + ", name=" + name +" ]";
+	}
+	
+	public String toString2() {
+		return "Drug [id = " + id + ", name = " +name+", admission= "+listAdmissions() + "  ] ";
 	}
 
 }

@@ -125,7 +125,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				break;
 				}
 			case 23: {
-				manager.listDrugs();
+				manager.listDrugs2();
 				break;
 				}
 			case 24: {
@@ -157,6 +157,10 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				manager.updateAdmission();
 				break;
 				}
+			case 31:{
+				manager.createAdmissionToDrug();
+				break;
+			}
 			
 			
 			
@@ -202,6 +206,8 @@ public static void printMenu() {
 			"28.- Show Admission\n"+
 			"29.- Read Admission\n"+
 			"30.- Update Admission\n\n"+
+			
+			"31.- Add Drug to admision\n"+
 			
 			
 			

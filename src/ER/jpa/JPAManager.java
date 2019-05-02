@@ -88,6 +88,35 @@ public class JPAManager {
 				em.getTransaction().commit();
 			}
 		
+		public void createAdmissionToDrug() {
+			Admission adm = null;
+			Drug d = null; 
+			try {
+				listAdmissions();
+				System.out.println("choose the admission");
+				int id_p = Integer.parseInt(reader.readLine());
+				Query q = em.createNativeQuery("SELECT * FROM Admissions WHERE id = ?", Admission.class);
+				q.setParameter(1, id_p);
+				adm = (Admission) q.getSingleResult();
+				listDrugs();
+				System.out.println("choose the drug");
+				int id_d = Integer.parseInt(reader.readLine());
+				q = em.createNativeQuery("SELECT * FROM Drugs WHERE id = ?", Drug.class);
+				q.setParameter(1, id_d);
+				d = (Drug) q.getSingleResult();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			addDrugToAdmission(adm,d);	
+		}
+		
+		public void addDrugToAdmission(Admission adm, Drug d) {
+			em.getTransaction().begin();
+			adm.addDrug(d);
+			d.addAdmission(adm);
+			em.getTransaction().commit();
+		}
+		
 
 		////CREATE////
 		
@@ -235,6 +264,7 @@ public class JPAManager {
 			return adm;	
 			
 		}
+		
 		
 			
 		//////ASKForData////////
@@ -413,6 +443,15 @@ public class JPAManager {
 				System.out.println(drug);
 			}
 		}
+		public void listDrugs2() {
+			
+			Query q1 = em.createNativeQuery("SELECT * FROM Drugs", Drug.class);
+			List<Drug> drugs = (List<Drug>) q1.getResultList();
+			for (Drug drug : drugs) {
+				System.out.println(drug.toString2());
+			}
+		}
+		
 		public void listBoxes() {
 			Query q1 = em.createNativeQuery("SELECT * FROM Boxes", Box.class);
 			List<Box> boxes = (List<Box>) q1.getResultList();
@@ -753,6 +792,8 @@ public class JPAManager {
 				e.printStackTrace();
 			}
 			}
+		
+	
 		
 		
 		
