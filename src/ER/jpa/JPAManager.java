@@ -42,10 +42,57 @@ public class JPAManager {
 		///,Doctor(D.attentionToAvailability),drug(D),box(D.Ive done changes),
 		///admission(D),dosage()??		
       	
-		public void createPatient() throws NumberFormatException, IOException {
-      		
-      		try {
-      			
+		public void createPatient() {		
+      		Patient pat1 = askForPatient();			 
+			em.getTransaction().begin();
+			em.persist(pat1);
+			em.getTransaction().commit();   		
+      	}
+		public void createAdmission(){
+				Admission adm1 = askForAdmission();
+				em.getTransaction().begin();
+				em.persist(adm1);
+				em.getTransaction().commit();
+			}	
+		public void createDoctor(){		
+				Doctor d = askForDoctor();
+				em.getTransaction().begin();
+				em.persist(d);
+				em.getTransaction().commit();
+			}
+		
+		public void createNurse(){
+				Nurse n = askForNurse();
+				em.getTransaction().begin();
+				em.persist(n);
+				em.getTransaction().commit();
+			}
+		public void createBox() {			
+				Box b = askForBox();
+				System.out.println(b.equals(null));
+				System.out.println("traza");
+				em.getTransaction().begin();
+				em.persist(b);
+				em.getTransaction().commit();
+				}
+		
+		public void createDrug() {
+			Drug d = askForDrug();
+				em.getTransaction().begin();
+				em.persist(d);
+				em.getTransaction().commit();
+			}
+		
+
+		////CREATE////
+		
+		///ASKForDAta: Patient(),Nurse()
+	    ///,Doctor(),drug(),box(),
+	    ///admissionD),dosage()??
+		
+		public Patient askForPatient() {
+			Patient pat = null;
+			try {
       			System.out.println("Please, input the patient data: ");
     			System.out.println("Insert the patient's ssn:");
     			int ssn = Integer.parseInt(reader.readLine());
@@ -64,23 +111,83 @@ public class JPAManager {
     			    Date dob2= Date.valueOf(date);
     			System.out.println("Insert the patient's blood type:");
     				String bloodType = reader.readLine();
-    				System.out.println("Type the patient's allergies:");
-    				
-    				Patient pat1 = 
-    						new Patient(ssn,name, weight, height,genre, dob2, bloodType);
-    				 
-    				em.getTransaction().begin();
-    				em.persist(pat1);
-    				em.getTransaction().commit();
-    				
-      		
-      		}catch(IOException e) {
-      			e.printStackTrace();
-      		}
-      		
-      	}
-		public void createAdmission() throws NumberFormatException, IOException {
-		
+    				System.out.println("Type the patient's allergies:");		
+    			pat = new Patient(ssn,name, weight, height,genre, dob2, bloodType);		
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return pat;		
+		}
+		public Doctor askForDoctor() {
+			Doctor doc = null;
+			try {
+				System.out.println("Write the name of the doctor: ");
+				String name = reader.readLine();
+				System.out.println("Write the name of the specialty: ");
+				String speciality = reader.readLine();
+				boolean availability = true;
+				System.out.println("Is the doctor available?:");
+				String yes_no = reader.readLine();
+				if(yes_no.equals(true)) {
+					availability = true;
+				}
+				else{
+					availability = false;
+				}
+				doc = new Doctor(name,speciality,availability);		
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return doc;	
+		}
+		public Nurse askForNurse() {
+			Nurse nurse = null;
+			try {
+				System.out.println("Write the name of the nurse: ");
+				String name = reader.readLine();
+				System.out.println("Write the name of the specialty: ");
+				String speciality = reader.readLine();
+				boolean availability = true;
+				System.out.println("Is the nurse available?:");
+				String yes_no = reader.readLine();
+				if(yes_no.equals(true)) {
+					availability = true;
+				}
+				else{
+					availability = false;
+				}			
+			nurse = new Nurse(name,speciality,availability);	
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return nurse;
+		}
+		public Drug askForDrug() {
+			Drug drug = null;
+			try {
+				System.out.println("Write the name of the drug: ");
+				String name = reader.readLine();
+				drug = new Drug(name);	
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return drug;
+		}
+		public Box askForBox() {
+			Box box = null;
+			try {
+				System.out.println("Write the name of the box-room: ");
+				String name= reader.readLine();
+				boolean availability = true;
+				box = new Box(name,availability);			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return box;			
+		}
+		public Admission askForAdmission()  {
+			Admission adm = null;
 			try {
 				System.out.println("Please, input the admission data:\n");
 				System.out.print("Patient`s SSD:\n");
@@ -114,112 +221,19 @@ public class JPAManager {
 				Date arrivalTime = Date.valueOf(localDate.toString());	
 				System.out.print("Test: ");
 				String tests = reader.readLine();
-				
-				
 				System.out.println("\nThe patient is going to be internated");
 				boolean release = false;
-				Admission adm1 = 
-						new Admission(p,arrivalTime,tests,release, nurse,doctor, box);
-	 
-				em.getTransaction().begin();
-				em.persist(adm1);
-				em.getTransaction().commit();
+				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);	
 				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
-		}
-		
-		
-		public void createDoctor(){
-			
-			try {
-				System.out.println("Write the name of the doctor: ");
-				String name = reader.readLine();
-				System.out.println("Write the name of the specialty: ");
-				String speciality = reader.readLine();
-				boolean availability = true;
-				System.out.println("Is the doctor available?:");
-				String yes_no = reader.readLine();
-				if(yes_no.equals(true)) {
-					availability = true;
-				}
-				else{
-					availability = false;
-				}
-				
-				Doctor d = new Doctor(name,speciality,availability);
-				em.getTransaction().begin();
-				em.persist(d);
-				em.getTransaction().commit();
-				
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		}
-		
-		public void createNurse(){
-		
-			try {
-				System.out.println("Write the name of the nurse: ");
-				String name = reader.readLine();
-				System.out.println("Write the name of the specialty: ");
-				String speciality = reader.readLine();
-				boolean availability = true;
-				System.out.println("Is the nurse available?:");
-				String yes_no = reader.readLine();
-				if(yes_no.equals(true)) {
-					availability = true;
-				}
-				else{
-					availability = false;
-				}
-				Nurse n = new Nurse(name,speciality,availability);
-				em.getTransaction().begin();
-				em.persist(n);
-				em.getTransaction().commit();
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		}
-		public void createBox() {
-			connectEntity();
-			try {
-				System.out.println("Write the name of the box-room: ");
-				String name= reader.readLine();
-				boolean availability = true;
-	           /*juan: SO SORRY GUYS!! 'Im going to set by default that
-	            * When creating a new box is always available
-	            * we may change this attribute when assigning an admission*/			
-				Box b = new Box(name,availability);
-				em.getTransaction().begin();
-				em.persist(b);
-				em.getTransaction().commit();
-	
-			}catch(Exception e) {
+			}catch(IOException e) {
 				e.printStackTrace();
 			}
+			return adm;	
+			
 		}
 		
-		public void createDrug() {
-		
-			try {
-				System.out.println("Write the name of the drug: ");
-				String name = reader.readLine();
-				Drug d = new Drug(name);
-				em.getTransaction().begin();
-				em.persist(d);
-				em.getTransaction().commit();
-
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-
-		////CREATE////
+			
+		//////ASKForData////////
 	
 	     ///READ: Patient(D),Nurse(D)
 	    ///,Doctor(D),drug(D),box(D),

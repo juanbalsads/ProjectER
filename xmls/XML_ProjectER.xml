@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProjectER>
+	<Patient>
+	
+	
+	</Patient>
 	<Admission></Admission>
-	<Patient></Patient>
 	<Doctor></Doctor>
 	<Nurse></Nurse>
 	<Box></Box>
