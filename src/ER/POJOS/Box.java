@@ -102,9 +102,12 @@ public class Box implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + ", admission=" + admission + "]";
+		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + "]";
 	}
 
+	public String toString2() {
+		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + ", admission="+ admission.getId() + "]";
+	}
 
 
 	

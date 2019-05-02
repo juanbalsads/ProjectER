@@ -86,7 +86,7 @@ public class SQLManager {
 		 String sql5= "CREATE TABLE if not exists Admissions " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
 		 "patient INTEGER REFERENCES Patients(ssn), " + 
-		 "arrival_time DATETIME, " + 
+		 "arrival_time TIMESTAMP, " + 
 		 "test TEXT, " +
 		 "release BOOLEAN, " +
 		 "doctor INTEGER REFERENCES Doctors(id), " +
@@ -100,13 +100,6 @@ public class SQLManager {
 		 "name TEXT NOT NULL) ";
 		 stmt6.executeUpdate(sql6);
 		 stmt6.close();
-		 Statement stmt10= c.createStatement();
-		 String sql10= "CREATE TABLE if not exists Patient_Drugs " + 
-		 "(patient INTERGER REFERENCES Patients(ssn), " + 
-		 "drug TEXT REFERENCES Drugs(id), " +
-		 "PRIMARY KEY (patient, drug))";
-		 stmt10.executeUpdate(sql10);
-		 stmt10.close();
 		 Statement stmt12= c.createStatement();
 		 String sql12= "CREATE TABLE if not exists Admission_Drugs " + 
 		 "(admission INTEGER REFERENCES Admission(id) , " +
@@ -331,7 +324,7 @@ public class SQLManager {
 							+ "VALUES (?,?,?,?,?,?);";
 					PreparedStatement prep = c.prepareStatement(sql);
 					prep.setInt(1, a.getId());
-					prep.setDate(2, a.getArrivalTime());
+					prep.setTimestamp(2, a.getArrivalTime());
 					prep.setString(3, a.getTests());
 					prep.setInt(4, a.getDoctor().getId());
 					prep.setInt(5, a.getNurse().getId());

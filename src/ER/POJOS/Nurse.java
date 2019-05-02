@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Table(name="Nurses")
-
 public class Nurse implements Serializable{
 	private static final long serialVersionUID = 6033711001187345264L;
 	@Id
@@ -34,7 +33,6 @@ public class Nurse implements Serializable{
 		this.admission = new ArrayList<Admission>();
 	}
 
-
 	public Nurse(Integer id, String name, String specialty, boolean availability) {
 		super();
 		this.id = id;
@@ -53,11 +51,11 @@ public class Nurse implements Serializable{
 	}
 	
 
-	public List<Admission> getPatients() {
+	public List<Admission> getAdmissions() {
 		return admission;
 	}
 
-	public void setPatients(List<Admission> patients) {
+	public void setAdmission(List<Admission> patients) {
 		this.admission = patients;
 	}
 
@@ -92,6 +90,26 @@ public class Nurse implements Serializable{
 	public void setAvailability(boolean availability) {
 		this.availability = availability;
 	}
+	
+	public void addAdmission(Admission adm) {
+		if(!admission.contains(adm)) {
+			this.admission.add(adm);
+		}
+	}
+	public void removeAdmission(Admission adm) {
+		if(admission.contains(adm)) {
+			this.admission.remove(adm);
+		}
+	}
+	
+	public String listAdmissions() {
+		String lista="";
+		for (Admission adm : admission) {
+			lista= lista+ adm.getId()+ ", ";
+		}
+		return lista;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -121,7 +139,12 @@ public class Nurse implements Serializable{
 	@Override
 	public String toString() {
 		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ ", patients=" + admission + "]";
+				+ "]";
+	}
+	
+	public String toString2() {
+		return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability+
+				 ", admissions=" + listAdmissions()+ "]";
 	}
 
 

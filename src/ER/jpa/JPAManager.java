@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import java.io.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,6 +53,10 @@ public class JPAManager {
 				Admission adm1 = askForAdmission();
 				em.getTransaction().begin();
 				em.persist(adm1);
+				adm1.getPatient().setAdmission(adm1);
+				adm1.getDoctor().addAdmission(adm1);
+				adm1.getNurse().addAdmission(adm1);
+				adm1.getBox().setAdmission(adm1);
 				em.getTransaction().commit();
 			}	
 		public void createDoctor(){		
@@ -195,14 +200,14 @@ public class JPAManager {
 				int SSD = Integer.parseInt(reader.readLine());
 				Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 				q.setParameter(1, SSD);
-				Patient p = (Patient) q.getSingleResult();			
-				System.out.print("Doctor�s id in charge:\n");
+				Patient p = (Patient) q.getSingleResult();	
+				System.out.print("Doctors id in charge:\n");
 				listDoctors();
 				int doctor_id = Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q.setParameter(1, doctor_id);
 				Doctor doctor = (Doctor) q.getSingleResult();	
-				System.out.print("Nurse�s id in charge:\n");
+				System.out.print("Nurses id in charge:\n");
 				listNurses();
 				int nurse_id =  Integer.parseInt(reader.readLine());
 				q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
@@ -216,15 +221,14 @@ public class JPAManager {
 				Box box = (Box) q.getSingleResult();		
 				System.out.print("Arrival time (yyyy-MM-dd HH:mm):\n");
 				String dateS = reader.readLine();
-				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-				LocalDateTime localDate = LocalDateTime.parse(dateS, formatterWithTime);		
-				Date arrivalTime = Date.valueOf(localDate.toString());	
+				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
+				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
+				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
 				System.out.print("Test: ");
 				String tests = reader.readLine();
 				System.out.println("\nThe patient is going to be internated");
 				boolean release = false;
-				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);	
-				
+				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);		
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -345,11 +349,19 @@ public class JPAManager {
 	    ///admission(D),dosage(NOtD)??
 		
 		public void listPatients() {
-		
+			
 			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 			List<Patient> pats = (List<Patient>) q1.getResultList();
 			for (Patient pat : pats) {
 				System.out.println(pat);
+			}
+		}
+		public void listPatients2() {
+		
+			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
+			List<Patient> pats = (List<Patient>) q1.getResultList();
+			for (Patient pat : pats) {
+				System.out.println(pat.toString2());
 			}
 		}
 		public void listAdmissions() {
@@ -363,11 +375,19 @@ public class JPAManager {
 		}
 		
 		public void listDoctors() {
-		
+			
 			Query q1 = em.createNativeQuery("SELECT * FROM Doctors", Doctor.class);
 			List<Doctor> docs = (List<Doctor>) q1.getResultList();
 			for (Doctor doc : docs) {
 				System.out.println(doc);
+			}
+		}
+		public void listDoctors2() {
+		
+			Query q1 = em.createNativeQuery("SELECT * FROM Doctors", Doctor.class);
+			List<Doctor> docs = (List<Doctor>) q1.getResultList();
+			for (Doctor doc : docs) {
+				System.out.println(doc.toString2());
 			}
 		}
 		public void listNurses() {
@@ -375,6 +395,14 @@ public class JPAManager {
 			List<Nurse> nurs = (List<Nurse>) q1.getResultList();
 			for (Nurse nur : nurs) {
 				System.out.println(nur);
+			}
+		}
+		
+		public void listNurses2() {
+			Query q1 = em.createNativeQuery("SELECT * FROM Nurses", Nurse.class);
+			List<Nurse> nurs = (List<Nurse>) q1.getResultList();
+			for (Nurse nur : nurs) {
+				System.out.println(nur.toString2());
 			}
 		}
 		public void listDrugs() {
@@ -390,9 +418,16 @@ public class JPAManager {
 			List<Box> boxes = (List<Box>) q1.getResultList();
 			for (Box box : boxes) {
 				System.out.println(box);
-			}
-			
+			}	
 		}			
+		
+		public void listBoxes2() {
+			Query q1 = em.createNativeQuery("SELECT * FROM Boxes", Box.class);
+			List<Box> boxes = (List<Box>) q1.getResultList();
+			for (Box box : boxes) {
+				System.out.println(box.toString2());
+			}	
+		}	
 		/////////PRINTLIST///////
 		
 		///DELETE: Patient(D),Nurse(D)

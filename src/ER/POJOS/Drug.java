@@ -21,18 +21,11 @@ public class Drug implements Serializable{
 	joinColumns={@JoinColumn(name="drug", referencedColumnName="id")},           
 	inverseJoinColumns={@JoinColumn(name="admission", referencedColumnName="id")})
 	private List<Admission> admission;
-	
-	@ManyToMany
-	@JoinTable(name="Patient_Drugs",           
-	joinColumns={@JoinColumn(name="drug", referencedColumnName="id")},           
-	inverseJoinColumns={@JoinColumn(name="patient", referencedColumnName="ssn")})
-	private List<Patient> patient;
-	
-	
+
+		
 	public Drug() {
 		super();
 		this.admission = new ArrayList<Admission>();
-		this.patient = new ArrayList<Patient>();
 	}
 
 	public Drug(Integer id, String name) {
@@ -40,14 +33,12 @@ public class Drug implements Serializable{
 		this.id = id;
 		this.name = name;
 		this.admission = new ArrayList<Admission>();
-		this.patient = new ArrayList<Patient>();
 	}
 	
 	public Drug(String name) {
 		super();
 		this.name = name;
 		this.admission = new ArrayList<Admission>();
-		this.patient = new ArrayList<Patient>();
 	}
 	
 
@@ -104,17 +95,10 @@ public class Drug implements Serializable{
 		this.admission = admission;
 	}
 
-	public List<Patient> getPatient() {
-		return patient;
-	}
-
-	public void setPatients(List<Patient> patient) {
-		this.patient = patient;
-	}
 
 	@Override
 	public String toString() {
-		return "Drug [id=" + id + ", name=" + name + ", admission=" + admission + ", patient=" + patient + "]";
+		return "Drug [id=" + id + ", name=" + name + ", admission=" + admission + "]";
 	}
 
 }

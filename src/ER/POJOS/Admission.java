@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -22,25 +23,34 @@ public class Admission implements Serializable{
 	@TableGenerator(name = "Admissions", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Admissions")
 	private Integer id;	
+	
 	@OneToOne(fetch=FetchType.LAZY)    
-	@JoinColumn(name="patient")//Juan:should I put the name of the other attribute in the table?	                              
+	@JoinColumn(name="patient")	                              
 	private Patient patient;
+	
 	@Column(name="arrival_time")
-	private Date arrivalTime;
+	private Timestamp arrivalTime;
+	
 	@Column(name="test")
 	private String tests;
 	private boolean release;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse")
 	private Nurse nurse;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor")
 	private Doctor doctor;
+	
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box")
 	private Box box;
+	
 	@ManyToMany(mappedBy="admission")
 	private List<Drug> drug;
+	
+	
 	
 	
 	
@@ -55,7 +65,7 @@ public class Admission implements Serializable{
 		
 		this.drug = new ArrayList <Drug>();
 	}
-	public Admission(Integer id, Patient patient, Date arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
+	public Admission(Integer id, Patient patient, Timestamp arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
 		this.id = id;
 		this.patient= patient;
@@ -69,7 +79,7 @@ public class Admission implements Serializable{
 		this.drug= new ArrayList<Drug>();
 	}
 	
-	public Admission( Patient patient, Date arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
+	public Admission( Patient patient, Timestamp arrivalTime,  String tests, boolean release, Nurse nurse, Doctor doctor, Box box) {
 		super();
 		this.patient= patient;
 		this.arrivalTime = arrivalTime;
@@ -106,11 +116,11 @@ public class Admission implements Serializable{
 		this.patient = patient;
 	}
 
-	public Date getArrivalTime() {
+	public Timestamp getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(Timestamp arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
@@ -184,8 +194,9 @@ public class Admission implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Admission [id=" + id + ", patient=" + patient + ", arrivalTime=" + arrivalTime + ", tests=" + tests + ", release=" + release + ", nurse=" + nurse + ", doctor=" + doctor
-				+ ", box=" + box + ", drugs=" + drug + "]";
+		return "\nAdmission [id=" + id + ", arrivalTime=" +arrivalTime.toString() + "\npatient=" + patient +  
+	 ", tests=" + tests + ", release=" + release + ", \nnurse=" + nurse + ",\ndoctor=" + doctor
+				+ ", \nbox=" + box + ", \ndrugs=" + drug + "]";
 	}
 
 

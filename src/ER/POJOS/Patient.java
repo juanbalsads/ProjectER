@@ -31,15 +31,11 @@ public class Patient implements Serializable {
 	@Column(name="blood_type")
 	private String bloodType;
 	
-	@ManyToMany(mappedBy="patient")
-	private List<Drug> allergies;
-	
 	@OneToOne(fetch=FetchType.LAZY, mappedBy= "patient") 
 	private Admission admission;
 	
 	public Patient() {
 		super();
-		this.allergies= new ArrayList<Drug>();
 	}
 
 
@@ -54,7 +50,6 @@ public class Patient implements Serializable {
 		this.dob = dob;
 		this.bloodType = bloodType;
 		this.admission= admission;
-		this.allergies= new ArrayList<Drug>();
 		
 	}
 
@@ -68,11 +63,10 @@ public class Patient implements Serializable {
 		this.genre = genre;
 		this.dob = dob;
 		this.bloodType = bloodType;
-		this.allergies= new ArrayList<Drug>();
 	}
 	
 	public Patient(String name, Double weight, Double height, String genre, Date dob,
-			String bloodType, List<Drug> allergy, Admission admission) {
+			String bloodType, Admission admission) {
 		super();
 		this.name = name;
 		this.weight = weight;
@@ -80,9 +74,7 @@ public class Patient implements Serializable {
 		this.genre = genre;
 		this.dob = dob;
 		this.bloodType = bloodType;
-		this.allergies= allergy;
 		this.admission= admission;
-		this.allergies= new ArrayList<Drug>();
 	}
 
 
@@ -159,17 +151,6 @@ public class Patient implements Serializable {
 	}
 
 
-	public List<Drug> getAllergies() {
-		return allergies;
-	}
-
-
-	public void setAllergies(List<Drug> allergies) {
-		this.allergies = allergies;
-	}
-	
-	
-
 
 	public Admission getAdmission() {
 		return admission;
@@ -210,10 +191,18 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" + weight + ", height=" + height + ", genre="
-				+ genre + ", dob=" + dob + ", bloodType=" + bloodType + ", allergies=" + allergies + ", admission="
+		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" +
+	            weight + ", height=" + height + ", genre="+
+				genre + ", dob=" + dob + ", bloodType=" + bloodType 
 				 + "]";
 	}
+	
+	public String toString2() {
+		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" +
+	            weight + ", height=" + height + ", genre="+
+				genre + ", dob=" + dob + ", bloodType=" + bloodType 
+				 + ", admission=" + admission.getId() +"]";
+	} 
 
 
 	

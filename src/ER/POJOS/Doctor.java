@@ -58,11 +58,11 @@ public class Doctor implements Serializable {
 		this.admission= new ArrayList<Admission>();
 	}
 
-	public List<Admission> getDoctors() {
+	public List<Admission> getAdmissions() {
 		return admission;
 	}
 
-	public void setDoctors(List<Admission> admission) {
+	public void setAdmissions(List<Admission> admission) {
 		this.admission = admission;
 	}
 
@@ -96,6 +96,25 @@ public class Doctor implements Serializable {
 
 	public void setAvailability(boolean availability) {
 		this.availability = availability;
+	}
+	
+	public void addAdmission(Admission adm) {
+		if(!admission.contains(adm)) {
+			this.admission.add(adm);
+		}
+	}
+	public void removeAdmission(Admission adm) {
+		if(admission.contains(adm)) {
+			this.admission.remove(adm);
+		}
+	}
+	
+	public String listAdmissions() {
+		String lista="";
+		for (Admission adm : admission) {
+			lista= lista+  adm.getId()+", ";
+		}
+		return lista;
 	}
 
 	@Override
@@ -141,8 +160,15 @@ public class Doctor implements Serializable {
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
-				+ ", doctors=" + admission + "]";
+				+  "]";
 	}
+
+	
+	public String toString2() {
+		return "Doctor [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
+				+", Admissions="+ listAdmissions() +  "]";
+	}
+	
 
 
 

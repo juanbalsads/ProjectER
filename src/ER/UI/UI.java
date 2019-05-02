@@ -44,7 +44,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				manager.deletePatient();
 				break;}
 			case 3: {
-				manager.listPatients();
+				manager.listPatients2();
 				break;}
 			case 4: {
 				manager.readPatient();
@@ -62,7 +62,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				break;
 				}
 			case 8: {
-				manager.listDoctors();
+				manager.listDoctors2();
 				break;
 				}
 			case 9: {
@@ -83,7 +83,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				break;
 				}
 			case 13: {
-				manager.listNurses();
+				manager.listNurses2();
 				break;
 				}
 			case 14: {
@@ -104,7 +104,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 				break;
 				}
 			case 18: {
-				manager.listBoxes();
+				manager.listBoxes2();
 				break;
 				}
 			case 19: {
