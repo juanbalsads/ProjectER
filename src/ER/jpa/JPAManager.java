@@ -694,6 +694,7 @@ public class JPAManager {
 			listDoctors();
 			System.out.print("Choose doctor to modify. Type its id:");
 			try {
+				byte[] bytesBlob = null;
 				int d_id = Integer.parseInt(reader.readLine());
 				Query q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
 				q.setParameter(1,d_id);
