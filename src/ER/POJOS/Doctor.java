@@ -27,9 +27,12 @@ public class Doctor implements Serializable {
 	private String name;
 	@Column(name= "speciality")
 	private String specialty;
+	private byte[] photo;
+
 	private boolean availability;
 	@OneToMany(mappedBy = "doctor")	
 	private List<Admission> admission;
+	
 	
 	public Doctor() {
 		super();
@@ -49,13 +52,22 @@ public class Doctor implements Serializable {
 		this.availability = availability;
 		this.admission= new ArrayList<Admission>();
 	}
-	
 	public Doctor(String name, String specialty, boolean availability) {
 		super();
 		this.name = name;
 		this.specialty = specialty;
 		this.availability = availability;
 		this.admission= new ArrayList<Admission>();
+
+	}
+	
+	public Doctor(String name, String specialty, boolean availability, byte[] photo) {
+		super();
+		this.name = name;
+		this.specialty = specialty;
+		this.availability = availability;
+		this.admission= new ArrayList<Admission>();
+		this.photo = photo;
 	}
 
 	public List<Admission> getAdmissions() {
@@ -92,6 +104,13 @@ public class Doctor implements Serializable {
 
 	public boolean getAvailability() {
 		return availability;
+	}
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 
 	public void setAvailability(boolean availability) {

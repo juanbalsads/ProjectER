@@ -181,6 +181,18 @@ public class Admission implements Serializable{
 		this.box = box;
 	}
 
+	
+	public void addDrug(Drug d) {
+		if(!this.drug.contains(d)) {
+			this.drug.add(d);
+		}
+	}
+	
+	public void removeDrug(Drug d) {
+		if(this.drug.contains(d)) {
+			this.drug.remove(d);
+		}
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
