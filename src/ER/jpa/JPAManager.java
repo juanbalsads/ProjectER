@@ -715,11 +715,25 @@ public class JPAManager {
 		            if(yes_no.equalsIgnoreCase("NO")) {
 		            	availability = false;
 		            }
-				
+		        System.out.println("New path of the picture:");
+		        String newfileName = reader.readLine();
+				if(!newfileName.equals("none")){
+					File photopath = new File(newfileName);
+					InputStream streamBlob = new FileInputStream(photopath);
+					 bytesBlob = new byte[streamBlob.available()];
+					streamBlob.read(bytesBlob);
+					streamBlob.close();
+					System.out.println("dale");
+					}
+				else {
+					bytesBlob = null;
+				}
+					
 		        em.getTransaction().begin();
 			    d.setName(newName);
 				d.setSpecialty(newSpecialty);
 				d.setAvailability(availability);
+				d.setPhoto(bytesBlob);
 			     em.getTransaction().commit();
 			
 			}catch(IOException e) {
