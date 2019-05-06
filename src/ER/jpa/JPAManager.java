@@ -121,6 +121,8 @@ public class JPAManager {
 
 		////CREATE////
 		
+
+		
 		///ASKForDAta: Patient(),Nurse()
 	    ///,Doctor(),drug(),box(),
 	    ///admissionD),dosage()??
@@ -333,8 +335,9 @@ public class JPAManager {
 				q.setParameter(1, d_id);
 				Doctor d = (Doctor) q.getSingleResult();
 				System.out.println(d.toString());
-			
-			
+				if(d.getPhoto()!=null) {
+					showPicture(d.getPhoto());
+				}
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -808,13 +811,13 @@ public class JPAManager {
 			}
 			}
 		
-		public void ShowPicture(byte[] photoblob) {
-			ByteArrayInputStream blobIn = new ByteArrayInputStream(employee.getPhoto());
+		public void showPicture(byte[] photoblob) {
+			ByteArrayInputStream blobIn = new ByteArrayInputStream(photoblob);
 			if (true) {
 				ImageWindow window = new ImageWindow();
 				window.showBlob(blobIn);
 			}
-			/
+			
 		}
 		
 	
