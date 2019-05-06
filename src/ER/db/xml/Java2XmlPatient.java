@@ -19,7 +19,7 @@ public class Java2XmlPatient {
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 	private static void printReports() {
-		Query q1 = em.createNativeQuery("SELECT * FROM Patient", Patient.class);
+		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 		List<Patient> patient = (List<Patient>) q1.getResultList();
 		// Print the departments
 		for (Patient p : patient) {
@@ -30,7 +30,7 @@ public class Java2XmlPatient {
 	public static void main(String[] args) throws Exception {
 		// Get the entity manager
 		// Note that we are using the class' entity manager
-		em = Persistence.createEntityManagerFactory("company-provider").createEntityManager();
+		em = Persistence.createEntityManagerFactory("projectER").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
@@ -48,7 +48,7 @@ public class Java2XmlPatient {
 		printReports();
 		System.out.print("Choose a report to turn into an XML file:");
 		int p_id = Integer.parseInt(reader.readLine());
-		Query q2 = em.createNativeQuery("SELECT * FROM Patient WHERE id = ?", Patient.class);
+		Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 		q2.setParameter(1, p_id);
 		Patient report = (Patient) q2.getSingleResult();
 		

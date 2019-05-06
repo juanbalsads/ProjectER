@@ -32,15 +32,15 @@ public class Xml2JavaReport {
 
 		// Print the patient
 		System.out.println("Patient:");
-		System.out.println("SSN:"+ Patient.getSSN());
-		System.out.println("Name: " + Patient.getName());
-		System.out.println("Weight: " + Patient.getWeight());
-		System.out.println("Height: "+ Patient.getHeight());
-		System.out.println("Genre: " + Patient.getGenre());
-		System.out.println("DOB: " + Patient.getDob());
-		System.out.println("Blood_Type: "+ Patient.getBloodType());
+		System.out.println("SSN:"+ p.getSSN());
+		System.out.println("Name: " + p.getName());
+		System.out.println("Weight: " + p.getWeight());
+		System.out.println("Height: "+ p.getHeight());
+		System.out.println("Genre: " + p.getGenre());
+		System.out.println("DOB: " + p.getDob());
+		System.out.println("Blood_Type: "+ p.getBloodType());
 		
-		List<Admission> admission = Patient.getAdmission();
+		List<Admission> admission = .getAdmission();
 		for (Admision a : admission) {
 			System.out.println("Admission: " + a.getId());
 		}

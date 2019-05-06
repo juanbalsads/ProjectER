@@ -9,12 +9,17 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.xml.bind.annotation.*;
 
 import ER.POJOS.*;
+
 
 @Entity
 @Table(name="Admissions")
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Admission")
+@XmlType(propOrder = {"id","arrivalTime", "tests", "release"})
 
 public class Admission implements Serializable{
 	private static final long serialVersionUID = 5626892191426340232L;
@@ -22,31 +27,40 @@ public class Admission implements Serializable{
 	@GeneratedValue(generator = "Admissions")
 	@TableGenerator(name = "Admissions", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Admissions")
+	@XmlAttribute
 	private Integer id;	
 	
 	@OneToOne(fetch=FetchType.LAZY)    
-	@JoinColumn(name="patient")	                              
+	@JoinColumn(name="patient")	
+	@XmlTransient
 	private Patient patient;
 	
 	@Column(name="arrival_time")
+	@XmlAttribute
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
+	@XmlAttribute
 	private String tests;
+	@XmlAttribute
 	private boolean release;
 	
+	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse")
 	private Nurse nurse;
 	
+	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor")
 	private Doctor doctor;
 	
+	@XmlTransient
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box")
 	private Box box;
 	
+	@XmlTransient
 	@ManyToMany(mappedBy="admission")
 	private List<Drug> drug;
 	

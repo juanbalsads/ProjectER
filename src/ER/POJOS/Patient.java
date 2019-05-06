@@ -1,10 +1,10 @@
 package ER.POJOS;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,23 +14,39 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.xml.bind.annotation.*;
+
 @Entity
 @Table(name="Patients")
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Patient")
+@XmlType(propOrder = {"ssn","name","weight","height","genre","dob","blood_type","Admission"})
+
 public class Patient implements Serializable {
 	private static final long serialVersionUID = -5716647307754030719L;
 	@Id
 	@GeneratedValue(generator="Patients")
 	@TableGenerator(name="Patients", table="sqlite_sequence",
 	    pkColumnName="name", valueColumnName="seq", pkColumnValue="Patients")
-	private Integer ssn;
-	private String name;
-	private Double weight; 
-	private Double height; 
-	private String genre;
-	private Date dob;
-	@Column(name="blood_type")
-	private String bloodType;
 	
+	@XmlAttribute
+	private Integer ssn;
+	@XmlAttribute
+	private String name;
+	@XmlAttribute
+	private Double weight;
+	@XmlAttribute
+	private Double height;
+	@XmlAttribute
+	private String genre;
+	@XmlElement
+	private Date dob;
+	
+	@Column(name="blood_type")
+	@XmlAttribute
+	private String bloodType;
+	@XmlElement
 	@OneToOne(fetch=FetchType.LAZY, mappedBy= "patient") 
 	private Admission admission;
 	
