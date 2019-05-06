@@ -1,8 +1,12 @@
 package ER.jdbc;
 import java.util.*;
+
+import javax.persistence.Query;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.io.*;
+import java.security.cert.CertPathValidatorException.Reason;
 import java.sql.Date;
 import java.sql.*;
 import java.time.*;
@@ -13,7 +17,7 @@ import java.sql.*
 
 public class SQLManager {
 	  Connection c;
-	  BufferedReader reader;
+	  BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 	 
 	 
 	 public SQLManager() {
@@ -126,71 +130,161 @@ public class SQLManager {
 	 
 /*----------------------------------ASK METHODS--------------------------------------*/	
 	 
-	 //ASK PATIENT
-	 
-	 public Patient askPatient() {
-		 try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Insert the patient's ssn:");
-			int ssn = Integer.parseInt(reader.readLine());
-			System.out.println("Insert the patient's name:");
-				String name = reader.readLine();
-			System.out.println("Insert weight:");
-				Double weight = Double.parseDouble(reader.readLine());
-			System.out.println("Insert height(meters):");
-				Double height = Double.parseDouble(reader.readLine());
-			System.out.println("Insert genre: ");
-				String genre = reader.readLine();
-			System.out.println("Insert date of birth (yyyy-MM-dd): ");
-				String dob = reader.readLine();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			    LocalDate date = LocalDate.parse(dob, formatter);
-			    Date dob2= Date.valueOf(date);
-			System.out.println("Insert the patient's blood type:");
-				String bloodType = reader.readLine();
-				System.out.println("Type the patient's allergies:");
+		public Patient askForPatient() {
+			Patient pat = null;
+			try {
+      			System.out.println("Please, input the patient data: ");
+    			System.out.println("Insert the patient's ssn:");
+    			String id=reader.readLine();
+    			int ssn = Integer.parseInt(id);
+    			System.out.println("Insert the patient's name:");
+    				String name = reader.readLine();
+    			System.out.println("Insert weight:");
+    				Double weight = Double.parseDouble(reader.readLine());
+    			System.out.println("Insert height(meters):");
+    				Double height = Double.parseDouble(reader.readLine());
+    			System.out.println("Insert genre: ");
+    				String genre = reader.readLine();
+    			System.out.println("Insert date of birth (yyyy-MM-dd): ");
+    				String dob = reader.readLine();
+    				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    			    LocalDate date = LocalDate.parse(dob, formatter);
+    			    Date dob2= Date.valueOf(date);
+    			System.out.println("Insert the patient's blood type:");
+    				String bloodType = reader.readLine();
+    				System.out.println("Type the patient's allergies:");		
+    			pat = new Patient(ssn,name, weight, height,genre, dob2, bloodType);		
 				
-			Patient p= new Patient (ssn, name, weight, height, genre, dob2, bloodType);
-			return p;
-		 } 
-		 catch (Exception e) {
+			}catch(IOException e) {
 				e.printStackTrace();
-				return null;}}
-	 
-	 //ASK DOCTOR
-	 
-	 public Doctor askDoctor() {
-		 try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Insert the doctor's name:");
+			}
+			return pat;		
+		}
+		
+		
+		public Doctor askForDoctor() {
+			Doctor doc = null;
+			try {
+				System.out.println("Write the name of the doctor: ");
 				String name = reader.readLine();
-			System.out.println("Insert the speciality:");
+				System.out.println("Write the name of the specialty: ");
 				String speciality = reader.readLine();
-			Doctor d= new Doctor (name, speciality, true);
-			return d;
-		 } 
-		 catch (Exception e) {
+				boolean availability = true;
+				System.out.println("Is the doctor available?:");
+				String yes_no = reader.readLine();
+				if(yes_no.equals("true")||yes_no.equals("yes")) {
+					availability = true;}
+				if(yes_no.equals("false")||yes_no.equals("no")) {
+					availability=false; }
+				while(!yes_no.equals("true")&&!yes_no.equals("yes")&&!yes_no.equals("false")&&!yes_no.equals("no")) {
+					System.out.println("Is the doctor available?:");
+					yes_no = reader.readLine();
+					if(yes_no.equals("true")||yes_no.equals("yes")) {
+						availability = true;}
+					if(yes_no.equals("false")||yes_no.equals("no")) {
+						availability=false; }
+				}
+				doc = new Doctor(name,speciality,availability);		
+			}catch(IOException e) {
 				e.printStackTrace();
-				return null;}}
-	 
-	 //ASK NURSE
-	 
-	 public Nurse askNurse() {
-		 try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Insert the nurse's name:");
+			}
+			return doc;	
+		}
+		
+		
+		public Nurse askForNurse() {
+			Nurse nurse = null;
+			try {
+				System.out.println("Write the name of the nurse: ");
 				String name = reader.readLine();
-			System.out.println("Insert the speciality:");
+				System.out.println("Write the name of the specialty: ");
 				String speciality = reader.readLine();
-			Nurse n= new Nurse (name, speciality,true);
-			return n;
-		 } 
-		 catch (Exception e) {
+				boolean availability = true;
+				System.out.println("Is the nurse available?:");
+				String yes_no = reader.readLine();
+				if(yes_no.equals("true")||yes_no.equals("yes")) {
+					availability = true;}
+				if(yes_no.equals("false")||yes_no.equals("no")) {
+					availability=false; }
+				while(!yes_no.equals("true")&&!yes_no.equals("yes")&&!yes_no.equals("false")&&!yes_no.equals("no")) {
+					System.out.println("Is the doctor available?:");
+					yes_no = reader.readLine();
+					if(yes_no.equals("true")||yes_no.equals("yes")) {
+						availability = true;}
+					if(yes_no.equals("false")||yes_no.equals("no")) {
+						availability=false; }
+				}			
+			nurse = new Nurse(name,speciality,availability);	
+			}catch(IOException e) {
 				e.printStackTrace();
-				return null;}}
-	 
-	 
-
+			}
+			return nurse;
+		}
+		
+		
+		public Drug askForDrug() {
+			Drug drug = null;
+			try {
+				System.out.println("Write the name of the drug: ");
+				String name = reader.readLine();
+				drug = new Drug(name);	
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return drug;
+		}
+		
+		
+		public Box askForBox() {
+			Box box = null;
+			try {
+				System.out.println("Write the name of the box-room: ");
+				String name= reader.readLine();
+				boolean availability = true;
+				box = new Box(name,availability);			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return box;			
+		}
+		
+		
+		public Admission askForAdmission()  {
+			Admission adm = null;
+			try {
+				System.out.println("Please, input the admission data:\n");
+				System.out.print("Patient`s SSD:\n");
+				listPatients();
+				int SSD = Integer.parseInt(reader.readLine());
+				Patient p= getPatient(SSD);
+				System.out.print("Doctors id in charge:\n");
+				listDoctors();
+				int doctor_id = Integer.parseInt(reader.readLine());
+				Doctor doctor = getDoctor(doctor_id);
+				System.out.print("Nurses id in charge:\n");
+				listNurses();
+				int nurse_id =  Integer.parseInt(reader.readLine());
+				Nurse nurse = getNurse(nurse_id);
+				System.out.print("Box id:\n");
+				listBoxes();
+				int box_id = Integer.parseInt(reader.readLine());
+				Box box = getBox(box_id);	
+				System.out.print("Arrival time (yyyy-MM-dd HH:mm):\n");
+				String dateS = reader.readLine();
+				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
+				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
+				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
+				System.out.print("Test: ");
+				String tests = reader.readLine();
+				System.out.println("\nThe patient is going to be internated");
+				boolean release = false;
+				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return adm;	
+			
+		}
 	 
 	
 	 
@@ -201,7 +295,8 @@ public class SQLManager {
 	 
 	 //INSERT PATIENTS
 	 
-	 public void insertPatient(Patient p) {
+	 public void createPatient() {
+		 Patient p= askForPatient();
 		 try {
 			 String sql = "INSERT INTO Patients (ssn, name, weight, height, genre, dob, blood_type) "
 						+ "VALUES (?,?,?,?,?,?,?);";
@@ -222,13 +317,14 @@ public class SQLManager {
 	 
 	 //INSERT DOCTORS
 	 
-	 public void insertDoctor(Doctor d) {
+	 public void createDoctor() {
+		 Doctor d= askForDoctor();
 		 try {
-			 String sql1 = "INSERT INTO Doctors (id, name, availability) "
+			 String sql1 = "INSERT INTO Doctors (name, speciality, availability) "
 						+ "VALUES (?,?,?);";
 				 	PreparedStatement prep = c.prepareStatement(sql1);
-				 	prep.setInt(1,d.getId());
-				 	prep.setString(2,d.getName());
+				 	prep.setString(1,d.getName());
+				 	prep.setString(2,d.getSpecialty());
 				 	prep.setBoolean(3,d.getAvailability());
 				 	prep.executeUpdate();
 				 	prep.close();} 
@@ -238,31 +334,15 @@ public class SQLManager {
 	 
 	 //INSERT NURSES
 	 
-	 public void insertNurses(Nurse n) {
-		 try {
-			 	
-			 	String sql1 = "INSERT INTO Nurses (id, name, availability) "
+	 public void createNurse() {
+		 Nurse n= askForNurse();
+		 try {	
+			 	String sql1 = "INSERT INTO Nurses (name, speciality, availability) "
 					+ "VALUES (?,?,?);";
 			 	PreparedStatement prep = c.prepareStatement(sql1);
-			 	prep.setInt(1,n.getId());
-			 	prep.setString(2,n.getName());
+			 	prep.setString(1,n.getName());
+			 	prep.setString(2,n.getSpecialty());
 			 	prep.setBoolean(3,n.getAvailability());
-			 	prep.executeUpdate();
-			 	prep.close();
-			 	} 
-		 catch (Exception e) {
-				e.printStackTrace();} }
-	 
-	 //INSERT PATIENT-DRUGS
-	 
-	 public void insertPatientAllergy(Patient p, Drug d) {
-		 try {
-			 	
-			 	String sql1 = "INSERT INTO Patient_Dugs (patient, drug) "
-					+ "VALUES (?,?);";
-			 	PreparedStatement prep = c.prepareStatement(sql1);
-			 	prep.setInt(1, p.getSSN());
-			 	prep.setInt(2, d.getId());
 			 	prep.executeUpdate();
 			 	prep.close();
 			 	} 
@@ -273,13 +353,13 @@ public class SQLManager {
 	 //INSERT DRUG
 	
 	 
-		public void insertDrug(Drug d) {
+		public void createDrug() {
+			Drug d= askForDrug();
 			 try {
-				 String sql1 = "INSERT INTO Drugs (id, name) "
-						+ "VALUES (?,?);";
+				 String sql1 = "INSERT INTO Drugs (name) "
+						+ "VALUES (?);";
 				 PreparedStatement prep = c.prepareStatement(sql1);
-				 prep.setInt(1, d.getId());
-				 prep.setString(2, d.getName());
+				 prep.setString(1, d.getName());
 				 prep.executeUpdate();
 				 prep.close();
 			     }
@@ -290,16 +370,13 @@ public class SQLManager {
 	 
 	 //INSERT BOX
 	 
-		public void insertBox() {
+		public void createBox() {
+			Box b= askForBox();
 			 try {
-				 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-				System.out.println("Write the name of the box-room: ");
-				String name= reader.readLine();
-				 System.out.println("traza");
-				 String sql1 = "INSERT INTO Boxes(name, availability) "
+				 String sql1 = "INSERT INTO Boxes (name, availability) "
 						+ "VALUES (?,?);";
 				 PreparedStatement prep = c.prepareStatement(sql1);
-				 prep.setString(1, name);
+				 prep.setString(1, b.getName());
 				 prep.setBoolean(2, true);
 				 prep.executeUpdate();
 				 prep.close();
@@ -311,61 +388,72 @@ public class SQLManager {
 		
 		 //INSERT ADMISSION
 		 
-		 public void insertAdmission(Admission a) {
+		 public void createAdmission() {
+			 Admission a=askForAdmission();
 			 try {
-				 	String sql = "INSERT INTO Admissions (id, arrival_time , test, release, doctor, nurse, box) "
+				 	String sql = "INSERT INTO Admissions (patient, arrival_time, test, doctor, nurse, box) "
 							+ "VALUES (?,?,?,?,?,?);";
 					PreparedStatement prep = c.prepareStatement(sql);
-					prep.setInt(1, a.getId());
+					prep.setInt(1, a.getPatient().getSSN());
 					prep.setTimestamp(2, a.getArrivalTime());
 					prep.setString(3, a.getTests());
 					prep.setInt(4, a.getDoctor().getId());
 					prep.setInt(5, a.getNurse().getId());
 					prep.setInt(6, a.getBox().getId());
 					prep.executeUpdate();
-					prep.close(); }
+					prep.close();
+					
+					PreparedStatement prep2;
+					String sql2;	
+					sql2 = "UPDATE Boxes SET availability=? WHERE id="+a.getBox().getId();
+						prep2 = c.prepareStatement(sql2);
+						prep2.setBoolean(1, false);
+						prep2.executeUpdate();		
+			 
+			 }
 			 catch (Exception e) {
 					e.printStackTrace();}}
 		
-		//Falta el insert admission-drugs porque falta el metodo de ASK
+
 		
-/*---------------------------------SELECT METHODS--------------------------------------*/		
+/*---------------------------------LIST METHODS--------------------------------------*/		
 		
 		
-   //SELECT ADMISSION
+   //LIST ADMISSION
 			
-			public void selectAdmissions() {
+			public void listAdmissions() {
 				try {
-					Patient p = new Patient ();
+					Patient p = null;
+					Doctor d= null;
+					Nurse n= null;
+					Box b= null;
 					Statement stmt1 = c.createStatement();
 					String sql1 = "SELECT * FROM Admissions";
 					ResultSet rs = stmt1.executeQuery(sql1);
 						while (rs.next()) {
 							int id = rs.getInt("id");
-							
-							String dateS = reader.readLine();
-							DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
-							LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
-							Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
-							String test = rs.getString("test");
-							boolean release=rs.getBoolean("release");
-							int doctorID= rs.getInt("doctor");
-							Doctor d= obtainDoctor(doctorID);
-							int nurseID= rs.getInt("nurse");
-							Nurse n= obtainNurse(nurseID);
-							int boxID= rs.getInt("box");
-							Box b= obtainBox(boxID);
+							int patient_id= rs.getInt("patient");
+							p= getPatient(patient_id);
+							Timestamp arrivalTime= rs.getTimestamp("arrival_time");
+							String test= rs.getString("test");
+							Boolean release= rs.getBoolean("release");
+							int doctor_id= rs.getInt("doctor");
+							d= getDoctor(doctor_id);
+							int nurse_id= rs.getInt("nurse");
+							n= getNurse(nurse_id);
+							int box_id= rs.getInt("box");
+							b= getBox(box_id);
 
-							Admission admission = new Admission(id, null, arrivalTime, test, release, n, d, b );						
+							Admission admission = new Admission(id, p, arrivalTime, test, release, n, d, b );						
 							System.out.println(admission);}
 						rs.close();
 						stmt1.close();}
 				catch (Exception e) {
 					e.printStackTrace();}}
 
-	 //SELECT PATIENT
+	 //LIST PATIENT
 	 	
-	 public void selectPatients() {
+	 public void listPatients() {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Patients";
@@ -378,16 +466,16 @@ public class SQLManager {
 				 	String genre = rs.getString("genre");
 				 	Date dob = rs.getDate ("dob");
 				 String bloodType= rs.getString("blood_type");	
-				 	Patient patient = new Patient (id,name,weight,height,genre,dob, bloodType, null);
+				 	Patient patient = new Patient (id,name,weight,height,genre,dob, bloodType);
 				 	System.out.println(patient);}
 			 	rs.close();
 			 	stmt.close();}
 		 catch(Exception e){
 			 e.printStackTrace();}}
 	 
-	 //SELECT DOCTOR
+	 //LIST DOCTOR
 	 
-	 public void selectDoctors() {
+	 public void listDoctors() {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Doctors";
@@ -405,9 +493,9 @@ public class SQLManager {
 		 catch(Exception e) {
 			 e.printStackTrace();}}
 	 
-	 //SELECT NURSE
+	 //LIST NURSE
 	 
-	 public void selectNurses() {
+	 public void listNurses() {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Nurses";
@@ -424,12 +512,12 @@ public class SQLManager {
 		 catch(Exception e) {
 			 e.printStackTrace(); }}
 	 
-	 //SELECT BOX 
+	 //LIST BOX 
 	 
-	 public void selectBox() {
+	 public void listBoxes() {
 		 try {
 			 Statement stmt  = c.createStatement();
-			 String sql = "SELECT * FROM Box";
+			 String sql = "SELECT * FROM Boxes";
 			 ResultSet rs = stmt.executeQuery(sql);
 			 while(rs.next()) {
 				 int id = rs.getInt("id");
@@ -443,15 +531,89 @@ public class SQLManager {
 			 e.printStackTrace();
 		 }
 	 }
+	 
+	//LIST DRUGS
 	
+	 public void listDrugs() {
+		 try {
+			 Statement stmt  = c.createStatement();
+			 String sql = "SELECT * FROM Drugs";
+			 ResultSet rs = stmt.executeQuery(sql);
+			 while(rs.next()) {
+				 int id = rs.getInt("id");
+				 String name = rs.getString("name");
+				 Drug d= new Drug(id, name);
+				 System.out.println(d);
+			 }
+			 
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	 }
+	 
+	 
+	 /*---------------------------------READ METHODS--------------------------------------*/
+	 
+	 
+	 public void readPatient() {
+		 try {
+	    System.out.print("Write the patient's SSD: \n");
+	    listPatients();
+			int pat_SSD = Integer.parseInt(reader.readLine());
+			Patient p= getPatient(pat_SSD);
+			System.out.println(p);
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();}}
+	 
+	 public void readDoctor() {
+		 try {
+		 System.out.print("Write the doctor's id: \n");
+		 listDoctors();
+			int id = Integer.parseInt(reader.readLine());
+			Doctor d= getDoctor(id);
+			System.out.println(d);
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();}}
+	 
+	 public void readNurse() {
+		 try {
+		 System.out.print("Write the nurse's id: \n");
+		 listNurses();
+			int id = Integer.parseInt(reader.readLine());
+			Nurse n= getNurse(id);
+			System.out.println(n);
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();}}
+	 
+	 public void readBox() {
+		 try {
+		 System.out.print("Write the box's id: \n");
+		 listBoxes();
+			int id = Integer.parseInt(reader.readLine());
+			Box b= getBox(id);
+			System.out.println(b);
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();}}
+	 
+	 public void readAdmission() {
+		 try {
+		 System.out.print("Write the admission's id: \n");
+		 listAdmissions();
+			int id = Integer.parseInt(reader.readLine());
+			Admission a= getAdmission(id);
+			System.out.println(a);
+		 }
+		 catch(Exception e) {
+			 e.printStackTrace();}}
 	 
 	 
 	 
-	 /*---------------------------------OBTAIN METHODS--------------------------------------*/
-	 
-	 
-	 //-------OBTAIN DOCTOR----//
-	 public Doctor obtainDoctor(int id) {
+	 //-------GET DOCTOR----//
+	 public Doctor getDoctor(int id) {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Doctors WHERE id="+id;
@@ -470,8 +632,8 @@ public class SQLManager {
 			 e.printStackTrace();
 			 return null;}}
 	 
-	 //-------OBTAIN NURSE----//
-	 public Nurse obtainNurse(int id) {
+	 //-------GET NURSE----//
+	 public Nurse getNurse(int id) {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Nurses WHERE id="+id;
@@ -489,8 +651,8 @@ public class SQLManager {
 			 e.printStackTrace();
 			 return null;}}
 	 
-	 //-------OBTAIN BOX----//
-	 public Box obtainBox(int id) {
+	 //-------GET BOX----//
+	 public Box getBox(int id) {
 		 try {
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Boxes WHERE id="+id;
@@ -509,11 +671,11 @@ public class SQLManager {
 			 return null;}}
 	 
 	 
-	//--------OBTAIN PATIENTS----//
-	public Patient obtainPatient(int id_patient) {
+	//--------GET PATIENTS----//
+	public Patient getPatient(int id_patient) {
 		 try {
 			 Statement stmt = c.createStatement();
-			 String sql = "SELECT * FROM patients WHERE id= "+id_patient+ " ";
+			 String sql = "SELECT * FROM Patients WHERE ssn= "+id_patient+ " ";
 			 Patient patient=null;
 			 Admission admission = null;
 			 ResultSet rs = stmt.executeQuery(sql); 
@@ -523,13 +685,9 @@ public class SQLManager {
 				 	Double weight = rs.getDouble("weight");
 				 	Double height = rs.getDouble("height");
 				 	String genre = rs.getString("genre");
-				 	String dob = rs.getString("dob");
-				 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    			    LocalDate date = LocalDate.parse(dob, formatter);
-    			    Date dob2= Date.valueOf(date);
+				 	Date dob = rs.getDate("dob");
 				 	String bloodType = rs.getString("blood_type");
-				 	admission = new Admission(ssn);
-					patient = new Patient (ssn,name,weight,height,genre,dob2,bloodType,admission);
+					patient = new Patient (ssn,name,weight,height,genre,dob,bloodType);
 			 	rs.close();
 			 	stmt.close();
 			 	return patient;
@@ -540,30 +698,33 @@ public class SQLManager {
 		
 		 return null;}
 	 
-	 //-------OBTAIN ADMISSION-----//
+	 //-------GET ADMISSION-----//
 	 
-	public Admission obtainAdmission(int id_admission) {
+	public Admission getAdmission(int id_admission) {
+		Patient p = null;
+		Doctor d= null;
+		Nurse n= null;
+		Box b= null;
 	 try {
 		Statement stmt = c.createStatement();
-		String sql = "SELECT * FROM Admission WHERE id= "+id_admission+ " ";
+		String sql = "SELECT * FROM Admissions WHERE id= "+id_admission+ " ";
 		Admission admission=null;
 		Patient patient = null;
 		ResultSet rs = stmt.executeQuery(sql); 
 			while (rs.next() ) {
-			 	//int id = rs.getInt("id");
-			 	LocalDateTime arrivalTime =  rs.getTimestamp("arrival_time").toLocalDateTime();
-			 	String test = rs.getString("test");
-                String dateS = rs.getString("arrivalTime");
-				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
-				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
-				Timestamp arrival_Time = Timestamp.valueOf(localDateTime);
-				Patient p = (Patient) rs.getObject("patient");
-				Doctor d = (Doctor) rs.getObject("doctor");
-				Nurse n = (Nurse) rs.getObject("nurse");
-				Box b = (Box) rs.getObject("box");
-				Boolean release = rs.getBoolean("release");
-				
-			 	admission = new Admission (id_admission,p,arrival_Time,test,release,n,d,b);
+				int id = rs.getInt("id");
+				int patient_id= rs.getInt("patient");
+				p= getPatient(patient_id);
+				Timestamp arrivalTime= rs.getTimestamp("arrival_time");
+				String test= rs.getString("test");
+				Boolean release= rs.getBoolean("release");
+				int doctor_id= rs.getInt("doctor");
+				d= getDoctor(doctor_id);
+				int nurse_id= rs.getInt("nurse");
+				n= getNurse(nurse_id);
+				int box_id= rs.getInt("box");
+				b= getBox(box_id);
+			 	admission = new Admission(id, p, arrivalTime, test, release, n, d, b );
 			 	}
 		 	rs.close();
 		 	stmt.close();
@@ -582,10 +743,10 @@ public class SQLManager {
 	public void deletePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			listPatients();
 			System.out.println("Choose a patient to delete, type its ID: ");
-				selectPatients();
 				int p_id = Integer.parseInt(reader.readLine());
-				String sql = "DELETE FROM patients WHERE ssn=?";
+				String sql = "DELETE FROM Patients WHERE ssn=?";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, p_id);
 				prep.executeUpdate();
@@ -595,9 +756,10 @@ public class SQLManager {
 
 	//DELETE DOCTORS
 	
-	public void deleteDoctors() {
+	public void deleteDoctor() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			listDoctors();
 			System.out.println("Choose a doctor to delete, type its ID: ");
 				int d_id = Integer.parseInt(reader.readLine());
 				String sql = "DELETE FROM Doctors WHERE id=?";
@@ -610,9 +772,10 @@ public class SQLManager {
 	
 	//DELETE NURSES
 	
-	public void deleteNurses() {
+	public void deleteNurse() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			listNurses();
 			System.out.println("Choose a nurse to delete, type its ID: ");
 				int n_id = Integer.parseInt(reader.readLine());
 				String sql = "DELETE FROM Nurses WHERE id=?";
@@ -629,6 +792,7 @@ public class SQLManager {
 	public void deleteBox() {
 		try {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		listBoxes();
 		System.out.println("Choose a box to delete, type its ID: ");
 		int box_id= Integer.parseInt(reader.readLine());
 		String sql= "DELETE FROM Boxes WHERE id=?";
@@ -643,17 +807,67 @@ public class SQLManager {
 		
 	}
 	
+	//DELETE DRUG
+	
+	public void deleteDrug() {
+		try {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		listDrugs();
+		System.out.println("Choose a drug to delete, type its ID: ");
+		int drug_id= Integer.parseInt(reader.readLine());
+		String sql= "DELETE FROM Drugs WHERE id=?";
+		PreparedStatement prep =c.prepareStatement(sql);
+		prep.setInt(1, drug_id);
+		prep.executeUpdate();
+		System.out.println("Deletion finished.");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//DELETE ADMISSION
+	
+	public void deleteAdmission() {
+		try {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		listAdmissions();
+		System.out.println("Choose an admission to delete, type its ID: ");
+		int adm_id= Integer.parseInt(reader.readLine());
+		Admission a=getAdmission(adm_id);
+		String sql= "DELETE FROM Admissions WHERE id=?";
+		PreparedStatement prep =c.prepareStatement(sql);
+		prep.setInt(1, adm_id);
+		prep.executeUpdate();
+		
+		PreparedStatement prep2;
+		String sql2;	
+		sql2 = "UPDATE Boxes SET availability=? WHERE id="+a.getBox().getId();
+			prep2 = c.prepareStatement(sql2);
+			prep2.setBoolean(1, true);
+			prep2.executeUpdate();	
+		System.out.println("Deletion finished.");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 /*---------------------------------UPDATE METHODS--------------------------------------*/
 	
 	//UPDATE PATIENTS				 
+	//Creo que es mejor dejar los updates en JPA
 	
-	public void updatePatient() {
+	/*public void updatePatient() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a patient, type its ID: ");
 				int p_id = Integer.parseInt(reader.readLine());
-				Patient patient=obtainPatient(p_id);
+				Patient patient= readPatient(p_id);
 			System.out.println("New name:");
 				String newName= reader.readLine();
 					if(newName.equals("")) {
@@ -680,17 +894,13 @@ public class SQLManager {
 				String newDob= reader.readLine();
 				Timestamp newdob=null;
 					if(newDob.equals("")) {
-						
 						DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
 						LocalDateTime localDateTime = LocalDateTime.parse(newDob, formatterWithTime);		
-					    newdob = Timestamp.valueOf(localDateTime);
-						
-						}
+					    newdob = Timestamp.valueOf(localDateTime);}
 			System.out.println("New bloodtype:");
 			    String newBloodType = reader.readLine();
 			        if(newBloodType.equals("")){
-			        	newBloodType=patient.getBloodType();
-			        }
+			        	newBloodType=patient.getBloodType();}
 			
 			PreparedStatement prep;
 			String sql;	
@@ -715,7 +925,7 @@ public class SQLManager {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a doctor, type its ID: ");
 				int n_id = Integer.parseInt(reader.readLine());
-				Doctor doctor = new Doctor(n_id);
+				Doctor doctor = readDoctor(n_id);
 				
 			System.out.println("New name:");
 				String newName= reader.readLine();
@@ -727,20 +937,24 @@ public class SQLManager {
 						newSpecialty= doctor.getSpecialty();}
 			System.out.println("It is available?(write yes or no): ");
 			    String yes_no = reader.readLine();
-			    Boolean availability = true;
-		            if(yes_no.equals("YES")) {
-		            	availability = true;
-		            }
-		            if(yes_no.equals("NO")) {
-		            	availability = false;
-		            }
+			    boolean available;
+				 boolean newAvailability=doctor.getAvailability();
+			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+	            	available=true;
+	            	if(available!=doctor.getAvailability()) {
+	            	newAvailability=true;}}
+	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+	            	available=false;
+	            	if(available!=doctor.getAvailability()) {
+	            	newAvailability=false;}
+	            }
 			PreparedStatement prep;
 			String sql;	
 			sql = "UPDATE Doctor SET name=?, speciality=?, availability=? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				prep.setString(1, newName);
 				prep.setString(2, newSpecialty);
-				prep.setBoolean(3, availability);
+				prep.setBoolean(3, newAvailability);
 				prep.setInt(4, n_id);
 				prep.executeUpdate();
 			System.out.println("Update finished.");}
@@ -754,7 +968,7 @@ public class SQLManager {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a nurse, type its ID: ");
 				int n_id = Integer.parseInt(reader.readLine());
-				Nurse nurse = new Nurse(n_id);
+				Nurse nurse = readNurse(n_id);
 				
 			System.out.println("New name:");
 				String newName= reader.readLine();
@@ -766,20 +980,24 @@ public class SQLManager {
 						newSpecialty= nurse.getSpecialty();}
 			System.out.println("It is available?(write yes or no): ");
 			    String yes_no = reader.readLine();
-			    Boolean availability = true;
-		            if(yes_no.equals("YES")) {
-		            	availability = true;
-		            }
-		            if(yes_no.equals("NO")) {
-		            	availability = false;
-		            }
+			    boolean available;
+				 boolean newAvailability=nurse.getAvailability();
+			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+	            	available=true;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=true;}}
+	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+	            	available=false;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=false;}
+	            }
 			PreparedStatement prep;
 			String sql;	
 			sql = "UPDATE Nurses SET name=?, speciality=?, availability=? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				prep.setString(1, newName);
 				prep.setString(2, newSpecialty);
-				prep.setBoolean(3, availability);
+				prep.setBoolean(3, newAvailability);
 				prep.setInt(4, n_id);
 				prep.executeUpdate();
 			System.out.println("Update finished.");}
@@ -792,25 +1010,39 @@ public class SQLManager {
 				 BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
 				 System.out.println("Choose box, type its ID: ");
 				 int box_id = Integer.parseInt(reader.readLine());
-				 String sql="UPDATE Box SET box=?, availability = ?";
+				 Box box= readBox(box_id);
+				 boolean available;
+				 boolean newAvailability=box.getAvailability();
+				 String sql="UPDATE Box SET name=?, availability = ?";
 				 PreparedStatement prep = c.prepareStatement(sql);
-				 System.out.println("Write if the box is available or occupied: ");
+				 System.out.println("New name: ");
+				 String newName = reader.readLine();
+				 if(newName.equals("")) {
+						newName= box.getName();}
+				 System.out.println("New availability. Is it available?: ");
 				 String yes_no = reader.readLine();
-				    Boolean availability = true;
-			            if(yes_no.equals("YES")) {
-			            	availability = true;
+			            if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+			            	available=true;
+			            	if(available!=box.getAvailability()) {
+			            	newAvailability=true;}}
+			            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+			            	available=false;
+			            	if(available!=box.getAvailability()) {
+			            	newAvailability=false;}
 			            }
-			            if(yes_no.equals("NO")) {
-			            	availability = false;
-			            }
-			     prep.setInt(1, box_id);
-				 prep.setBoolean(2, availability);
+			     prep.setString(1, newName);
+				 prep.setBoolean(2, newAvailability);
 				 prep.executeUpdate();
 				 System.out.println("Update finished.");
 				 }
 		 catch(Exception e) {
 			 e.printStackTrace();
 		 }}
+		 
+		 */
+			
+		 
+		 
 		 
 	
 }
