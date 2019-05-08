@@ -273,11 +273,8 @@ public class JDBCManager implements Manager{
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
 				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
 				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
-				System.out.print("Test: ");
-				String tests = reader.readLine();
 				System.out.println("\nThe patient is going to be internated");
-				boolean release = false;
-				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);			
+				adm = new Admission(p,arrivalTime,nurse,doctor, box);			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -505,7 +502,18 @@ public class JDBCManager implements Manager{
 			 		String speciality = rs.getString("speciality");
 			 		Boolean availability=rs.getBoolean("availability");
 			 		Nurse nurse = new Nurse (id,name,speciality,availability);
-			 		System.out.println(nurse);}
+			 		
+			 		Statement stmt2 = c.createStatement();
+					String sql2 = "SELECT id FROM Admissions WHERE nurse= "+id;
+					ResultSet rs2 = stmt2.executeQuery(sql2);
+					List <Admission> admissions= new ArrayList<Admission>();
+					Admission adm=null;
+					while (rs2.next()) {
+						adm= getAdmission(rs2.getInt("id"));
+						admissions.add(adm);}
+					nurse.setAdmission(admissions);
+			System.out.println(nurse.toString2());
+			 		}
 			 	rs.close();
 			 	stmt.close(); } 
 		 catch(Exception e) {
@@ -582,16 +590,7 @@ public class JDBCManager implements Manager{
 		 listNurses();
 			int id = Integer.parseInt(reader.readLine());
 			Nurse n= getNurse(id);
-			Statement stmt = c.createStatement();
-			String sql = "SELECT id FROM Admissions WHERE nurse= "+id;
-			ResultSet rs = stmt.executeQuery(sql);
-			List <Admission> admissions= new ArrayList<Admission>();
-			Admission adm=null;
-			while (rs.next()) {
-				adm= getAdmission(rs.getInt("id"));
-				admissions.add(adm);}
-			n.setAdmission(admissions);
-			System.out.println(n.toString2());
+			System.out.println(n);
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();}}

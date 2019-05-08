@@ -168,6 +168,17 @@ public class JPAManager implements Manager {
 				boolean availability = true;
 				System.out.println("Is the doctor available?:");
 				String yes_no = reader.readLine();
+				if(yes_no.equals("true")||yes_no.equals("yes")) {
+					availability = true;}
+				if(yes_no.equals("false")||yes_no.equals("no")) {
+					availability=false; }
+				while(!yes_no.equals("true")&&!yes_no.equals("yes")&&!yes_no.equals("false")&&!yes_no.equals("no")) {
+					System.out.println("Is the doctor available?:");
+					yes_no = reader.readLine();
+					if(yes_no.equals("true")||yes_no.equals("yes")) {
+						availability = true;}
+					if(yes_no.equals("false")||yes_no.equals("no")) {
+						availability=false; }}
 				System.out.println("Write the path of the file, none if there is not photo:");
 				String fileName = reader.readLine();
 				if(!fileName.equals("none")){
@@ -181,12 +192,7 @@ public class JPAManager implements Manager {
 					bytesBlob = null;
 				}
 				
-				if(yes_no.equals(true)) {
-					availability = true;
-				}
-				else{
-					availability = false;
-				}
+				
 				doc = new Doctor(name,speciality,availability,bytesBlob);		
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -203,12 +209,18 @@ public class JPAManager implements Manager {
 				boolean availability = true;
 				System.out.println("Is the nurse available?:");
 				String yes_no = reader.readLine();
-				if(yes_no.equals(true)) {
-					availability = true;
-				}
-				else{
-					availability = false;
-				}			
+				if(yes_no.equals("true")||yes_no.equals("yes")) {
+					availability = true;}
+				if(yes_no.equals("false")||yes_no.equals("no")) {
+					availability=false; }
+				while(!yes_no.equals("true")&&!yes_no.equals("yes")&&!yes_no.equals("false")&&!yes_no.equals("no")) {
+					System.out.println("Is the doctor available?:");
+					yes_no = reader.readLine();
+					if(yes_no.equals("true")||yes_no.equals("yes")) {
+						availability = true;}
+					if(yes_no.equals("false")||yes_no.equals("no")) {
+						availability=false; }
+				}						
 			nurse = new Nurse(name,speciality,availability);	
 			}catch(IOException e) {
 				e.printStackTrace();
@@ -272,10 +284,7 @@ public class JPAManager implements Manager {
 				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
 				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
 				System.out.print("Test: ");
-				String tests = reader.readLine();
-				System.out.println("\nThe patient is going to be internated");
-				boolean release = false;
-				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);		
+				adm = new Admission(p,arrivalTime, nurse,doctor, box);		
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
