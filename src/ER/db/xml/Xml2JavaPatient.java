@@ -14,7 +14,7 @@ import javax.xml.bind.Unmarshaller;
 import ER.POJOS.Patient;
 import ER.POJOS.Admission;
 
-public class Xml2JavaReport {
+public class Xml2JavaPatient {
 
 	private static final String PERSISTENCE_PROVIDER = "company-provider";
 	private static EntityManagerFactory factory;
