@@ -7,7 +7,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-public class Xml2HtmlReport {
+public class Xml2HtmlPatient {
 	
 	/**
 	 * Simple transformation method. You can use it in your project.
