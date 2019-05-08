@@ -26,7 +26,7 @@ public class Xml2HtmlReport {
 	}
 
 	public static void main(String[] args) {
-		simpleTransform("./xmls/External-Report.xml", "./xmls/Report-Style.xslt", "./xmls/External-Report.html");
+		simpleTransform("./xmls/External-Patient.xml", "./xmls/Patient-Style.xslt", "./xmls/External-Patient.html");
 
 	}
 }

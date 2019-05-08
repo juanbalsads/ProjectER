@@ -50,13 +50,13 @@ public class Java2XmlPatient {
 		int p_id = Integer.parseInt(reader.readLine());
 		Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 		q2.setParameter(1, p_id);
-		Patient report = (Patient) q2.getSingleResult();
+		Patient patient = (Patient) q2.getSingleResult();
 		
 		// Use the Marshaller to marshal the Java object to a file
 		File file = new File("./xmls/Example-Patient.xml");
-		marshaller.marshal(report, file);
+		marshaller.marshal(patient, file);
 		// Printout
-		marshaller.marshal(report, System.out);
+		marshaller.marshal(patient, System.out);
 
 	}
 }
