@@ -10,8 +10,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import ER.POJOS.*;
+import ER.db.xml.utils.*;
 
 
 @Entity
@@ -37,6 +39,7 @@ public class Admission implements Serializable{
 	
 	@Column(name="arrival_time")
 	@XmlAttribute
+	@XmlJavaTypeAdapter(SQLTimestampAdapter.class)
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
