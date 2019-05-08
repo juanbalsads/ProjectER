@@ -22,7 +22,7 @@ import ER.jpa.JPAManager;
 //								  Nurses(W),Boxes(W),Admission(),Drug(W)
 //		
 private static JPAManager manager= new JPAManager();
-private static SQLManager manager1= new SQLManager();	
+private static JDBCManager manager1= new JDBCManager();	
 public static void main(String args[]) throws NumberFormatException, IOException {
 			manager1.createTables();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -34,7 +34,7 @@ public static void main(String args[]) throws NumberFormatException, IOException
 			switch (selection) {
 			case 0:
 				manager1.disconnect();
-				manager.disconnectEntity();
+				manager.disconnect();
 				System.out.println("Bye!");
 				break;
 			case 1: {
