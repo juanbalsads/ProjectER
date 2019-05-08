@@ -37,3 +37,8 @@ Hello Rodrigo, this week we continued with the jdbc methods, trying to integrate
  Hello Rodrigo, this week we have been trying to work with all the JPA methods (create, read, update and delete)
  to make sure that they work correctly and we have started also to write the XML-DTD language that will be sending
  it to you by email. 
+ 
+ (08-05-2019)
+ Hello Rodrigo, this week we have finished with JDBC. Also, JPA it´s nearly over but it needs minor corrections.
+ We wrote the Xml annotatitons and made the marshall and unmarshall methods. Our plan is to start with the graphical
+ interface and with html. 

@@ -10,8 +10,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import ER.POJOS.*;
+import ER.db.xml.utils.*;
 
 
 @Entity
@@ -36,13 +38,14 @@ public class Admission implements Serializable{
 	private Patient patient;
 	
 	@Column(name="arrival_time")
-	@XmlAttribute
+	@XmlElement
+	@XmlJavaTypeAdapter(SQLTimestampAdapter.class)
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
-	@XmlAttribute
+	@XmlElement
 	private String tests;
-	@XmlAttribute
+	@XmlElement
 	private boolean release;
 	
 	@XmlTransient
@@ -100,6 +103,19 @@ public class Admission implements Serializable{
 		this.tests = tests;
 		this.doctor= doctor;
 		this.release = release;
+		this.nurse = nurse;
+		this.box= box;
+		
+		this.drug= new ArrayList<Drug>();
+	}
+	
+	public Admission( Patient patient, Timestamp arrivalTime,  Nurse nurse, Doctor doctor, Box box) {
+		super();
+		this.patient= patient;
+		this.arrivalTime = arrivalTime;
+		this.tests = tests;
+		this.doctor= doctor;
+		this.release = true;
 		this.nurse = nurse;
 		this.box= box;
 		

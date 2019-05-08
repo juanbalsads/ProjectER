@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import ER.POJOS.*;
-import ER.jdbc.SQLManager;
+import ER.jdbc.JDBCManager;
 import ER.jpa.JPAManager;
 
 public class UI2 {
 
-	private static SQLManager manager= new SQLManager();
+	private static JDBCManager manager= new JDBCManager();
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub

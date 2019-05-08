@@ -10,10 +10,10 @@ import org.xml.sax.SAXException;
 
 import ER.db.xml.utils.CustomErrorHandler;
 
-public class DTDCheckerReport {
+public class DTDCheckerPatient {
 
     public static void main(String[] args) {
-        File xmlFile = new File("./xmls/External-Report.xml"); 
+        File xmlFile = new File("./xmls/External-Patient.xml"); 
         try {
         	// Create a DocumentBuilderFactory
             DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();

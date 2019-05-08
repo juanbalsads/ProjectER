@@ -7,7 +7,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-public class Xml2HtmlReport {
+public class Xml2HtmlPatient {
 	
 	/**
 	 * Simple transformation method. You can use it in your project.
@@ -26,7 +26,7 @@ public class Xml2HtmlReport {
 	}
 
 	public static void main(String[] args) {
-		simpleTransform("./xmls/External-Report.xml", "./xmls/Report-Style.xslt", "./xmls/External-Report.html");
+		simpleTransform("./xmls/External-Patient.xml", "./xmls/Patient-Style.xslt", "./xmls/External-Patient.html");
 
 	}
 }

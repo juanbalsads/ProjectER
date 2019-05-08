@@ -46,17 +46,17 @@ public class Java2XmlPatient {
 		// Choose the report to turn into an XML
 		// Choose his new department
 		printReports();
-		System.out.print("Choose a report to turn into an XML file:");
+		System.out.print("Choose a patient to turn into an XML file:");
 		int p_id = Integer.parseInt(reader.readLine());
 		Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 		q2.setParameter(1, p_id);
-		Patient report = (Patient) q2.getSingleResult();
+		Patient patient = (Patient) q2.getSingleResult();
 		
 		// Use the Marshaller to marshal the Java object to a file
 		File file = new File("./xmls/Example-Patient.xml");
-		marshaller.marshal(report, file);
+		marshaller.marshal(patient, file);
 		// Printout
-		marshaller.marshal(report, System.out);
+		marshaller.marshal(patient, System.out);
 
 	}
 }
