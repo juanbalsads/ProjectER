@@ -12,37 +12,36 @@ import java.sql.*;
 import java.time.*;
 
 import ER.POJOS.*;
+import Manager.Manager;
+
 import java.sql.*
 ;
 
-public class SQLManager {
+public class JDBCManager implements Manager{
 	  Connection c;
 	  BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 	 
 	 
-	 public SQLManager() {
+	 public JDBCManager() {
 		super();
 		connect();
 	}
 
 
-	public boolean connect() {
+	public void connect() {
 	 try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:./db/ProjectER.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
-			return true;
-			
-			
 		} catch (Exception e) {
-			return false;} }
+			e.printStackTrace();;} }
 	 
 	 
-	 public boolean disconnect() {
+	 public void disconnect() {
 		 try {  c.close();
-				return true;} 
+				 } 
 		 catch (Exception e) {
-				return false; } }
+				e.printStackTrace(); } }
 	 
 	 public void createTables() {
 		 try {
@@ -583,7 +582,16 @@ public class SQLManager {
 		 listNurses();
 			int id = Integer.parseInt(reader.readLine());
 			Nurse n= getNurse(id);
-			System.out.println(n);
+			Statement stmt = c.createStatement();
+			String sql = "SELECT id FROM Admissions WHERE nurse= "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			List <Admission> admissions= new ArrayList<Admission>();
+			Admission adm=null;
+			while (rs.next()) {
+				adm= getAdmission(rs.getInt("id"));
+				admissions.add(adm);}
+			n.setAdmission(admissions);
+			System.out.println(n.toString2());
 		 }
 		 catch(Exception e) {
 			 e.printStackTrace();}}
@@ -852,6 +860,94 @@ public class SQLManager {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+
+	@Override
+	public void readDrug() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updatePatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateAdmission() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateDrug() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateNurse() {
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Choose a nurse, type its ID: ");
+				int n_id = Integer.parseInt(reader.readLine());
+				Nurse nurse = getNurse(n_id);
+				
+			System.out.println("New name:");
+				String newName= reader.readLine();
+					if(newName.equals("")) {
+						newName= nurse.getName();}
+			System.out.println("New specialty:");
+				String newSpecialty= reader.readLine();
+					if(newSpecialty.equals("")) {
+						newSpecialty= nurse.getSpecialty();}
+			System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    boolean available;
+				 boolean newAvailability=nurse.getAvailability();
+			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+	            	available=true;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=true;}}
+	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+	            	available=false;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=false;}
+	            }
+			PreparedStatement prep;
+			String sql;	
+			sql = "UPDATE Nurses SET name=?, speciality=?, availability=? WHERE id=?";
+				prep = c.prepareStatement(sql);
+				prep.setString(1, newName);
+				prep.setString(2, newSpecialty);
+				prep.setBoolean(3, newAvailability);
+				prep.setInt(4, n_id);
+				prep.executeUpdate();
+			System.out.println("Update finished.");
+		}
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	}
+
+
+	@Override
+	public void updateBox() {
+		// TODO Auto-generated method stub
 		
 	}
 	

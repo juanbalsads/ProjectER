@@ -13,21 +13,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import ER.POJOS.*;
+import Manager.Manager;
 import sample.db.graphics.ImageWindow;
 
 
 
-public class JPAManager {
+public class JPAManager implements Manager {
     
 	private static EntityManager em;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 		public JPAManager() {
 			super();
-			connectEntity();
+			connect();
 		}
 		
-		public static void connectEntity() {
+		public void connect() {
 			
 		    em = Persistence.createEntityManagerFactory("projectER").createEntityManager();
 		    em.getTransaction().begin();
@@ -36,7 +37,7 @@ public class JPAManager {
 		    
 		}
 		
-		public static void disconnectEntity() {
+		public void disconnect() {
 			em.close();
 		}
 	
