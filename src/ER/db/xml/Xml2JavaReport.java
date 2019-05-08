@@ -1,7 +1,7 @@
 package ER.db.xml;
 
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,9 +27,10 @@ public class Xml2JavaReport {
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 		// Use the Unmarshaller to unmarshal the XML document from a file
-		File file = new File("./xmls/External-Report.xml");
+		File file = new File("./xmls/External-Patient.xml");
 		Patient p = (Patient) unmarshaller.unmarshal(file);
-
+		List <Admission> admission;
+		
 		// Print the patient
 		System.out.println("Patient:");
 		System.out.println("SSN:"+ p.getSSN());
@@ -40,8 +41,8 @@ public class Xml2JavaReport {
 		System.out.println("DOB: " + p.getDob());
 		System.out.println("Blood_Type: "+ p.getBloodType());
 		
-		List<Admission> admission = .getAdmission();
-		for (Admision a : admission) {
+		admission = new ArrayList<Admission>();
+		for (Admission a : admission) {
 			System.out.println("Admission: " + a.getId());
 		}
 
