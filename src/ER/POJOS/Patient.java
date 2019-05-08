@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Patient")
-@XmlType(propOrder = {"ssn","name","weight","height","genre","dob","bloodType","admission"})
+@XmlType(propOrder = {"ssn","name","weight","height","genre","dob","bloodype","Admission"})
 
 public class Patient implements Serializable {
 	private static final long serialVersionUID = -5716647307754030719L;
@@ -42,6 +42,7 @@ public class Patient implements Serializable {
 	private String genre;
 	@XmlElement
 	private Date dob;
+	
 	@Column(name="blood_type")
 	@XmlAttribute
 	private String bloodType;
