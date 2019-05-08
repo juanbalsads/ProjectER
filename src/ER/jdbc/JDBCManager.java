@@ -12,37 +12,36 @@ import java.sql.*;
 import java.time.*;
 
 import ER.POJOS.*;
+import Manager.Manager;
+
 import java.sql.*
 ;
 
-public class SQLManager {
+public class JDBCManager implements Manager{
 	  Connection c;
 	  BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
 	 
 	 
-	 public SQLManager() {
+	 public JDBCManager() {
 		super();
 		connect();
 	}
 
 
-	public boolean connect() {
+	public void connect() {
 	 try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:./db/ProjectER.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
-			return true;
-			
-			
 		} catch (Exception e) {
-			return false;} }
+			e.printStackTrace();;} }
 	 
 	 
-	 public boolean disconnect() {
+	 public void disconnect() {
 		 try {  c.close();
-				return true;} 
+				 } 
 		 catch (Exception e) {
-				return false; } }
+				e.printStackTrace(); } }
 	 
 	 public void createTables() {
 		 try {
@@ -274,11 +273,8 @@ public class SQLManager {
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
 				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
 				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
-				System.out.print("Test: ");
-				String tests = reader.readLine();
 				System.out.println("\nThe patient is going to be internated");
-				boolean release = false;
-				adm = new Admission(p,arrivalTime,tests,release, nurse,doctor, box);			
+				adm = new Admission(p,arrivalTime,nurse,doctor, box);			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -506,7 +502,18 @@ public class SQLManager {
 			 		String speciality = rs.getString("speciality");
 			 		Boolean availability=rs.getBoolean("availability");
 			 		Nurse nurse = new Nurse (id,name,speciality,availability);
-			 		System.out.println(nurse);}
+			 		
+			 		Statement stmt2 = c.createStatement();
+					String sql2 = "SELECT id FROM Admissions WHERE nurse= "+id;
+					ResultSet rs2 = stmt2.executeQuery(sql2);
+					List <Admission> admissions= new ArrayList<Admission>();
+					Admission adm=null;
+					while (rs2.next()) {
+						adm= getAdmission(rs2.getInt("id"));
+						admissions.add(adm);}
+					nurse.setAdmission(admissions);
+			System.out.println(nurse.toString2());
+			 		}
 			 	rs.close();
 			 	stmt.close(); } 
 		 catch(Exception e) {
@@ -852,6 +859,94 @@ public class SQLManager {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+
+	@Override
+	public void readDrug() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updatePatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateAdmission() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateDrug() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void updateNurse() {
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Choose a nurse, type its ID: ");
+				int n_id = Integer.parseInt(reader.readLine());
+				Nurse nurse = getNurse(n_id);
+				
+			System.out.println("New name:");
+				String newName= reader.readLine();
+					if(newName.equals("")) {
+						newName= nurse.getName();}
+			System.out.println("New specialty:");
+				String newSpecialty= reader.readLine();
+					if(newSpecialty.equals("")) {
+						newSpecialty= nurse.getSpecialty();}
+			System.out.println("It is available?(write yes or no): ");
+			    String yes_no = reader.readLine();
+			    boolean available;
+				 boolean newAvailability=nurse.getAvailability();
+			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+	            	available=true;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=true;}}
+	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+	            	available=false;
+	            	if(available!=nurse.getAvailability()) {
+	            	newAvailability=false;}
+	            }
+			PreparedStatement prep;
+			String sql;	
+			sql = "UPDATE Nurses SET name=?, speciality=?, availability=? WHERE id=?";
+				prep = c.prepareStatement(sql);
+				prep.setString(1, newName);
+				prep.setString(2, newSpecialty);
+				prep.setBoolean(3, newAvailability);
+				prep.setInt(4, n_id);
+				prep.executeUpdate();
+			System.out.println("Update finished.");
+		}
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	}
+
+
+	@Override
+	public void updateBox() {
+		// TODO Auto-generated method stub
 		
 	}
 	
