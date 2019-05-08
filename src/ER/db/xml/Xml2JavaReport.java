@@ -1,7 +1,9 @@
 package ER.db.xml;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,8 +42,8 @@ public class Xml2JavaReport {
 		System.out.println("DOB: " + p.getDob());
 		System.out.println("Blood_Type: "+ p.getBloodType());
 		
-		List<Admission> admission = .getAdmission();
-		for (Admision a : admission) {
+		List<Admission> admission = new ArrayList<Admission>();
+		for (Admission a : admission) {
 			System.out.println("Admission: " + a.getId());
 		}
 
