@@ -38,14 +38,14 @@ public class Admission implements Serializable{
 	private Patient patient;
 	
 	@Column(name="arrival_time")
-	@XmlAttribute
+	@XmlElement
 	@XmlJavaTypeAdapter(SQLTimestampAdapter.class)
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
-	@XmlAttribute
+	@XmlElement
 	private String tests;
-	@XmlAttribute
+	@XmlElement
 	private boolean release;
 	
 	@XmlTransient

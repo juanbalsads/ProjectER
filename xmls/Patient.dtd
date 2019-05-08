@@ -1,7 +1,12 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 
 <!DOCTYPE Patient [ [
-  <!ELEMENT Patient (SSN, Name, Weight, Height, Genre, DOB, Blood_Type, Admission)>
+  <!ELEMENT Patient ( SSN ) >
+  <!ELEMENT Name (#PCDATA)>
+  <!ELEMENT Weight(#PCDATA)>
+  <!ELEMENT Height(#PCDATA)>
+  <!ELEMENT Genre(#PCDATA)>
+  <!ELEMENT Blood_Type(#PCDATA)>
   <!ELEMENT DOB (Day,Month,Year)>
   <!ATTLIST Patient(SSN CDATA #REQUIRED, Name CDATA #REQUIRED>
       Weight CDATA #IMPLIED

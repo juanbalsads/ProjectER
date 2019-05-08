@@ -15,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import ER.db.xml.utils.SQLDateAdapter;
 
 @Entity
 @Table(name="Patients")
@@ -32,19 +35,20 @@ public class Patient implements Serializable {
 	
 	@XmlAttribute
 	private Integer ssn;
-	@XmlAttribute
+	@XmlElement
 	private String name;
-	@XmlAttribute
+	@XmlElement
 	private Double weight;
-	@XmlAttribute
+	@XmlElement
 	private Double height;
-	@XmlAttribute
+	@XmlElement
 	private String genre;
 	@XmlElement
+	@XmlJavaTypeAdapter(SQLDateAdapter.class)
 	private Date dob;
 	
 	@Column(name="blood_type")
-	@XmlAttribute
+	@XmlElement
 	private String bloodType;
 	@XmlElement
 	@OneToOne(fetch=FetchType.LAZY, mappedBy= "patient") 
