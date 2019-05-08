@@ -46,7 +46,7 @@ public class Java2XmlPatient {
 		// Choose the report to turn into an XML
 		// Choose his new department
 		printReports();
-		System.out.print("Choose a report to turn into an XML file:");
+		System.out.print("Choose a patient to turn into an XML file:");
 		int p_id = Integer.parseInt(reader.readLine());
 		Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 		q2.setParameter(1, p_id);

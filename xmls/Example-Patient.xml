@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient ssn="11">
+    <name>iago</name>
+    <weight>3.0</weight>
+    <height>3.0</height>
+    <genre>m</genre>
+    <dob>1998-01-01</dob>
+    <bloodType>a</bloodType>
+    <admission id="2">
+        <arrivalTime>2000-02-02 19:00:00.0</arrivalTime>
+        <tests>d</tests>
+        <release>false</release>
+    </admission>
+</Patient>
