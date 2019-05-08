@@ -143,7 +143,7 @@ public class Nurse implements Serializable{
 	}
 	
 	public String toString2() {
-		if(admission.equals(null)){
+		if(admission==null){
 			return "Nurse [id=" + id + ", name=" + name + ", specialty=" + specialty + ", availability=" + availability
 					+ "]";
 		}

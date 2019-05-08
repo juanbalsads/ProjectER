@@ -106,7 +106,11 @@ public class Box implements Serializable {
 	}
 
 	public String toString2() {
-		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + ", admission="+ admission.getId() + "]";
+		if(admission==null) {
+			return "Box [id=" + id + ", name=" + name + ", availability=" + availability + "]";
+		}
+		else {
+		return "Box [id=" + id + ", name=" + name + ", availability=" + availability + ", admission="+ admission.getId() + "]";}
 	}
 
 
