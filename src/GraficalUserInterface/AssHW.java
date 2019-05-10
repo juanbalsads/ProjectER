@@ -125,10 +125,17 @@ public class AssHW extends JFrame {
 		TypeSSNLab.setVisible(false);
 		
 		JButton TypeSSNBut = new JButton("");
+		TypeSSNBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditPat editPat = new EditPat();
+				setVisible(false);
+				editPat.setVisible(true);
+			}
+		});
 		TypeSSNBut.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-derecha-c\u00EDrculo-24.png"));
 		TypeSSNBut.setForeground(Color.BLACK);
 		TypeSSNBut.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
-		TypeSSNBut.setBackground(new Color(204, 102, 0));
+		TypeSSNBut.setBackground(new Color(204, 153, 0));
 		TypeSSNBut.setBounds(611, 194, 51, 45);
 		contentPane.add(TypeSSNBut);
 		TypeSSNBut.setVisible(false);
@@ -147,6 +154,13 @@ public class AssHW extends JFrame {
 		TypeIDLab.setVisible(false);
 		
 		TypeIDBut = new JButton("");
+		TypeIDBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditAdm editAdm = new EditAdm();
+				setVisible(false);
+				editAdm.setVisible(true);
+			}
+		});
 		TypeIDBut.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-derecha-c\u00EDrculo-24.png"));
 		TypeIDBut.setForeground(Color.BLACK);
 		TypeIDBut.setFont(new Font("Gill Sans MT", Font.BOLD, 18));

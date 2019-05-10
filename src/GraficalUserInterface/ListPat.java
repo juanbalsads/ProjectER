@@ -20,7 +20,7 @@ public class ListPat extends JFrame {
 
 
 	public ListPat() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 100, 820, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 153));
@@ -67,6 +67,10 @@ public class ListPat extends JFrame {
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				AssHW assHW = new AssHW();
+				setVisible(true);
+				assHW.setVisible(true);
+
 
 			}
 		});

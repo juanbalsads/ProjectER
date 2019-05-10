@@ -7,18 +7,18 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 
-public class NewPat extends JFrame {
+public class EditPat extends JFrame {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -32,8 +32,7 @@ public class NewPat extends JFrame {
 	private JTextField monthtextField;
 	private JTextField yeartextField;
 
-
-	public NewPat() {
+	public EditPat() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 820, 600);
 		contentPane = new JPanel();
@@ -42,7 +41,7 @@ public class NewPat extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("   New Patient");
+		JLabel lblNewLabel = new JLabel("   Edit Patient");
 		lblNewLabel.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
 		lblNewLabel.setBounds(302, 11, 184, 48);
 		contentPane.add(lblNewLabel);
@@ -220,19 +219,19 @@ public class NewPat extends JFrame {
 		lblHistory.setBounds(48, 408, 98, 38);
 		contentPane.add(lblHistory);
 		
-		JButton btnCreate = new JButton("Create");
-		btnCreate.setBackground(new Color(204, 153, 0));
-		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
-		btnCreate.setBounds(278, 520, 89, 30);
-		contentPane.add(btnCreate);
+		JButton btnNewButton = new JButton("Edit");
+		btnNewButton.setBackground(new Color(204, 153, 0));
+		btnNewButton.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
+		btnNewButton.setBounds(278, 520, 89, 30);
+		contentPane.add(btnNewButton);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AssHW assHW = new AssHW();
 				setVisible(false);
 				assHW.setVisible(true);
 
-
 			}
 		});
 	}
+
 }

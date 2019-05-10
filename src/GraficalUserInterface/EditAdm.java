@@ -1,21 +1,21 @@
 package GraficalUserInterface;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-public class NewAdm extends JFrame {
+public class EditAdm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField PatientSSNtextField;
@@ -29,8 +29,7 @@ public class NewAdm extends JFrame {
 	private JTextField arrtim_mintextField;
 
 
-
-	public NewAdm() {
+	public EditAdm() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 100, 820, 600);
 		contentPane = new JPanel();
@@ -39,7 +38,7 @@ public class NewAdm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("   New Admission");
+		JLabel lblNewLabel = new JLabel("   Edit Admission");
 		lblNewLabel.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
 		lblNewLabel.setBounds(354, 36, 184, 48);
 		contentPane.add(lblNewLabel);
@@ -76,17 +75,6 @@ public class NewAdm extends JFrame {
 		btnBack.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-izquierda-c\u00EDrculo-24 (1).png"));
 		btnBack.setBounds(663, 11, 37, 38);
 		contentPane.add(btnBack);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				AssHW assHW = new AssHW();
-				setVisible(true);
-				assHW.setVisible(true);
-
-				
-
-			}
-		});
-		
 		
 		JLabel lblPatientSsn = new JLabel("  Patient SSN:");
 		lblPatientSsn.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
@@ -183,7 +171,7 @@ public class NewAdm extends JFrame {
 		arrtim_mintextField.setBounds(412, 410, 49, 31);
 		contentPane.add(arrtim_mintextField);
 		
-		JButton submit_button = new JButton("Create");
+		JButton submit_button = new JButton("Edit");
 		submit_button.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 		submit_button.setBackground(new Color(204, 153, 0));
 		submit_button.setBounds(347, 483, 89, 30);
@@ -245,10 +233,16 @@ public class NewAdm extends JFrame {
 		Box_button.setBackground(new Color(255, 153, 0));
 		Box_button.setBounds(593, 298, 154, 34);
 		contentPane.add(Box_button);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AssHW assHW = new AssHW();
+				setVisible(true);
+				assHW.setVisible(true);
 
+			}
+		});
+		
 
 	}
+
 }
-
-
-

@@ -60,12 +60,12 @@ public class InitialWindow extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\hospital100.png"));
 		contentPane.add(lblNewLabel_1);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("ASSISTANT");
-		rdbtnNewRadioButton.setBounds(20, 333, 145, 32);
-		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
-		rdbtnNewRadioButton.setBackground(new Color(255, 153, 0));
-		contentPane.add(rdbtnNewRadioButton);
+		JRadioButton rdbtnAss = new JRadioButton("ASSISTANT");
+		rdbtnAss.setBounds(20, 333, 145, 32);
+		buttonGroup.add(rdbtnAss);
+		rdbtnAss.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
+		rdbtnAss.setBackground(new Color(255, 153, 0));
+		contentPane.add(rdbtnAss);
 		
 		JRadioButton rdbtnDoctor = new JRadioButton("DOCTOR");
 		rdbtnDoctor.setBounds(214, 333, 132, 32);
@@ -91,10 +91,27 @@ public class InitialWindow extends JFrame {
 		JButton btnSignIn = new JButton("Sign In");
 		btnSignIn.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		btnSignIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {		
-				setVisible(false);
-				AssHW assHW = new AssHW();
-				assHW.setVisible(true);
+			public void actionPerformed(ActionEvent arg0) {	
+				if(rdbtnAss.isSelected()) {
+					setVisible(false);
+					AssHW assHW = new AssHW();
+					assHW.setVisible(true);
+				}
+				if(rdbtnDoctor.isSelected()) {
+					setVisible(false);
+					DocHW docHW = new DocHW();
+					docHW.setVisible(true);
+				}
+				if(rdbtnNurse.isSelected()) {
+					setVisible(false);
+					NurHW nurHW = new NurHW();
+					nurHW.setVisible(true);
+				}
+				if(rdbtnDbManager.isSelected()) {
+					setVisible(false);
+					DbManHW DbManHW = new DbManHW();
+					DbManHW.setVisible(true);
+				}
 				
 			}
 		});

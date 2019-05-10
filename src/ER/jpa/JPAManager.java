@@ -497,7 +497,23 @@ public Admission getAdmission (int id) {
 			for (Box box : boxes) {
 				System.out.println(box.toString2());
 			}	
-		}	
+		}
+		
+		
+		////////PROVING
+		
+		public List<Admission> listAdmissionsList() {
+			
+			Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
+			List<Admission> adms = (List<Admission>) q1.getResultList();
+			return adms;
+	
+		
+		}
+		
+		// ArrayList<Admission> listaadm = listAdmissionsList();
+		
+		
 		/////////PRINTLIST///////
 		
 		///DELETE: Patient(D),Nurse(D)

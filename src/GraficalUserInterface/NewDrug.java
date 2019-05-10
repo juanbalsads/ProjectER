@@ -1,43 +1,25 @@
 package GraficalUserInterface;
 
 import java.awt.BorderLayout;
-import ER.jpa.*;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import ER.POJOS.Admission;
-
-import javax.swing.JList;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JTable;
-
-public class ListAdm extends JFrame {
+public class NewDrug extends JFrame {
 
 	private JPanel contentPane;
-	private JList list;
-	private DefaultListModel modelList;
-	private static EntityManager em;
-	private JPAManager manager;
-	
 
-	public ListAdm() {
-		manager = new JPAManager();
+
+	public NewDrug() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 100, 820, 600);
 		contentPane = new JPanel();
@@ -46,12 +28,12 @@ public class ListAdm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("  Admissions");
-		lblNewLabel.setFont(new Font("Gill Sans MT", Font.BOLD, 24));
+		JLabel lblNewLabel = new JLabel("   New Drug");
+		lblNewLabel.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
 		lblNewLabel.setBounds(354, 36, 184, 48);
 		contentPane.add(lblNewLabel);
 		
-		
+
 		//RIGHT BUTT
 		
 		JButton btnendSession = new JButton("");
@@ -83,55 +65,30 @@ public class ListAdm extends JFrame {
 		btnBack.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-izquierda-c\u00EDrculo-24 (1).png"));
 		btnBack.setBounds(663, 11, 37, 38);
 		contentPane.add(btnBack);
-
-		
-		/*ArrayList<Admission> listaadm = new ArrayList<Admission>();
-		listaadm = (ArrayList<Admission>) manager.listAdmissionsList();
-		list = new JList();
-        modelList = new DefaultListModel();
- 
-
-        for (int i = 0; i < listaadm.size(); i++) {
-        	
-            modelList.addElement(listaadm.get(i));
-        }
-        list.setModel(modelList);
-        JScrollPane jscrollPane = new JScrollPane();
-        list.add(jscrollPane, BorderLayout.EAST);
-		
-		
-		Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
-			List<Admission> adms = (List<Admission>) q1.getResultList();
-			for (Admission adm : adms) {
-				System.out.println(adm);
-			}
-		
-		
-		list.setVisible(true);
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setBounds(91, 119, 609, 284);
-		contentPane.add(list);*/
-		
-		
-		
-		
-		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AssHW assHW = new AssHW();
 				setVisible(true);
 				assHW.setVisible(true);
 
+				
+
+			}
+		});
+		JButton btnCreate = new JButton("Create");
+		btnCreate.setBackground(new Color(204, 153, 0));
+		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
+		btnCreate.setBounds(278, 520, 89, 30);
+		contentPane.add(btnCreate);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AssHW assHW = new AssHW();
+				setVisible(false);
+				assHW.setVisible(true);
+
 
 			}
 		});
 	}
+
 }
