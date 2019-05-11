@@ -14,11 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class NewDoc extends JFrame {
+public class UpdateDoc extends JFrame {
 
 	private JPanel contentPane;
 
-	public NewDoc() {
+
+	public UpdateDoc() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 100, 820, 600);
 		contentPane = new JPanel();
@@ -27,7 +28,7 @@ public class NewDoc extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("   New Doctor");
+		JLabel lblNewLabel = new JLabel("   Update Doctor");
 		lblNewLabel.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
 		lblNewLabel.setBounds(354, 36, 184, 48);
 		contentPane.add(lblNewLabel);
@@ -74,7 +75,7 @@ public class NewDoc extends JFrame {
 
 			}
 		});
-		JButton btnCreate = new JButton("Create");
+		JButton btnCreate = new JButton("Update");
 		btnCreate.setBackground(new Color(204, 153, 0));
 		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 		btnCreate.setBounds(278, 520, 89, 30);
@@ -88,7 +89,6 @@ public class NewDoc extends JFrame {
 
 			}
 		});
-	
 	}
 
 }

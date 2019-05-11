@@ -80,96 +80,205 @@ public class DbManHW extends JFrame {
 		contentPane.add(lblDrugs);
 		
 		JButton btnInsertDoc = new JButton("Insert");
+		btnInsertDoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				NewDoc newDoc = new NewDoc();
+				newDoc.setVisible(true);
+			}
+		});
 		btnInsertDoc.setForeground(Color.BLACK);
 		btnInsertDoc.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		btnInsertDoc.setBackground(new Color(255, 153, 0));
-		btnInsertDoc.setBounds(234, 156, 154, 34);
+		btnInsertDoc.setBounds(178, 158, 135, 34);
 		contentPane.add(btnInsertDoc);
 		
 		JButton btnDeleteDoc = new JButton("Delete");
 		btnDeleteDoc.setForeground(Color.BLACK);
 		btnDeleteDoc.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		btnDeleteDoc.setBackground(new Color(255, 153, 0));
-		btnDeleteDoc.setBounds(415, 156, 154, 34);
+		btnDeleteDoc.setBounds(323, 160, 130, 34);
 		contentPane.add(btnDeleteDoc);
 		
 		JButton btnUpdateDoc = new JButton("Update");
+		btnUpdateDoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				UpdateDoc updateDoc = new UpdateDoc();
+				updateDoc.setVisible(true);
+			}
+		});
 		btnUpdateDoc.setForeground(Color.BLACK);
 		btnUpdateDoc.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		btnUpdateDoc.setBackground(new Color(255, 153, 0));
-		btnUpdateDoc.setBounds(593, 156, 154, 34);
+		btnUpdateDoc.setBounds(463, 160, 133, 34);
 		contentPane.add(btnUpdateDoc);
 		
 		JButton buttonInsertNur = new JButton("Insert");
 		buttonInsertNur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				NewNur newNur = new NewNur();
+				newNur.setVisible(true);
 			}
 		});
 		buttonInsertNur.setForeground(Color.BLACK);
 		buttonInsertNur.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonInsertNur.setBackground(new Color(255, 153, 0));
-		buttonInsertNur.setBounds(234, 231, 154, 34);
+		buttonInsertNur.setBounds(178, 233, 135, 34);
 		contentPane.add(buttonInsertNur);
 		
 		JButton buttonDeleteNur = new JButton("Delete");
 		buttonDeleteNur.setForeground(Color.BLACK);
 		buttonDeleteNur.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonDeleteNur.setBackground(new Color(255, 153, 0));
-		buttonDeleteNur.setBounds(415, 231, 154, 34);
+		buttonDeleteNur.setBounds(323, 235, 130, 34);
 		contentPane.add(buttonDeleteNur);
 		
 		JButton buttonUpdateNur = new JButton("Update");
 		buttonUpdateNur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				UpdateNur updateNur = new UpdateNur();
+				updateNur.setVisible(true);
 			}
 		});
 		buttonUpdateNur.setForeground(Color.BLACK);
 		buttonUpdateNur.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonUpdateNur.setBackground(new Color(255, 153, 0));
-		buttonUpdateNur.setBounds(593, 231, 154, 34);
+		buttonUpdateNur.setBounds(463, 233, 133, 34);
 		contentPane.add(buttonUpdateNur);
 		
 		JButton buttonInsertBox = new JButton("Insert");
+		buttonInsertBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				NewBox newBox = new NewBox();
+				newBox.setVisible(true);
+			}
+		});
 		buttonInsertBox.setForeground(Color.BLACK);
 		buttonInsertBox.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonInsertBox.setBackground(new Color(255, 153, 0));
-		buttonInsertBox.setBounds(234, 317, 154, 34);
+		buttonInsertBox.setBounds(178, 319, 135, 34);
 		contentPane.add(buttonInsertBox);
 		
 		JButton buttonDeleteBox = new JButton("Delete");
 		buttonDeleteBox.setForeground(Color.BLACK);
 		buttonDeleteBox.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonDeleteBox.setBackground(new Color(255, 153, 0));
-		buttonDeleteBox.setBounds(415, 317, 154, 34);
+		buttonDeleteBox.setBounds(323, 321, 130, 34);
 		contentPane.add(buttonDeleteBox);
 		
 		JButton buttonUpdateBox = new JButton("Update");
+		buttonUpdateBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				UpdateBox updateBox = new UpdateBox();
+				updateBox.setVisible(true);
+				
+			}
+		});
 		buttonUpdateBox.setForeground(Color.BLACK);
 		buttonUpdateBox.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonUpdateBox.setBackground(new Color(255, 153, 0));
-		buttonUpdateBox.setBounds(593, 317, 154, 34);
+		buttonUpdateBox.setBounds(463, 321, 133, 34);
 		contentPane.add(buttonUpdateBox);
 		
 		JButton buttonInsertDrug = new JButton("Insert");
+		buttonInsertDrug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				NewDrug newDrug = new NewDrug();
+				newDrug.setVisible(true);
+				
+			}
+		});
 		buttonInsertDrug.setForeground(Color.BLACK);
 		buttonInsertDrug.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonInsertDrug.setBackground(new Color(255, 153, 0));
-		buttonInsertDrug.setBounds(234, 409, 154, 34);
+		buttonInsertDrug.setBounds(178, 411, 135, 34);
 		contentPane.add(buttonInsertDrug);
 		
 		JButton buttonDeleteDrug = new JButton("Delete");
 		buttonDeleteDrug.setForeground(Color.BLACK);
 		buttonDeleteDrug.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonDeleteDrug.setBackground(new Color(255, 153, 0));
-		buttonDeleteDrug.setBounds(415, 409, 154, 34);
+		buttonDeleteDrug.setBounds(323, 413, 130, 34);
 		contentPane.add(buttonDeleteDrug);
 		
 		JButton buttonUpdateDug = new JButton("Update");
+		buttonUpdateDug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				setVisible(false);
+				UpdateDrug updateDrug = new UpdateDrug();
+				updateDrug.setVisible(true);
+			}
+			
+		});
 		buttonUpdateDug.setForeground(Color.BLACK);
 		buttonUpdateDug.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
 		buttonUpdateDug.setBackground(new Color(255, 153, 0));
-		buttonUpdateDug.setBounds(593, 409, 154, 34);
+		buttonUpdateDug.setBounds(463, 413, 133, 34);
 		contentPane.add(buttonUpdateDug);
+		
+		JButton listDoc = new JButton("List");
+		listDoc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListDoc listDoc = new ListDoc();
+				setVisible(false);
+				listDoc.setVisible(true);
+			}
+		});
+		listDoc.setForeground(Color.BLACK);
+		listDoc.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
+		listDoc.setBackground(new Color(255, 153, 0));
+		listDoc.setBounds(606, 160, 133, 34);
+		contentPane.add(listDoc);
+		
+		JButton listNur = new JButton("List");
+		listNur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListNur listnur = new ListNur();
+				setVisible(false);
+				listnur.setVisible(true);
+				
+			}
+		});
+		listNur.setForeground(Color.BLACK);
+		listNur.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
+		listNur.setBackground(new Color(255, 153, 0));
+		listNur.setBounds(606, 231, 133, 34);
+		contentPane.add(listNur);
+		
+		JButton listBox = new JButton("List");
+		listBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListBox listBox = new ListBox();
+				setVisible(false);
+				listBox.setVisible(true);
+			}
+		});
+		listBox.setForeground(Color.BLACK);
+		listBox.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
+		listBox.setBackground(new Color(255, 153, 0));
+		listBox.setBounds(606, 321, 133, 34);
+		contentPane.add(listBox);
+		
+		JButton listDrug = new JButton("List");
+		listDrug.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListDrug listDrug = new ListDrug();
+				setVisible(false);
+				listDrug.setVisible(true);
+			}
+		});
+		listDrug.setForeground(Color.BLACK);
+		listDrug.setFont(new Font("Gill Sans MT", Font.BOLD, 18));
+		listDrug.setBackground(new Color(255, 153, 0));
+		listDrug.setBounds(606, 413, 133, 34);
+		contentPane.add(listDrug);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DbManHW dbManHW = new DbManHW();
@@ -192,5 +301,4 @@ public class DbManHW extends JFrame {
 		
 
 	}
-
 }
