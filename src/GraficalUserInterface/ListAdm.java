@@ -72,7 +72,7 @@ public class ListAdm extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 			}
@@ -126,7 +126,7 @@ public class ListAdm extends JFrame {
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(true);
 				assHW.setVisible(true);
 

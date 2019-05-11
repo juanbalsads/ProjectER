@@ -68,7 +68,7 @@ public class NewPat extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 			}
@@ -227,7 +227,7 @@ public class NewPat extends JFrame {
 		contentPane.add(btnCreate);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 

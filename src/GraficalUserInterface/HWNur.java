@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class NurHW extends JFrame {
+public class HWNur extends JFrame {
 
 	private JPanel contentPane;
 
 
-	public NurHW() {
+	public HWNur() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setBounds(220, 100, 820, 600);
@@ -59,7 +59,7 @@ public class NurHW extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NurHW nurHW = new NurHW();
+				HWNur nurHW = new HWNur();
 				setVisible(false);
 				nurHW.setVisible(true);
 			}

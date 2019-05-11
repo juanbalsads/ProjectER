@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class DbManHW extends JFrame {
+public class HWDbMan extends JFrame {
 
 	private JPanel contentPane;
 
 
-	public DbManHW() {
+	public HWDbMan() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setBounds(220, 100, 820, 600);
@@ -281,7 +281,7 @@ public class DbManHW extends JFrame {
 		contentPane.add(listDrug);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DbManHW dbManHW = new DbManHW();
+				HWDbMan dbManHW = new HWDbMan();
 				setVisible(false);
 				dbManHW.setVisible(true);
 			}

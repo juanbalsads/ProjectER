@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
-public class EditPat extends JFrame {
+public class UpdatePat extends JFrame {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -32,7 +32,7 @@ public class EditPat extends JFrame {
 	private JTextField monthtextField;
 	private JTextField yeartextField;
 
-	public EditPat() {
+	public UpdatePat() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 820, 600);
 		contentPane = new JPanel();
@@ -67,7 +67,7 @@ public class EditPat extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 			}
@@ -226,7 +226,7 @@ public class EditPat extends JFrame {
 		contentPane.add(btnNewButton);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 

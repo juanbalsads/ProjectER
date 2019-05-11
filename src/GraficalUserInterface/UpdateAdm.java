@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class EditAdm extends JFrame {
+public class UpdateAdm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField PatientSSNtextField;
@@ -29,7 +29,7 @@ public class EditAdm extends JFrame {
 	private JTextField arrtim_mintextField;
 
 
-	public EditAdm() {
+	public UpdateAdm() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(220, 100, 820, 600);
 		contentPane = new JPanel();
@@ -64,7 +64,7 @@ public class EditAdm extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 			}
@@ -235,7 +235,7 @@ public class EditAdm extends JFrame {
 		contentPane.add(Box_button);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(true);
 				assHW.setVisible(true);
 

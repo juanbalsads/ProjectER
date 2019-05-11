@@ -94,22 +94,22 @@ public class InitialWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(rdbtnAss.isSelected()) {
 					setVisible(false);
-					AssHW assHW = new AssHW();
+					HWAss assHW = new HWAss();
 					assHW.setVisible(true);
 				}
 				if(rdbtnDoctor.isSelected()) {
 					setVisible(false);
-					DocHW docHW = new DocHW();
+					HWDoc docHW = new HWDoc();
 					docHW.setVisible(true);
 				}
 				if(rdbtnNurse.isSelected()) {
 					setVisible(false);
-					NurHW nurHW = new NurHW();
+					HWNur nurHW = new HWNur();
 					nurHW.setVisible(true);
 				}
 				if(rdbtnDbManager.isSelected()) {
 					setVisible(false);
-					DbManHW DbManHW = new DbManHW();
+					HWDbMan DbManHW = new HWDbMan();
 					DbManHW.setVisible(true);
 				}
 				

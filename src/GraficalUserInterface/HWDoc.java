@@ -14,11 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class DocHW extends JFrame {
+public class HWDoc extends JFrame {
 
 	private JPanel contentPane;
 
-	public DocHW() {
+	public HWDoc() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setBounds(220, 100, 820, 600);
@@ -58,7 +58,7 @@ public class DocHW extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DocHW docHW = new DocHW();
+				HWDoc docHW = new HWDoc();
 				setVisible(false);
 				docHW.setVisible(true);
 			}

@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
 
-public class AssHW extends JFrame {
+public class HWAss extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnNewButton;
@@ -39,7 +39,7 @@ public class AssHW extends JFrame {
 	private JTextField TypeIDText;
 	private JButton btnListAdmission;
 	
-	public AssHW() {
+	public HWAss() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setBounds(220, 100, 820, 600);
@@ -127,7 +127,7 @@ public class AssHW extends JFrame {
 		JButton TypeSSNBut = new JButton("");
 		TypeSSNBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditPat editPat = new EditPat();
+				UpdatePat editPat = new UpdatePat();
 				setVisible(false);
 				editPat.setVisible(true);
 			}
@@ -156,7 +156,7 @@ public class AssHW extends JFrame {
 		TypeIDBut = new JButton("");
 		TypeIDBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditAdm editAdm = new EditAdm();
+				UpdateAdm editAdm = new UpdateAdm();
 				setVisible(false);
 				editAdm.setVisible(true);
 			}
@@ -275,7 +275,7 @@ public class AssHW extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AssHW assHW = new AssHW();
+				HWAss assHW = new HWAss();
 				setVisible(false);
 				assHW.setVisible(true);
 			}
