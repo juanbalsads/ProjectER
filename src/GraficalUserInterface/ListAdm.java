@@ -54,7 +54,7 @@ public class ListAdm extends JFrame {
 		
 		//RIGHT BUTT
 		
-		JButton btnendSession = new JButton("");
+		/*JButton btnendSession = new JButton("");
 		btnendSession.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-fin-de-cadena-24.png"));
 		btnendSession.setBounds(757, 11, 37, 38);
 		contentPane.add(btnendSession);
@@ -83,6 +83,16 @@ public class ListAdm extends JFrame {
 		btnBack.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-izquierda-c\u00EDrculo-24 (1).png"));
 		btnBack.setBounds(663, 11, 37, 38);
 		contentPane.add(btnBack);
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				HWAss assHW = new HWAss();
+				setVisible(true);
+				assHW.setVisible(true);
+
+
+			}
+		});*/
 
 		
 		/*ArrayList<Admission> listaadm = new ArrayList<Admission>();
@@ -123,15 +133,6 @@ public class ListAdm extends JFrame {
 		
 		
 		
-		
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(true);
-				assHW.setVisible(true);
 
-
-			}
-		});
 	}
 }

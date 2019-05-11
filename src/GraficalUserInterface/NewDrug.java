@@ -7,16 +7,21 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class NewDrug extends JFrame {
 
 	private JPanel contentPane;
+
+
+
 
 
 	public NewDrug() {
@@ -54,9 +59,9 @@ public class NewDrug extends JFrame {
 		contentPane.add(btnHW);
 		btnHW.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HWAss assHW = new HWAss();
+				HWDbMan hWDbMan = new HWDbMan();
 				setVisible(false);
-				assHW.setVisible(true);
+				hWDbMan.setVisible(true);
 			}
 		});
 
@@ -67,28 +72,31 @@ public class NewDrug extends JFrame {
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(true);
-				assHW.setVisible(true);
+				HWDbMan hWDbMan = new HWDbMan();
+				setVisible(false);
+				hWDbMan.setVisible(true);
 
 				
 
 			}
 		});
+		
+		JLabel label = new JLabel("   Name:");
+		label.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		label.setBounds(39, 107, 76, 38);
+		contentPane.add(label);
+		
+		JTextField nametextField = new JTextField();
+		nametextField.setColumns(10);
+		nametextField.setBounds(164, 113, 301, 31);
+		contentPane.add(nametextField);
+		
 		JButton btnCreate = new JButton("Create");
 		btnCreate.setBackground(new Color(204, 153, 0));
 		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 		btnCreate.setBounds(278, 520, 89, 30);
 		contentPane.add(btnCreate);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(false);
-				assHW.setVisible(true);
 
-
-			}
-		});
 	}
 
 }

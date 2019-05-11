@@ -2,21 +2,26 @@ package GraficalUserInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class UpdateNur extends JFrame {
 
 	private JPanel contentPane;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 
 	public UpdateNur() {
@@ -67,28 +72,60 @@ public class UpdateNur extends JFrame {
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
+				HWDbMan hWDbMan = new HWDbMan();
 				setVisible(true);
-				assHW.setVisible(true);
+				hWDbMan.setVisible(true);
 
 				
 
 			}
 		});
+		
+		JLabel label = new JLabel("   Name:");
+		label.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		label.setBounds(39, 107, 76, 38);
+		contentPane.add(label);
+		
+		JTextField nametextField = new JTextField();
+		nametextField.setColumns(10);
+		nametextField.setBounds(164, 113, 301, 31);
+		contentPane.add(nametextField);
+		
+		JLabel lblSpeciality = new JLabel("   Speciality:");
+		lblSpeciality.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		lblSpeciality.setBounds(39, 176, 98, 38);
+		contentPane.add(lblSpeciality);
+		
+		JTextField specilitytextField = new JTextField();
+		specilitytextField.setColumns(10);
+		specilitytextField.setBounds(164, 182, 301, 31);
+		contentPane.add(specilitytextField);
+		
+		JLabel lblPhoto = new JLabel("   photo:");
+		lblPhoto.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		lblPhoto.setBounds(39, 257, 98, 38);
+		contentPane.add(lblPhoto);
+		
+		JRadioButton rdbtnAvailable = new JRadioButton("Available");
+		buttonGroup.add(rdbtnAvailable);
+		rdbtnAvailable.setBackground(new Color(255, 255, 153));
+		rdbtnAvailable.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
+		rdbtnAvailable.setBounds(215, 357, 121, 38);
+		contentPane.add(rdbtnAvailable);
+		
+		JRadioButton rdbtnNotAvailable = new JRadioButton("Not Available");
+		buttonGroup.add(rdbtnNotAvailable);
+		rdbtnNotAvailable.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
+		rdbtnNotAvailable.setBackground(new Color(255, 255, 153));
+		rdbtnNotAvailable.setBounds(431, 357, 171, 38);
+		contentPane.add(rdbtnNotAvailable);
+		
 		JButton btnCreate = new JButton("Update");
 		btnCreate.setBackground(new Color(204, 153, 0));
 		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 		btnCreate.setBounds(278, 520, 89, 30);
 		contentPane.add(btnCreate);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(false);
-				assHW.setVisible(true);
-
-
-			}
-		});
+		
 	}
 
 }

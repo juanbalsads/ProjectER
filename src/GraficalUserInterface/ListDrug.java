@@ -35,7 +35,7 @@ public class ListDrug extends JFrame {
 				
 
 				//RIGHT BUTT
-				
+				/*
 				JButton btnendSession = new JButton("");
 				btnendSession.setIcon(new ImageIcon("C:\\Users\\juanb\\git\\ProjectER\\Images\\icons8-fin-de-cadena-24.png"));
 				btnendSession.setBounds(757, 11, 37, 38);
@@ -73,7 +73,7 @@ public class ListDrug extends JFrame {
 
 
 					}
-				});
+				});*/
 	}
 
 }

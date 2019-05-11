@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class UpdateDrug extends JFrame {
@@ -65,28 +66,30 @@ public class UpdateDrug extends JFrame {
 	contentPane.add(btnBack);
 	btnBack.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
-			HWAss assHW = new HWAss();
+			HWDbMan hWDbMan = new HWDbMan();
 			setVisible(true);
-			assHW.setVisible(true);
+			hWDbMan.setVisible(true);
 
 			
 
 		}
 	});
+	JLabel label = new JLabel("   Name:");
+	label.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+	label.setBounds(39, 107, 76, 38);
+	contentPane.add(label);
+	
+	JTextField nametextField = new JTextField();
+	nametextField.setColumns(10);
+	nametextField.setBounds(164, 113, 301, 31);
+	contentPane.add(nametextField);
+	
 	JButton btnCreate = new JButton("Update");
 	btnCreate.setBackground(new Color(204, 153, 0));
 	btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 	btnCreate.setBounds(278, 520, 89, 30);
 	contentPane.add(btnCreate);
-	btnBack.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-			HWAss assHW = new HWAss();
-			setVisible(false);
-			assHW.setVisible(true);
-
-
-		}
-	});
+	
 	}
 
 }

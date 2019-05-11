@@ -13,10 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class NewDoc extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField nametextField;
+	private JTextField specilitytextField;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public NewDoc() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,9 +72,9 @@ public class NewDoc extends JFrame {
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(true);
-				assHW.setVisible(true);
+				HWDbMan hWDbMan = new HWDbMan();
+				setVisible(false);
+				hWDbMan.setVisible(true);
 
 				
 
@@ -79,16 +85,46 @@ public class NewDoc extends JFrame {
 		btnCreate.setFont(new Font("Gill Sans MT", Font.BOLD, 15));
 		btnCreate.setBounds(278, 520, 89, 30);
 		contentPane.add(btnCreate);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				HWAss assHW = new HWAss();
-				setVisible(false);
-				assHW.setVisible(true);
+		
+		JLabel label = new JLabel("   Name:");
+		label.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		label.setBounds(39, 107, 76, 38);
+		contentPane.add(label);
+		
+		nametextField = new JTextField();
+		nametextField.setColumns(10);
+		nametextField.setBounds(164, 113, 301, 31);
+		contentPane.add(nametextField);
+		
+		JLabel lblSpeciality = new JLabel("   Speciality:");
+		lblSpeciality.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		lblSpeciality.setBounds(39, 176, 98, 38);
+		contentPane.add(lblSpeciality);
+		
+		specilitytextField = new JTextField();
+		specilitytextField.setColumns(10);
+		specilitytextField.setBounds(164, 182, 301, 31);
+		contentPane.add(specilitytextField);
+		
+		JLabel lblPhoto = new JLabel("   photo:");
+		lblPhoto.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
+		lblPhoto.setBounds(39, 257, 98, 38);
+		contentPane.add(lblPhoto);
+		
+		JRadioButton rdbtnAvailable = new JRadioButton("Available");
+		buttonGroup.add(rdbtnAvailable);
+		rdbtnAvailable.setBackground(new Color(255, 255, 153));
+		rdbtnAvailable.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
+		rdbtnAvailable.setBounds(215, 357, 121, 38);
+		contentPane.add(rdbtnAvailable);
+		
+		JRadioButton rdbtnNotAvailable = new JRadioButton("Not Available");
+		buttonGroup.add(rdbtnNotAvailable);
+		rdbtnNotAvailable.setFont(new Font("Gill Sans MT", Font.BOLD, 20));
+		rdbtnNotAvailable.setBackground(new Color(255, 255, 153));
+		rdbtnNotAvailable.setBounds(431, 357, 171, 38);
+		contentPane.add(rdbtnNotAvailable);
 
-
-			}
-		});
 	
 	}
-
 }
