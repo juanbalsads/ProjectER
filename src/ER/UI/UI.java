@@ -23,6 +23,8 @@ import ER.jpa.JPAManager;
 //		
 private static JPAManager manager= new JPAManager();
 private static JDBCManager manager1= new JDBCManager();	
+
+
 public static void main(String args[]) throws NumberFormatException, IOException {
 			manager1.createTables();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

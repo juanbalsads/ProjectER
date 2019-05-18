@@ -100,7 +100,7 @@ public class JDBCManager implements Manager{
 		 stmt6.close();
 		 Statement stmt12= c.createStatement();
 		 String sql12= "CREATE TABLE if not exists Admission_Drugs " + 
-		 "(admission INTEGER REFERENCES Admission(id) , " +
+		 "(admission INTEGER REFERENCES Admission(id) ON UPDATE cascade, " +
 		 "drug INTEGER REFERENCES Drugs(id), " +
 		 "dosage DOUBLE, "+
 		 "PRIMARY KEY (admission, drug)) ";
@@ -281,13 +281,40 @@ public class JDBCManager implements Manager{
 			return adm;	
 			
 		}
-	 
+		
+		
+/*-----------------------------SEARCH PATIENT BY NAME----------------------------------*/
+		
 	
+		public void getPatientByName () {
+			 try {
+				 System.out.println("Write the name of the patient: ");
+				 String patientName = reader.readLine();
+				 Statement stmt = c.createStatement();
+				 String sql = "SELECT * FROM Patients WHERE name= '"+ patientName+ "' ";
+				 Patient patient=null;
+				 ResultSet rs = stmt.executeQuery(sql); 
+				 while (rs.next() ) {
+					 	int ssn = rs.getInt("ssn");
+					 	String name = rs.getString("name");
+					 	Double weight = rs.getDouble("weight");
+					 	Double height = rs.getDouble("height");
+					 	String genre = rs.getString("genre");
+					 	Date dob = rs.getDate("dob");
+					 	String bloodType = rs.getString("blood_type");
+						patient = new Patient (ssn,name,weight,height,genre,dob,bloodType);
+						System.out.println(patient);}
+				 	rs.close();
+				 	stmt.close();
+				 
+				 }
+			 catch(Exception e){
+				 e.printStackTrace();
+				}}
 	 
-
 	 
-	 
-/*---------------------------------INSERT METHODS--------------------------------------*/	 
+/*---------------------------------INSERT METHODS--------------------------------------*/	
+		
 	 
 	 //INSERT PATIENTS
 	 
@@ -619,6 +646,8 @@ public class JDBCManager implements Manager{
 	 
 	 
 	 
+	 /*---------------------------------GET METHODS--------------------------------------*/
+	 
 	 //-------GET DOCTOR----//
 	 public Doctor getDoctor(int id) {
 		 try {
@@ -684,7 +713,6 @@ public class JDBCManager implements Manager{
 			 Statement stmt = c.createStatement();
 			 String sql = "SELECT * FROM Patients WHERE ssn= "+id_patient+ " ";
 			 Patient patient=null;
-			 Admission admission = null;
 			 ResultSet rs = stmt.executeQuery(sql); 
 			 while (rs.next() ) {
 				 	int ssn = rs.getInt("ssn");
@@ -694,16 +722,14 @@ public class JDBCManager implements Manager{
 				 	String genre = rs.getString("genre");
 				 	Date dob = rs.getDate("dob");
 				 	String bloodType = rs.getString("blood_type");
-					patient = new Patient (ssn,name,weight,height,genre,dob,bloodType);
+					patient = new Patient (ssn,name,weight,height,genre,dob,bloodType);}
 			 	rs.close();
 			 	stmt.close();
 			 	return patient;
-			 }}
+			 }
 		 catch(Exception e){
 			 e.printStackTrace();
-			 return null;}
-		
-		 return null;}
+			 return null;}}
 	 
 	 //-------GET ADMISSION-----//
 	 

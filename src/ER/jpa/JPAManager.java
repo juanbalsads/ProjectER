@@ -746,19 +746,6 @@ public Admission getAdmission (int id) {
 				String newSpecialty= reader.readLine();
 					if(newSpecialty.equals("")) {
 						newSpecialty= d.getSpecialty();}
-				System.out.println("It is available?(write yes or no): ");
-				String yes_no = reader.readLine();
-			    boolean available;
-			    	boolean newAvailability=d.getAvailability();
-				    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
-		            	available=true;
-		            	if(available!=d.getAvailability()) {
-		            	newAvailability=true;}}
-		            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
-		            	available=false;
-		            	if(available!=d.getAvailability()) {
-		            	newAvailability=false;}
-		            }
 		        System.out.println("New path of the picture:");
 		        String newfileName = reader.readLine();
 				if(!newfileName.equals("none")){
@@ -776,7 +763,6 @@ public Admission getAdmission (int id) {
 		        em.getTransaction().begin();
 			    d.setName(newName);
 				d.setSpecialty(newSpecialty);
-				d.setAvailability(newAvailability);
 				d.setPhoto(bytesBlob);
 			     em.getTransaction().commit();
 			}catch(IOException e) {
@@ -797,29 +783,74 @@ public Admission getAdmission (int id) {
 				String newSpecialty= reader.readLine();
 					if(newSpecialty.equals("")) {
 						newSpecialty= n.getSpecialty();}
-			    System.out.println("It is available?(write yes or no): ");
-			    String yes_no = reader.readLine();
-			    boolean available;
-				 boolean newAvailability=n.getAvailability();
-			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
-	            	available=true;
-	            	if(available!=n.getAvailability()) {
-	            	newAvailability=true;}}
-	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
-	            	available=false;
-	            	if(available!=n.getAvailability()) {
-	            	newAvailability=false;}
-	            }
 		        em.getTransaction().begin();
 			    n.setName(newName);
 				n.setSpecialty(newSpecialty);
-				n.setAvailability(newAvailability);
 			     em.getTransaction().commit();
 			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 		}
+		
+		
+	    public void updateAvailabilityDoctor() {
+	    	listDoctors();
+			System.out.print("Choose doctor to modify. Type its id:");
+			try {
+			int d_id = Integer.parseInt(reader.readLine());
+			Doctor d = getDoctor(d_id);
+			System.out.println("It is available?(write yes or no): ");
+		    String yes_no = reader.readLine();
+		    boolean available;
+			 boolean newAvailability=d.getAvailability();
+		    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+            	available=true;
+            	if(available!=d.getAvailability()) {
+            	newAvailability=true;}}
+            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+            	available=false;
+            	if(available!=d.getAvailability()) {
+            	newAvailability=false;}
+            }
+            em.getTransaction().begin();
+			d.setAvailability(newAvailability);
+		    em.getTransaction().commit();
+			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}	
+	    }
+		
+	    public void updateAvailabilityNurse() {
+	    	listNurses();
+			System.out.print("Choose nurse to modify. Type its id:");
+			try {
+			int n_id = Integer.parseInt(reader.readLine());
+			Nurse n = getNurse(n_id);
+			System.out.println("It is available?(write yes or no): ");
+		    String yes_no = reader.readLine();
+		    boolean available;
+			 boolean newAvailability=n.getAvailability();
+		    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
+            	available=true;
+            	if(available!=n.getAvailability()) {
+            	newAvailability=true;}}
+            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
+            	available=false;
+            	if(available!=n.getAvailability()) {
+            	newAvailability=false;}
+            }
+            
+            em.getTransaction().begin();
+			n.setAvailability(newAvailability);
+		     em.getTransaction().commit();
+			
+			}catch(IOException e) {
+				e.printStackTrace();
+			}	
+	    }
+	    
 		
 		public void updateBox() {
 			listBoxes();

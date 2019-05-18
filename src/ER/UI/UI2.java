@@ -96,6 +96,10 @@ public class UI2 {
 			manager.listAdmissions();
 			break;
 			}
+		case 19: {
+			manager.getPatientByName();
+			break;
+			}
 			}}}
 
 
@@ -123,7 +127,9 @@ System.out.println("WELCOME TO THE ER DATABASE: \n"+"Choose your option\n"+
 		
 		"16.- Create Admission\n"+
 		"17.- Delete Admission\n"+
-		"18.- List Admissions\n\n"+
+		"18.- List Admission\n\n"+
+		
+		"19.- Search patient by id\n\n"+
 
 		"0.- Exit\n"
 		
