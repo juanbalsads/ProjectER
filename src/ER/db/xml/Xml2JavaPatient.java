@@ -40,6 +40,8 @@ public class Xml2JavaPatient{
 		System.out.println("Genre: " + p.getGenre());
 		System.out.println("DOB: " + p.getDob());
 		System.out.println("Blood_Type: "+ p.getBloodType());
+		if(p.getAdmission().getId()!= null) {
+		System.out.println("Admission: "+p.getAdmission().getId());}
 		//admission = new ArrayList<Admission>();
 		/*List<Admission>admission =new ArrayList<Admission>();*/
 		/*admission.add(p.getAdmission()); //new ArrayList<Admission>();
