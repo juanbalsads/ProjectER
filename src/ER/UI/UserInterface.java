@@ -4,28 +4,90 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import ER.jdbc.JDBCManager;
+import ER.jpa.JPAManager;
+
 public class UserInterface {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
+		JDBCManager managerJDBC = new JDBCManager();
+		JPAManager managerJPA = new JPAManager();
 		int option = 1;
 		BufferedReader cs = new BufferedReader(new InputStreamReader(System.in));
-		while(option >= 0 && option <= 4) {
+		while(option > 0 && option <= 4) {
 				PrintHomeMenu();
 				option = Integer.parseInt(cs.readLine());
 				int optioninside = 1;
 				switch(option){
 				case 1:{
-					printMenuAssistant();
-					optioninside = Integer.parseInt(cs.readLine());
-					while(optioninside >= 0 && optioninside <= 8 ) {
-						
+					while(optioninside > 0 && optioninside <= 8 ) {
+						printMenuAssistant();
+						optioninside = Integer.parseInt(cs.readLine());
+						switch(optioninside) {
+							case 1: {
+								managerJDBC.createAdmission();
+								break;
+							}
+							case 2: {
+								managerJDBC.updateAdmission();
+								break;
+							}
+							case 3:{
+								managerJDBC.createPatient();
+								break;
+							}
+							case 4:{
+								managerJDBC.updatePatient();
+								break;
+							}
+							case 5:{
+								managerJPA.listNurses2();
+								break;
+							}
+							case 6:{
+								managerJPA.listDoctors2();
+								break;
+							}
+							case 7:{
+								managerJPA.listPatients2();
+								break;
+							}
+							case 8:{
+								managerJPA.listBoxes2();
+								break;
+							}
+							case 0:{
+								System.out.println("See you!");
+								option = 0;
+								break;
+							}
+						}
 					}
 					break;
 				}
 				case 2:{
-					printMenuNurse();
-					optioninside = Integer.parseInt(cs.readLine());
-					while(optioninside >= 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 3 ) {
+						printMenuNurse();
+						optioninside = Integer.parseInt(cs.readLine());
+						switch(optioninside) {
+							case 1: {
+								
+								break;
+								
+							}
+							case 2: {
+								break;
+								
+							}
+							case 3: {
+								break;
+								
+							}
+							case 4:{
+								break;
+								
+							}
+						}
 						
 					}
 					break;
@@ -33,15 +95,69 @@ public class UserInterface {
 				case 3:{
 					printMenuDoctor();
 					optioninside = Integer.parseInt(cs.readLine());
-					while(optioninside >= 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 3 ) {
 						
 					}
 					break;
 				}
 				case 4:{
-					printMenuDatabaseManager();
-					optioninside = Integer.parseInt(cs.readLine());
-					while(optioninside >= 0 && optioninside <= 12 ) {
+					while(optioninside > 0 && optioninside <= 12 ) {
+						printMenuDatabaseManager();
+						optioninside = Integer.parseInt(cs.readLine());
+						switch(optioninside) {
+							case 1:{
+								managerJDBC.createDoctor();
+								break;
+							}
+							case 2:{
+								managerJDBC.deleteDoctor();
+								break;
+							}
+							case 3:{
+								managerJDBC.updateDoctor();
+								break;
+							}
+							case 4:{
+								managerJDBC.createNurse();
+								break;
+							}
+							case 5:{
+								managerJDBC.deleteNurse();
+								break;
+							}
+							case 6:{
+								managerJDBC.updateNurse();
+								break;
+							}
+							case 7:{
+								managerJPA.createBox();
+								break;
+							}
+							case 8:{
+								managerJPA.deleteBox();
+								break;
+							}
+							case 9:{
+								managerJPA.updateBox();
+								break;
+							}
+							case 10:{
+								managerJPA.createDrug();
+								break;
+							}
+							case 11:{
+								managerJPA.deleteDrug();
+								break;
+							}
+							case 12:{
+								managerJPA.updateDrug();
+								break;
+							}
+							case 0:{
+								option=0;
+								break;
+							}
+						}
 						
 					}
 					break;
@@ -50,7 +166,8 @@ public class UserInterface {
 					System.out.println("See you!");
 					break;
 				}
-			}		
+			}
+				System.out.println("saleee");
 		}
 	}
 	
@@ -80,8 +197,8 @@ public class UserInterface {
 				"6.- List Doctors\n"+	
 				"7.- List Patient\n"+
 				"8.- List Box\n\n"+
-				"0.- Home Window\n"+
-				"00.- Exit\n\n"+
+				
+				"0.- Exit\n\n"+
 				"Choose option:"+
 				"");	
 	}
@@ -104,8 +221,7 @@ public class UserInterface {
 				"10.- Create Drug\n"+
 				"11.- Delete Drug\n"+
 				"12.- Update Drug\n\n"+
-				"0.- Home Window\n"+
-				"00.- Exit\n\n"+
+				"0.- Exit\n\n"+
 				"Choose option:"+
 				"");	
 	}
@@ -116,7 +232,7 @@ public class UserInterface {
 				"2.- See My Admissions\n"+
 				"3.- List Admissions\n\n"+
 				"0.- Home Window\n"+
-				"00.- Exit\n\n"+
+				"-1.- Exit\n\n"+
 				"Choose option:"+
 				"");	
 	}
@@ -126,10 +242,10 @@ public class UserInterface {
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
 				"3.- List Admissions\n\n"+
-				"0.- Home Window\n"+
-				"00.- Exit\n\n"+
+				"0.- Exit \n"+
 				"Choose option:"+
 				"");	
 	}
+ 
 
 }
