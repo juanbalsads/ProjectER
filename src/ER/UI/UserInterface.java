@@ -58,7 +58,6 @@ public class UserInterface {
 							}
 							case 0:{
 								System.out.println("See you!");
-								option = 0;
 								break;
 							}
 						}
@@ -71,19 +70,22 @@ public class UserInterface {
 						optioninside = Integer.parseInt(cs.readLine());
 						switch(optioninside) {
 							case 1: {
-								
+								managerJPA.updateAvailabilityNurse();
 								break;
 								
 							}
 							case 2: {
+								managerJPA.listNurseAdmissions();
 								break;
 								
 							}
 							case 3: {
+								managerJPA.listAdmissions();
 								break;
 								
 							}
-							case 4:{
+							case 0:{
+								System.out.println("See you!");
 								break;
 								
 							}
@@ -93,9 +95,31 @@ public class UserInterface {
 					break;
 				}
 				case 3:{
-					printMenuDoctor();
-					optioninside = Integer.parseInt(cs.readLine());
 					while(optioninside > 0 && optioninside <= 3 ) {
+						printMenuDoctor();
+						optioninside = Integer.parseInt(cs.readLine());
+						switch(optioninside) {
+						case 1: {
+							managerJPA.updateAvailabilityDoctor();
+							break;
+							
+						}
+						case 2: {
+							managerJPA.listDoctorAdmissions();
+							break;
+							
+						}
+						case 3: {
+							managerJPA.listAdmissions();
+							break;
+							
+						}
+						case 0:{
+							System.out.println("See you!");
+							break;
+							
+						}
+					}
 						
 					}
 					break;
@@ -154,7 +178,7 @@ public class UserInterface {
 								break;
 							}
 							case 0:{
-								option=0;
+								System.out.println("See you!");
 								break;
 							}
 						}

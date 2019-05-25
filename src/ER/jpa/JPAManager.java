@@ -434,6 +434,38 @@ public Admission getAdmission (int id) {
 			}
 		
 		}
+		public void listDoctorAdmissions() {
+			try {
+				listDoctors();
+				System.out.print("Write the doctor's id: ");
+				int d_id = Integer.parseInt(reader.readLine());
+				Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
+				q1.setParameter(1, d_id);
+				List<Admission> adms = (List<Admission>) q1.getResultList();
+				for (Admission adm : adms) {
+					System.out.println(adm);
+				}
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		public void listNurseAdmissions() {
+			try {
+				listNurses();
+				System.out.print("Write the nurse`s id: ");
+				int n_id = Integer.parseInt(reader.readLine());
+				Query q1 = em.createNativeQuery("SELECT * FROM Admissions WHERE id = ?", Admission.class);
+				q1.setParameter(1, n_id);
+				List<Admission> adms = (List<Admission>) q1.getResultList();
+				for (Admission adm : adms) {
+					System.out.println(adm);
+				}
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+
+		
+		}
 		
 		public void listDoctors() {
 			
@@ -500,16 +532,8 @@ public Admission getAdmission (int id) {
 		}
 		
 		
-		////////PROVING
+
 		
-		public List<Admission> listAdmissionsList() {
-			
-			Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
-			List<Admission> adms = (List<Admission>) q1.getResultList();
-			return adms;
-	
-		
-		}
 		
 		// ArrayList<Admission> listaadm = listAdmissionsList();
 		
