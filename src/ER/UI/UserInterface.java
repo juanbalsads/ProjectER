@@ -45,7 +45,7 @@ public class UserInterface {
 								break;
 							}
 							case 6:{
-								managerJPA.listDoctors2();
+								managerJDBC.listDoctors();
 								break;
 							}
 							case 7:{
@@ -65,7 +65,7 @@ public class UserInterface {
 					break;
 				}
 				case 2:{
-					while(optioninside > 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 4 ) {
 						printMenuNurse();
 						optioninside = Integer.parseInt(cs.readLine());
 						switch(optioninside) {
@@ -80,7 +80,12 @@ public class UserInterface {
 								
 							}
 							case 3: {
-								managerJPA.listAdmissions();
+								managerJDBC.listAdmissions();
+								break;
+								
+							}
+							case 4: {
+								managerJPA.readNurse();
 								break;
 								
 							}
@@ -95,7 +100,7 @@ public class UserInterface {
 					break;
 				}
 				case 3:{
-					while(optioninside > 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 4 ) {
 						printMenuDoctor();
 						optioninside = Integer.parseInt(cs.readLine());
 						switch(optioninside) {
@@ -111,6 +116,11 @@ public class UserInterface {
 						}
 						case 3: {
 							managerJPA.listAdmissions();
+							break;
+							
+						}
+						case 4: {
+							managerJPA.readDoctor();
 							break;
 							
 						}
@@ -130,7 +140,7 @@ public class UserInterface {
 						optioninside = Integer.parseInt(cs.readLine());
 						switch(optioninside) {
 							case 1:{
-								managerJDBC.createDoctor();
+								managerJPA.createDoctor();
 								break;
 							}
 							case 2:{
@@ -254,7 +264,8 @@ public class UserInterface {
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
-				"3.- List Admissions\n\n"+
+				"3.- List Admissions\n"+
+				"4.- Read My Data"+
 				"0.- Home Window\n"+
 				"-1.- Exit\n\n"+
 				"Choose option:"+
@@ -265,7 +276,8 @@ public class UserInterface {
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
-				"3.- List Admissions\n\n"+
+				"3.- List Admissions\n"+
+				"4.- Read My Data"+
 				"0.- Exit \n"+
 				"Choose option:"+
 				"");	
