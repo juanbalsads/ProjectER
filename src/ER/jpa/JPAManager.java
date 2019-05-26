@@ -6,10 +6,13 @@ import javax.persistence.Query;
 
 import java.io.*;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import ER.POJOS.*;
@@ -135,15 +138,36 @@ public class JPAManager implements Manager {
 			try {
       			System.out.println("Please, input the patient data: ");
     			System.out.println("Insert the patient's ssn:");
-    			int ssn = Integer.parseInt(reader.readLine());
+    			String id=reader.readLine();
+    			while(!onlyContainsNumbers(id)) {
+    				System.out.println("Insert a valid patient's ssn:");
+        			 id=reader.readLine();
+    			}
+    			int ssn = Integer.parseInt(id);
     			System.out.println("Insert the patient's name:");
     				String name = reader.readLine();
     			System.out.println("Insert weight:");
-    				Double weight = Double.parseDouble(reader.readLine());
+    				String w=reader.readLine();
+    			while(!onlyContainsDouble(w)) {
+        			System.out.println("  Insert a valid patient's weight:");
+           			 w=reader.readLine();
+        		}
+    				Double weight = Double.parseDouble(w);
     			System.out.println("Insert height(meters):");
-    				Double height = Double.parseDouble(reader.readLine());
-    			System.out.println("Insert genre: ");
+    			String h= reader.readLine();
+    			while(!onlyContainsDouble(h)) {
+        			System.out.println("  Insert a valid patient's height:");
+           			 h=reader.readLine();
+        		}
+    				Double height = Double.parseDouble(h);
+    			System.out.println("Insert gender (male|female): ");
     				String genre = reader.readLine();
+    				
+    				while (!genre.equals("male")&&!genre.equals("MALE")&&!genre.equals("female")&&!genre.equals("FEMALE")) {
+    					System.out.println("Insert a valid gender (male|female): ");
+        				genre = reader.readLine();	
+    				}
+    					
     			System.out.println("Insert date of birth (yyyy-MM-dd): ");
     				String dob = reader.readLine();
     				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -159,9 +183,10 @@ public class JPAManager implements Manager {
 			}
 			return pat;		
 		}
+		
+		
 		public Doctor askForDoctor() {
 			Doctor doc = null;
-			byte[] bytesBlob = null;
 			try {
 				System.out.println("Write the name of the doctor: ");
 				String name = reader.readLine();
@@ -180,27 +205,16 @@ public class JPAManager implements Manager {
 					if(yes_no.equals("true")||yes_no.equals("yes")) {
 						availability = true;}
 					if(yes_no.equals("false")||yes_no.equals("no")) {
-						availability=false; }}
-				System.out.println("Write the path of the file, none if there is not photo:");
-				String fileName = reader.readLine();
-				if(!fileName.equals("none")){
-					File photopath = new File(fileName);
-					InputStream streamBlob = new FileInputStream(photopath);
-					 bytesBlob = new byte[streamBlob.available()];
-					streamBlob.read(bytesBlob);
-					streamBlob.close();
-					}
-				else {
-					bytesBlob = null;
+						availability=false; }
 				}
-				
-				
-				doc = new Doctor(name,speciality,availability,bytesBlob);		
+				doc = new Doctor(name,speciality,availability);		
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 			return doc;	
 		}
+		
+		
 		public Nurse askForNurse() {
 			Nurse nurse = null;
 			try {
@@ -222,13 +236,15 @@ public class JPAManager implements Manager {
 						availability = true;}
 					if(yes_no.equals("false")||yes_no.equals("no")) {
 						availability=false; }
-				}						
+				}			
 			nurse = new Nurse(name,speciality,availability);	
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
 			return nurse;
 		}
+		
+		
 		public Drug askForDrug() {
 			Drug drug = null;
 			try {
@@ -240,6 +256,8 @@ public class JPAManager implements Manager {
 			}
 			return drug;
 		}
+		
+		
 		public Box askForBox() {
 			Box box = null;
 			try {
@@ -261,26 +279,46 @@ public class JPAManager implements Manager {
 				System.out.print("Patient`s SSD:\n");
 				listPatients();
 				int SSD = Integer.parseInt(reader.readLine());
-				Patient p = getPatient(SSD);	
+				while(!patientsIds().contains(SSD)) {
+					System.out.print("Not valid. Patient`s SSD:\n");
+					listPatients();
+					SSD = Integer.parseInt(reader.readLine());}
+				Patient p= getPatient(SSD);
+				
 				System.out.print("Doctors id in charge:\n");
 				listDoctors();
 				int doctor_id = Integer.parseInt(reader.readLine());
-				Doctor doctor = getDoctor(doctor_id);	
+				while(!doctorsIds().contains(doctor_id)) {
+					System.out.print("Not valid. Doctors id in charge:\n");
+					listDoctors();
+					doctor_id = Integer.parseInt(reader.readLine());}
+				Doctor doctor = getDoctor(doctor_id);
+				
 				System.out.print("Nurses id in charge:\n");
 				listNurses();
 				int nurse_id =  Integer.parseInt(reader.readLine());
+				while(!nursesIds().contains(nurse_id)) {
+					System.out.print("Not valid. Nurses id in charge:\n");
+					listNurses();
+				    nurse_id =  Integer.parseInt(reader.readLine());}
 				Nurse nurse = getNurse(nurse_id);
-				System.out.print("Box:\n");
+				
+				System.out.print("Box id:\n");
 				listBoxes();
 				int box_id = Integer.parseInt(reader.readLine());
-				Box box = getBox(box_id);		
+				while(!boxesIds().contains(box_id)) {
+					System.out.print("Not valid. Box id:\n");
+					listBoxes();
+				    box_id = Integer.parseInt(reader.readLine());}
+				Box box = getBox(box_id);	
+				
 				System.out.print("Arrival time (yyyy-MM-dd HH:mm):\n");
 				String dateS = reader.readLine();
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
 				LocalDateTime localDateTime = LocalDateTime.parse(dateS, formatterWithTime);		
 				Timestamp arrivalTime = Timestamp.valueOf(localDateTime);
-				System.out.print("Test: ");
-				adm = new Admission(p,arrivalTime, nurse,doctor, box);		
+				System.out.println("\nThe patient is going to be internated");
+				adm = new Admission(p,arrivalTime,nurse,doctor, box);			
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
@@ -549,12 +587,27 @@ public Admission getAdmission (int id) {
 			listPatients();
 			try {
 				System.out.print("Choose a patient to delete. Type its SSN:");
-				int p_SSD = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid patient SSN: ");
+					id=reader.readLine();
+				}
+				int p_SSD = Integer.parseInt(id);
+				if(!patientsIds().contains(p_SSD)) {
+					System.out.println("    This patient does not exist");
+				}
+				else {
+						
 				Patient pdelete = getPatient(p_SSD);
 				em.getTransaction().begin();
-				
+				if (pdelete.getAdmission()!=null) {
+				pdelete.getAdmission().getDoctor().removeAdmission(pdelete.getAdmission());
+				pdelete.getAdmission().getDoctor().removeAdmission(pdelete.getAdmission());
+				pdelete.getAdmission().getBox().setAvailability(true);
+				pdelete.getAdmission().getBox().setAdmission(null);;
+				em.remove(pdelete.getAdmission());}
 				em.remove(pdelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();}	
 		}
@@ -564,11 +617,20 @@ public Admission getAdmission (int id) {
 			listNurses();
 			try {
 				System.out.print("Choose a nurse to delete. Type its id:");
-				int n_id = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid nurse id: ");
+					id=reader.readLine();
+				}
+				int n_id = Integer.parseInt(id);	
+				if(!nursesIds().contains(n_id)) {
+					System.out.println("    This nurse does not exist");
+				}
+				else {	
 				Nurse ndelete = getNurse(n_id);
 				em.getTransaction().begin();
 				em.remove(ndelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();}	
 		}
@@ -578,11 +640,20 @@ public Admission getAdmission (int id) {
 			listDoctors();
 			try {
 				System.out.print("Choose a doctor to delete. Type its id:");
-				int d_id = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid doctor id: ");
+					id=reader.readLine();
+				}
+				int d_id = Integer.parseInt(id);	
+				if(!doctorsIds().contains(d_id)) {
+					System.out.println("    This doctor does not exist");
+				}
+				else {
 				Doctor ddelete = getDoctor(d_id);
 				em.getTransaction().begin();
 				em.remove(ddelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();}	
 		}
@@ -592,15 +663,25 @@ public Admission getAdmission (int id) {
 			listAdmissions();
 			try {
 				System.out.print("Choose an admission to delete. Type its id:");
-				int adm_id = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid admission id: ");
+					id=reader.readLine();
+				}
+				int adm_id = Integer.parseInt(id);	
+				if(!admissionsIds().contains(adm_id)) {
+					System.out.println("    This admission does not exist");
+				}
+				else {	
 				Admission admdelete = getAdmission(adm_id);
 				em.getTransaction().begin();
 				admdelete.getDoctor().removeAdmission(admdelete);
 				admdelete.getNurse().removeAdmission(admdelete);
 				admdelete.getBox().setAvailability(true);
+				admdelete.getBox().setAdmission(null);
 				admdelete.getPatient().setAdmission(null);
 				em.remove(admdelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();}	
 		}
@@ -610,12 +691,21 @@ public Admission getAdmission (int id) {
 			listBoxes();
 			try {
 				System.out.print("Choose an box to delete. Type its id:");
-				int b_id = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid box id: ");
+					id=reader.readLine();
+				}
+				int b_id = Integer.parseInt(id);	
+				if(!boxesIds().contains(b_id)) {
+					System.out.println("    This box does not exist");
+				}
+				else {		
 				Box bdmdelete = getBox(b_id);
 				em.getTransaction().begin();
 				bdmdelete.getAdmission().setBox(null);
 				em.remove(bdmdelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();}	
 		}
@@ -625,18 +715,59 @@ public Admission getAdmission (int id) {
 			listDrugs();
 			try {
 				System.out.print("Choose an drug to delete. Type its id:");
-				int d_id = Integer.parseInt(reader.readLine());		
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid drug id: ");
+					id=reader.readLine();
+				}
+				int d_id = Integer.parseInt(id);	
+				if(!drugsIds().contains(d_id)) {
+					System.out.println("    This drug does not exist");
+				}
+				else {	
 				Drug ddmdelete = getDrug(d_id);
 				em.getTransaction().begin();
 				em.remove(ddmdelete);
-				em.getTransaction().commit();
+				em.getTransaction().commit();}
 			}catch(IOException e) {
 				e.printStackTrace();
 			}	
 		}
 		
 		
-		
+		/*----------------------RELEASE-------------------*/
+		public void releasePatient() {
+
+			listAdmissions();
+			
+			try {
+				System.out.println("Choose admission to release. Type its id:");
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+					System.out.println("    Select a valid admission id: ");
+					id=reader.readLine();
+				}
+				int adm_id = Integer.parseInt(id);	
+				if(!admissionsIds().contains(adm_id)) {
+					System.out.println("    This admission does not exist");
+				}
+				else {	
+				Admission adm = getAdmission(adm_id);
+				em.getTransaction().begin();
+				adm.setRelease(true);
+				adm.getDoctor().removeAdmission(adm);
+				adm.getNurse().removeAdmission(adm);
+				adm.getBox().setAvailability(true);
+				
+				em.getTransaction().commit();
+				
+				System.out.println("released");}
+				}   
+			catch(IOException e) {
+				e.printStackTrace();}
+			
+		}
+			
 		///UPDATE: Patient(D--what to do with relation entity such as admission),Nurse(D)
 	    ///,Doctor(D),drug(),box(D),
 	    ///admission(),dosage(NOtD)??
@@ -646,16 +777,27 @@ public Admission getAdmission (int id) {
 			
 			try {
 				System.out.println("Choose admission to modify. Type its id:");
-				int adm_id = Integer.parseInt(reader.readLine());
-				Admission adm = getAdmission(adm_id);
 				
+				String id=reader.readLine();
+				int adm_id=Integer.parseInt(id);	
+				while(!onlyContainsNumbers(id)|| !patientsIds().contains(adm_id)) {
+					System.out.println("    Select a valid admission id: ");
+					id=reader.readLine();
+					adm_id = Integer.parseInt(id);	}
+				Admission adm = getAdmission(adm_id);
+			
 				System.out.print("New doctor's id:\n");
 				listDoctors();
 				String doc_id=reader.readLine();
 				Doctor newDoc= adm.getDoctor();
 				if(!doc_id.equals("")){
 					int doctor_id = Integer.parseInt(doc_id);
-					newDoc= getDoctor(doctor_id);}
+					while(!onlyContainsNumbers(doc_id)|| !patientsIds().contains(doctor_id)) {
+						System.out.println("    Select a valid admission id: ");
+						doc_id=reader.readLine();
+						doctor_id = Integer.parseInt(doc_id);	}
+					newDoc= getDoctor(doctor_id);
+				}
 		
 				System.out.print("New nurse's id:\n");
 				listNurses();
@@ -663,7 +805,12 @@ public Admission getAdmission (int id) {
 				Nurse newNur= adm.getNurse();
 				if(!nur_id.equals("")){
 					int nurse_id = Integer.parseInt(nur_id);
-					newNur= getNurse(nurse_id);}
+					while(!onlyContainsNumbers(nur_id)|| !patientsIds().contains(nurse_id)) {
+						System.out.println("    Select a valid admission id: ");
+						nur_id=reader.readLine();
+						nurse_id = Integer.parseInt(doc_id);	}	
+					newNur= getNurse(nurse_id);
+				}
 				
 				System.out.print("New Box id:\n");
 				listBoxes();
@@ -671,6 +818,10 @@ public Admission getAdmission (int id) {
 				Box newBox= adm.getBox();
 				if(!b_id.equals("")){
 					int box_id = Integer.parseInt(b_id);
+					while(!onlyContainsNumbers(b_id)|| !patientsIds().contains(box_id)) {
+						System.out.println("    Select a valid admission id: ");
+						doc_id=reader.readLine();
+						box_id = Integer.parseInt(b_id);	}
 					newBox= getBox(box_id);}
 				
 				System.out.println("n"+newNur);
@@ -678,7 +829,6 @@ public Admission getAdmission (int id) {
 				if(adm.getDoctor()!=null) {
 				adm.getDoctor().removeAdmission(adm);}
 				adm.setDoctor(newDoc);
-				System.out.println("traza");
 				newNur.addAdmission(adm);
 				if(adm.getNurse()!=null) {
 				adm.getNurse().removeAdmission(adm);}
@@ -700,9 +850,69 @@ public Admission getAdmission (int id) {
 		
 		public void updatePatient() {
 			listPatients();
-			System.out.print("Choose a patient to modify. Type its SSD:");
+			/*
+			 * public Patient askForPatient() {
+			Patient pat = null;
 			try {
-				int p_SSD = Integer.parseInt(reader.readLine());
+      			System.out.println("Please, input the patient data: ");
+    			System.out.println("Insert the patient's ssn:");
+    			String id=reader.readLine();
+    			while(!onlyContainsNumbers(id)) {
+    				System.out.println("Insert a valid patient's ssn:");
+        			 id=reader.readLine();
+    			}
+    			int ssn = Integer.parseInt(id);
+    			System.out.println("Insert the patient's name:");
+    				String name = reader.readLine();
+    			System.out.println("Insert weight:");
+    				String w=reader.readLine();
+    			while(!onlyContainsDouble(w)) {
+        			System.out.println("  Insert a valid patient's weight:");
+           			 w=reader.readLine();
+        		}
+    				Double weight = Double.parseDouble(w);
+    			System.out.println("Insert height(meters):");
+    			String h= reader.readLine();
+    			while(!onlyContainsDouble(h)) {
+        			System.out.println("  Insert a valid patient's height:");
+           			 h=reader.readLine();
+        		}
+    				Double height = Double.parseDouble(h);
+    			System.out.println("Insert gender (male|female): ");
+    				String genre = reader.readLine();
+    				
+    				while (!genre.equals("male")&&!genre.equals("MALE")&&!genre.equals("female")&&!genre.equals("FEMALE")) {
+    					System.out.println("Insert a valid gender (male|female): ");
+        				genre = reader.readLine();	
+    				}
+    					
+    			System.out.println("Insert date of birth (yyyy-MM-dd): ");
+    				String dob = reader.readLine();
+    				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    			    LocalDate date = LocalDate.parse(dob, formatter);
+    			    Date dob2= Date.valueOf(date);
+    			System.out.println("Insert the patient's blood type:");
+    				String bloodType = reader.readLine();
+    				System.out.println("Type the patient's allergies:");		
+    			pat = new Patient(ssn,name, weight, height,genre, dob2, bloodType);		
+				
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			return pat;		
+		}
+			 */
+			
+			
+			System.out.print("Choose a patient to modify. Type its SSN:");
+			try {
+				String id=reader.readLine();
+    			while(!onlyContainsNumbers(id)) {
+    				System.out.println("Insert a valid patient's ssn:");
+        			 id=reader.readLine();
+    			}
+    			int p_SSD = Integer.parseInt(id);
+				
 				Patient p = getPatient(p_SSD);
 				System.out.println("New name:");
 				String newName= reader.readLine();
@@ -715,6 +925,10 @@ public Admission getAdmission (int id) {
 					if(newWeightS.equals("")) {
 						newWeight= p.getWeight();}
 					else {
+		    			while(!onlyContainsDouble(newWeightS)) {
+		        			System.out.println("  Insert a valid patient's weight:");
+		        			newWeightS=reader.readLine();
+		        		}
 						newWeight= Double.parseDouble(newWeightS);}
 			    System.out.println("New height:");
 				Double newHeight;
@@ -722,12 +936,22 @@ public Admission getAdmission (int id) {
 					if(newHeightS.equals("")) {
 						newHeight= p.getHeight();}
 					else {
+						while(!onlyContainsDouble(newHeightS)) {
+		        			System.out.println("  Insert a valid patient's height:");
+		        			newHeightS=reader.readLine();
+		        		}
 						newHeight= Double.parseDouble(newHeightS);}
 			
-				System.out.println("New genre:");
+				System.out.println("New gender (male|female):");
 				String newGenre= reader.readLine();
 					if(newGenre.equals("")) {
 						newGenre= p.getGenre();}
+					else {
+						while (!newGenre.equals("male")&&!newGenre.equals("MALE")&&!newGenre.equals("female")&&!newGenre.equals("FEMALE")) {
+	    					System.out.println("Insert a valid gender (male|female): ");
+	    					newGenre = reader.readLine();	
+	    				}
+					}
 			    
 				System.out.println("New dob (yyyy-MM-dd):");
 				String newDobS= reader.readLine();
@@ -755,6 +979,7 @@ public Admission getAdmission (int id) {
 			}
 					
 		}
+		
 		public void updateDoctor() {
 			listDoctors();
 			System.out.print("Choose doctor to modify. Type its id:");
@@ -926,7 +1151,95 @@ public Admission getAdmission (int id) {
 		
 	
 		
+		private boolean onlyContainsNumbers (String text) {
+		    try {
+		        Long.parseLong(text);
+		    } catch (NumberFormatException ex) {
+		        return false;
+		    }
+		    return true;
+		} 
 		
+		private boolean onlyContainsDouble (String text) {
+		    try {
+		        Double.parseDouble(text);
+		    } catch (NumberFormatException ex) {
+		        return false;
+		    }
+		    return true;
+		}
+		
+		public List<Integer> patientsIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT ssn FROM Patients ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
+		
+		public List<Integer> admissionsIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT id FROM Admissions ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
+		
+		public List<Integer> doctorsIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT id FROM Doctors ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
+		
+		public List<Integer> nursesIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT id FROM Nurses ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
+		
+		public List<Integer> boxesIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT id FROM Boxes ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
+		
+		public List<Integer> drugsIds (){
+			List<Integer> listId= new ArrayList<Integer>();
+			try {	
+			Query q =em.createNamedQuery("SELECT id FROM Drugs ", Integer.class);
+			listId= (List<Integer>) q.getResultList();
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			 	return listId;
+		}
 		
 		
 		

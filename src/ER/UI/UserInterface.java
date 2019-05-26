@@ -15,47 +15,74 @@ public class UserInterface {
 		int option = 1;
 		BufferedReader cs = new BufferedReader(new InputStreamReader(System.in));
 		while(option > 0 && option <= 4) {
-				PrintHomeMenu();
+				PrintHomeMenu();				
 				option = Integer.parseInt(cs.readLine());
+				while(option<0 || option>4) {
+					System.out.println("Please select a valid option");
+					PrintHomeMenu();				
+					option = Integer.parseInt(cs.readLine());
+				}
 				int optioninside = 1;
 				switch(option){
 				case 1:{
-					while(optioninside > 0 && optioninside <= 8 ) {
+					while(optioninside > 0 && optioninside <= 12 ) {
 						printMenuAssistant();
 						optioninside = Integer.parseInt(cs.readLine());
+						while(optioninside<0 || optioninside>12) {
+							System.out.println("Please select a valid option");
+							printMenuAssistant();
+							optioninside = Integer.parseInt(cs.readLine());
+						}
 						switch(optioninside) {
 							case 1: {
 								managerJDBC.createAdmission();
 								break;
 							}
 							case 2: {
-								managerJDBC.updateAdmission();
+								managerJPA.updateAdmission();
 								break;
 							}
 							case 3:{
-								managerJDBC.createPatient();
+								managerJPA.releasePatient();
 								break;
 							}
 							case 4:{
-								managerJDBC.updatePatient();
+								managerJDBC.createPatient();
 								break;
 							}
 							case 5:{
-								managerJPA.listNurses2();
+								managerJPA.updatePatient();
 								break;
 							}
 							case 6:{
-								managerJPA.listDoctors2();
+								managerJPA.listNurses2();
 								break;
 							}
 							case 7:{
-								managerJPA.listPatients2();
+								managerJPA.listDoctors2();
 								break;
 							}
 							case 8:{
+								managerJPA.listPatients2();
+								break;
+							}
+							case 9:{
 								managerJPA.listBoxes2();
 								break;
 							}
+							case 10:{
+								managerJPA.listAdmissions();
+								break;
+							}
+							case 11: {
+								managerJDBC.getPatientByName();
+								break;
+							}
+							case 12: {
+								managerJPA.readDoctor();
+								break;
+							}
+							
 							case 0:{
 								System.out.println("See you!");
 								break;
@@ -65,9 +92,14 @@ public class UserInterface {
 					break;
 				}
 				case 2:{
-					while(optioninside > 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 4 ) {
 						printMenuNurse();
 						optioninside = Integer.parseInt(cs.readLine());
+						while(optioninside<0 || optioninside>4) {
+							System.out.println("Please select a valid option");
+							printMenuAssistant();
+							optioninside = Integer.parseInt(cs.readLine());
+						}
 						switch(optioninside) {
 							case 1: {
 								managerJPA.updateAvailabilityNurse();
@@ -84,6 +116,11 @@ public class UserInterface {
 								break;
 								
 							}
+							case 4: {
+								managerJPA.createAdmissionToDrug();
+								break;
+								
+							}
 							case 0:{
 								System.out.println("See you!");
 								break;
@@ -95,9 +132,14 @@ public class UserInterface {
 					break;
 				}
 				case 3:{
-					while(optioninside > 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 4 ) {
 						printMenuDoctor();
 						optioninside = Integer.parseInt(cs.readLine());
+						while(optioninside<0 || optioninside>4) {
+							System.out.println("Please select a valid option");
+							printMenuAssistant();
+							optioninside = Integer.parseInt(cs.readLine());
+						}
 						switch(optioninside) {
 						case 1: {
 							managerJPA.updateAvailabilityDoctor();
@@ -111,6 +153,11 @@ public class UserInterface {
 						}
 						case 3: {
 							managerJPA.listAdmissions();
+							break;
+							
+						}
+						case 4: {
+							managerJPA.createAdmissionToDrug();
 							break;
 							
 						}
@@ -128,9 +175,14 @@ public class UserInterface {
 					while(optioninside > 0 && optioninside <= 12 ) {
 						printMenuDatabaseManager();
 						optioninside = Integer.parseInt(cs.readLine());
+						while(optioninside<0 || optioninside>12) {
+							System.out.println("Please select a valid option");
+							printMenuAssistant();
+							optioninside = Integer.parseInt(cs.readLine());
+						}
 						switch(optioninside) {
 							case 1:{
-								managerJDBC.createDoctor();
+								managerJPA.createDoctor();
 								break;
 							}
 							case 2:{
@@ -138,7 +190,7 @@ public class UserInterface {
 								break;
 							}
 							case 3:{
-								managerJDBC.updateDoctor();
+								managerJPA.updateDoctor();
 								break;
 							}
 							case 4:{
@@ -196,31 +248,36 @@ public class UserInterface {
 	}
 	
 	public static void PrintHomeMenu() {
-		System.out.println("WELCOME TO ER DATABASE:");
-		System.out.println("IDENTIFY:");
+		System.out.println("\nWELCOME TO ER DATABASE:");
+		System.out.println("\nIDENTIFY:\n");
 		System.out.println(""+
 				"1.- ER Assistant\n\n"+
 				"2.- Nurse\n\n"+			
 				"3.- Doctor\n\n"+
 				"4.- Database Manager\n\n"+
-				"0.- Exit\n"+
+				"0.- Exit\n\n"+
 				"Choose option:"+
 				"");
 	}
 	
 	public static void printMenuAssistant() {
-		System.out.println("-----ASSISTANT MENU-----\n");
+		System.out.println("\n\n-----ASSISTANT MENU-----\n");
 		System.out.println(""+
 				"1.- New Admission\n"+
-				"2.- Edit Admission\n\n"+
+				"2.- Edit Admission\n"+
+				"3.- Release Admission\n\n"+
 				
-				"3.- New Patient\n"+
-				"4.- Edit Patient\n\n"+
+				"4.- New Patient\n"+
+				"5.- Edit Patient\n\n"+
 				
-				"5.- List Nurse\n"+
-				"6.- List Doctors\n"+	
-				"7.- List Patient\n"+
-				"8.- List Box\n\n"+
+				"6.- List Nurse\n"+
+				"7.- List Doctors\n"+	
+				"8.- List Patients\n"+
+				"9.- List Boxes\n"+
+				"10.- List Admissions\n\n"+
+				
+				"11.- Search Patient by name\n"+
+				"12.- Read doctor (with photo) \n\n"+
 				
 				"0.- Exit\n\n"+
 				"Choose option:"+
@@ -228,7 +285,7 @@ public class UserInterface {
 	}
 	
 	public static void printMenuDatabaseManager() {
-		System.out.println("-----DATABASE MANAGER MENU-----\n");
+		System.out.println("\n\n-----DATABASE MANAGER MENU-----\n");
 		System.out.println(""+
 				"1.- Create Doctor\n"+
 				"2.- Delete Doctor\n"+
@@ -250,22 +307,23 @@ public class UserInterface {
 				"");	
 	}
 	public static void printMenuDoctor() {
-		System.out.println("-----DOCTOR MENU-----\n");
+		System.out.println("\n\n-----DOCTOR MENU-----\n");
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
-				"3.- List Admissions\n\n"+
-				"0.- Home Window\n"+
-				"-1.- Exit\n\n"+
+				"3.- List Admissions\n"+
+				"4.- Add drug to an admissions\n\n"+
+				"0.- Exit\n"+
 				"Choose option:"+
 				"");	
 	}
 	public static void printMenuNurse() {
-		System.out.println("-----NURSE MENU-----\n");
+		System.out.println("\n\n-----NURSE MENU-----\n");
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
 				"3.- List Admissions\n\n"+
+				"4.- Add drug to an admissions\n\n"+
 				"0.- Exit \n"+
 				"Choose option:"+
 				"");	

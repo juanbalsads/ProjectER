@@ -25,6 +25,7 @@ public class JDBCManager implements Manager{
 	 public JDBCManager() {
 		super();
 		connect();
+		createTables();
 	}
 
 
@@ -83,13 +84,13 @@ public class JDBCManager implements Manager{
 		 Statement stmt5= c.createStatement();
 		 String sql5= "CREATE TABLE if not exists Admissions " + 
 		 "(id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-		 "patient INTEGER REFERENCES Patients(ssn), " + 
+		 "patient INTEGER REFERENCES Patients(ssn) ON DELETE CASCADE ON UPDATE CASCADE , " + 
 		 "arrival_time TIMESTAMP, " + 
 		 "test TEXT, " +
 		 "release BOOLEAN, " +
-		 "doctor INTEGER REFERENCES Doctors(id), " +
-		 "nurse INTEGER REFERENCES Nurses(id), " +
-		 "box INTEGER REFERENCES Boxes(id)) ";
+		 "doctor INTEGER REFERENCES Doctors(id) ON DELETE SET NULL ON UPDATE CASCADE, " +
+		 "nurse INTEGER REFERENCES Nurses(id) ON DELETE SET NULL ON UPDATE CASCADE, " +
+		 "box INTEGER REFERENCES Boxes(id) ON DELETE SET NULL ON UPDATE CASCADE) ";
 		 stmt5.executeUpdate(sql5);
 		 stmt5.close();
 		 Statement stmt6= c.createStatement();
@@ -100,8 +101,8 @@ public class JDBCManager implements Manager{
 		 stmt6.close();
 		 Statement stmt12= c.createStatement();
 		 String sql12= "CREATE TABLE if not exists Admission_Drugs " + 
-		 "(admission INTEGER REFERENCES Admission(id) ON UPDATE cascade, " +
-		 "drug INTEGER REFERENCES Drugs(id), " +
+		 "(admission INTEGER REFERENCES Admission(id) ON DELETE CASCADE ON UPDATE CASCADE, " +
+		 "drug INTEGER REFERENCES Drugs(id) ON DELETE CASCADE ON UPDATE CASCADE, " +
 		 "dosage DOUBLE, "+
 		 "PRIMARY KEY (admission, drug)) ";
 		 stmt12.executeUpdate(sql12);
@@ -135,15 +136,35 @@ public class JDBCManager implements Manager{
       			System.out.println("Please, input the patient data: ");
     			System.out.println("Insert the patient's ssn:");
     			String id=reader.readLine();
+    			while(!onlyContainsNumbers(id)) {
+    				System.out.println("Insert a valid patient's ssn:");
+        			 id=reader.readLine();
+    			}
     			int ssn = Integer.parseInt(id);
     			System.out.println("Insert the patient's name:");
     				String name = reader.readLine();
     			System.out.println("Insert weight:");
-    				Double weight = Double.parseDouble(reader.readLine());
+    				String w=reader.readLine();
+    			while(!onlyContainsDouble(w)) {
+        			System.out.println("  Insert a valid patient's weight:");
+           			 w=reader.readLine();
+        		}
+    				Double weight = Double.parseDouble(w);
     			System.out.println("Insert height(meters):");
-    				Double height = Double.parseDouble(reader.readLine());
-    			System.out.println("Insert genre: ");
+    			String h= reader.readLine();
+    			while(!onlyContainsDouble(h)) {
+        			System.out.println("  Insert a valid patient's height:");
+           			 h=reader.readLine();
+        		}
+    				Double height = Double.parseDouble(h);
+    			System.out.println("Insert gender (male|female): ");
     				String genre = reader.readLine();
+    				
+    				while (!genre.equals("male")&&!genre.equals("MALE")&&!genre.equals("female")&&!genre.equals("FEMALE")) {
+    					System.out.println("Insert a valid gender (male|female): ");
+        				genre = reader.readLine();	
+    				}
+    					
     			System.out.println("Insert date of birth (yyyy-MM-dd): ");
     				String dob = reader.readLine();
     				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -255,19 +276,39 @@ public class JDBCManager implements Manager{
 				System.out.print("Patient`s SSD:\n");
 				listPatients();
 				int SSD = Integer.parseInt(reader.readLine());
+				while(!patientsIds().contains(SSD)) {
+					System.out.print("Not valid. Patient`s SSD:\n");
+					listPatients();
+					SSD = Integer.parseInt(reader.readLine());}
 				Patient p= getPatient(SSD);
+				
 				System.out.print("Doctors id in charge:\n");
 				listDoctors();
 				int doctor_id = Integer.parseInt(reader.readLine());
+				while(!doctorsIds().contains(doctor_id)) {
+					System.out.print("Not valid. Doctors id in charge:\n");
+					listDoctors();
+					doctor_id = Integer.parseInt(reader.readLine());}
 				Doctor doctor = getDoctor(doctor_id);
+				
 				System.out.print("Nurses id in charge:\n");
 				listNurses();
 				int nurse_id =  Integer.parseInt(reader.readLine());
+				while(!nursesIds().contains(nurse_id)) {
+					System.out.print("Not valid. Nurses id in charge:\n");
+					listNurses();
+				    nurse_id =  Integer.parseInt(reader.readLine());}
 				Nurse nurse = getNurse(nurse_id);
+				
 				System.out.print("Box id:\n");
 				listBoxes();
 				int box_id = Integer.parseInt(reader.readLine());
+				while(!boxesIds().contains(box_id)) {
+					System.out.print("Not valid. Box id:\n");
+					listBoxes();
+				    box_id = Integer.parseInt(reader.readLine());}
 				Box box = getBox(box_id);	
+				
 				System.out.print("Arrival time (yyyy-MM-dd HH:mm):\n");
 				String dateS = reader.readLine();
 				DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
@@ -767,8 +808,6 @@ public class JDBCManager implements Manager{
 			 return null;}}
 
 
-	
-		
 /*---------------------------------DELETE METHODS--------------------------------------*/
 	
 	//DELETE PATIENTS	
@@ -777,13 +816,22 @@ public class JDBCManager implements Manager{
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			listPatients();
-			System.out.println("Choose a patient to delete, type its ID: ");
-				int p_id = Integer.parseInt(reader.readLine());
+			System.out.println("Choose a patient to delete, type its SSN: ");
+				String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+    				System.out.println("Insert a valid patient SSN to delete:");
+        			 id=reader.readLine();
+    			}
+				int p_id = Integer.parseInt(id);
+				if(!patientsIds().contains(p_id)) {
+					System.out.print("This patient does not exist");}
+				else {
+				
 				String sql = "DELETE FROM Patients WHERE ssn=?";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, p_id);
 				prep.executeUpdate();
-				System.out.println("Deletion finished.");}
+				System.out.println("Deletion finished.");}}
 		catch (Exception e) {
 			e.printStackTrace();}}
 
@@ -794,12 +842,20 @@ public class JDBCManager implements Manager{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			listDoctors();
 			System.out.println("Choose a doctor to delete, type its ID: ");
-				int d_id = Integer.parseInt(reader.readLine());
+			String id=reader.readLine();
+			while(!onlyContainsNumbers(id)) {
+				System.out.println("Insert a valid doctor id to delete:");
+    			 id=reader.readLine();
+			}
+			int d_id = Integer.parseInt(id);
+			if(!doctorsIds().contains(d_id)) {
+				System.out.print("This doctor does not exist");}
+			else {
 				String sql = "DELETE FROM Doctors WHERE id=?";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, d_id);
 				prep.executeUpdate();
-				System.out.println("Deletion finished.");}
+				System.out.println("Deletion finished.");}}
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
@@ -810,13 +866,21 @@ public class JDBCManager implements Manager{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			listNurses();
 			System.out.println("Choose a nurse to delete, type its ID: ");
-				int n_id = Integer.parseInt(reader.readLine());
+			String id=reader.readLine();
+			while(!onlyContainsNumbers(id)) {
+				System.out.println("Insert a valid nurse id to delete:");
+    			 id=reader.readLine();
+			}
+			int n_id = Integer.parseInt(id);
+			if(!nursesIds().contains(n_id)) {
+				System.out.print("This nurse does not exist");}
+			else {	
 				String sql = "DELETE FROM Nurses WHERE id=?";
 				PreparedStatement prep = c.prepareStatement(sql);
 				prep.setInt(1, n_id);
 				prep.executeUpdate();
 				System.out.println("Deletion finished.");
-			}
+			}}
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
@@ -827,13 +891,21 @@ public class JDBCManager implements Manager{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		listBoxes();
 		System.out.println("Choose a box to delete, type its ID: ");
-		int box_id= Integer.parseInt(reader.readLine());
+		String id=reader.readLine();
+		while(!onlyContainsNumbers(id)) {
+			System.out.println("Insert a valid box id to delete:");
+			 id=reader.readLine();
+		}
+		int box_id = Integer.parseInt(id);
+		if(!boxesIds().contains(box_id)) {
+			System.out.print("This box does not exist");}
+		else {
 		String sql= "DELETE FROM Boxes WHERE id=?";
 		PreparedStatement prep =c.prepareStatement(sql);
 		prep.setInt(1, box_id);
 		prep.executeUpdate();
 		System.out.println("Deletion finished.");
-		}
+		}}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -847,13 +919,25 @@ public class JDBCManager implements Manager{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		listDrugs();
 		System.out.println("Choose a drug to delete, type its ID: ");
-		int drug_id= Integer.parseInt(reader.readLine());
+		
+
+		String id=reader.readLine();
+		while(!onlyContainsNumbers(id)) {
+			System.out.println("Insert a valid drug id to delete:");
+			 id=reader.readLine();
+		}
+		int drug_id = Integer.parseInt(id);
+		if(!drugsIds().contains(drug_id)) {
+			System.out.print("This drug does not exist");}
+		else {
+		
+		
 		String sql= "DELETE FROM Drugs WHERE id=?";
 		PreparedStatement prep =c.prepareStatement(sql);
 		prep.setInt(1, drug_id);
 		prep.executeUpdate();
 		System.out.println("Deletion finished.");
-		}
+		}}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -924,12 +1008,24 @@ public class JDBCManager implements Manager{
 	}
 
 
+
 	@Override
 	public void updateNurse() {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a nurse, type its ID: ");
-				int n_id = Integer.parseInt(reader.readLine());
+			
+			  String id=reader.readLine();
+				while(!onlyContainsNumbers(id)) {
+				System.out.println("Insert a valid nurse id to update:");
+    			 id=reader.readLine();
+			}
+			int n_id = Integer.parseInt(id);
+			while(!nursesIds().contains(n_id)) {
+				System.out.println("Insert an existing nurse id to update:");
+    			n_id=Integer.parseInt(reader.readLine());
+			}
+			
 				Nurse nurse = getNurse(n_id);
 				
 			System.out.println("New name:");
@@ -976,194 +1072,127 @@ public class JDBCManager implements Manager{
 		
 	}
 	
-	
 
-/*---------------------------------UPDATE METHODS--------------------------------------*/
-	
-	//UPDATE PATIENTS				 
-	//Creo que es mejor dejar los updates en JPA
-	
-	/*public void updatePatient() {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Choose a patient, type its ID: ");
-				int p_id = Integer.parseInt(reader.readLine());
-				Patient patient= readPatient(p_id);
-			System.out.println("New name:");
-				String newName= reader.readLine();
-					if(newName.equals("")) {
-						newName= patient.getName();}
-			System.out.println("New weight:");
-				Double newWeight1;
-				String newWeight = reader.readLine();
-					if(newWeight.equals("")) {
-						newWeight1= patient.getWeight();}
-					else {
-						newWeight1= Double.parseDouble(newWeight);}
-			System.out.println("New height:");
-				Double newHeight1;
-				String newHeight = reader.readLine();
-					if(newHeight.equals("")) {
-						newHeight1= patient.getHeight();}
-					else {
-						newHeight1= Double.parseDouble(newHeight);}
-			System.out.println("New genre:");
-				String newGenre= reader.readLine();
-					if(newGenre.equals("")) {
-						newGenre= patient.getGenre();}
-			System.out.println("New dob:");
-				String newDob= reader.readLine();
-				Timestamp newdob=null;
-					if(newDob.equals("")) {
-						DateTimeFormatter formatterWithTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");	
-						LocalDateTime localDateTime = LocalDateTime.parse(newDob, formatterWithTime);		
-					    newdob = Timestamp.valueOf(localDateTime);}
-			System.out.println("New bloodtype:");
-			    String newBloodType = reader.readLine();
-			        if(newBloodType.equals("")){
-			        	newBloodType=patient.getBloodType();}
-			
-			PreparedStatement prep;
-			String sql;	
-			sql = "UPDATE patients SET name=?, weight=?, height=?, genre=?, dob=?, blood_type=? WHERE id=?";
-				prep = c.prepareStatement(sql);
-				prep.setString(1, newName);
-				prep.setDouble(2, newWeight1);
-				prep.setDouble(3, newHeight1);
-				prep.setString(4, newGenre);
-				prep.setTimestamp(5, newdob);
-				prep.setInt(6, p_id);
-				prep.setString(7, newBloodType);
-				prep.executeUpdate();
-			System.out.println("Update finished.");}
-		catch(Exception e){
-			 e.printStackTrace();}}
-	
-	
-	//UPDATE DOCTORS
-	public void updateDoctor() {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Choose a doctor, type its ID: ");
-				int n_id = Integer.parseInt(reader.readLine());
-				Doctor doctor = readDoctor(n_id);
-				
-			System.out.println("New name:");
-				String newName= reader.readLine();
-					if(newName.equals("")) {
-						newName= doctor.getName();}
-			System.out.println("New specialty:");
-				String newSpecialty= reader.readLine();
-					if(newSpecialty.equals("")) {
-						newSpecialty= doctor.getSpecialty();}
-			System.out.println("It is available?(write yes or no): ");
-			    String yes_no = reader.readLine();
-			    boolean available;
-				 boolean newAvailability=doctor.getAvailability();
-			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
-	            	available=true;
-	            	if(available!=doctor.getAvailability()) {
-	            	newAvailability=true;}}
-	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
-	            	available=false;
-	            	if(available!=doctor.getAvailability()) {
-	            	newAvailability=false;}
-	            }
-			PreparedStatement prep;
-			String sql;	
-			sql = "UPDATE Doctor SET name=?, speciality=?, availability=? WHERE id=?";
-				prep = c.prepareStatement(sql);
-				prep.setString(1, newName);
-				prep.setString(2, newSpecialty);
-				prep.setBoolean(3, newAvailability);
-				prep.setInt(4, n_id);
-				prep.executeUpdate();
-			System.out.println("Update finished.");}
-		catch(Exception e){
-			 e.printStackTrace();}}
-
-		 
-    //UPDATE NURSES
-	public void updateNurse() {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Choose a nurse, type its ID: ");
-				int n_id = Integer.parseInt(reader.readLine());
-				Nurse nurse = readNurse(n_id);
-				
-			System.out.println("New name:");
-				String newName= reader.readLine();
-					if(newName.equals("")) {
-						newName= nurse.getName();}
-			System.out.println("New specialty:");
-				String newSpecialty= reader.readLine();
-					if(newSpecialty.equals("")) {
-						newSpecialty= nurse.getSpecialty();}
-			System.out.println("It is available?(write yes or no): ");
-			    String yes_no = reader.readLine();
-			    boolean available;
-				 boolean newAvailability=nurse.getAvailability();
-			    if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
-	            	available=true;
-	            	if(available!=nurse.getAvailability()) {
-	            	newAvailability=true;}}
-	            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
-	            	available=false;
-	            	if(available!=nurse.getAvailability()) {
-	            	newAvailability=false;}
-	            }
-			PreparedStatement prep;
-			String sql;	
-			sql = "UPDATE Nurses SET name=?, speciality=?, availability=? WHERE id=?";
-				prep = c.prepareStatement(sql);
-				prep.setString(1, newName);
-				prep.setString(2, newSpecialty);
-				prep.setBoolean(3, newAvailability);
-				prep.setInt(4, n_id);
-				prep.executeUpdate();
-			System.out.println("Update finished.");}
-		catch(Exception e){
-			 e.printStackTrace();}}
-
-	//UPDATE BOX
-		 public void updateBox() {
-			 try {
-				 BufferedReader reader = new BufferedReader (new InputStreamReader(System.in));
-				 System.out.println("Choose box, type its ID: ");
-				 int box_id = Integer.parseInt(reader.readLine());
-				 Box box= readBox(box_id);
-				 boolean available;
-				 boolean newAvailability=box.getAvailability();
-				 String sql="UPDATE Box SET name=?, availability = ?";
-				 PreparedStatement prep = c.prepareStatement(sql);
-				 System.out.println("New name: ");
-				 String newName = reader.readLine();
-				 if(newName.equals("")) {
-						newName= box.getName();}
-				 System.out.println("New availability. Is it available?: ");
-				 String yes_no = reader.readLine();
-			            if(yes_no.equals("YES")||yes_no.equals("yes")||yes_no.equals("true")) {
-			            	available=true;
-			            	if(available!=box.getAvailability()) {
-			            	newAvailability=true;}}
-			            if(yes_no.equals("NO")||yes_no.equals("no")||yes_no.equals("false")) {
-			            	available=false;
-			            	if(available!=box.getAvailability()) {
-			            	newAvailability=false;}
-			            }
-			     prep.setString(1, newName);
-				 prep.setBoolean(2, newAvailability);
-				 prep.executeUpdate();
-				 System.out.println("Update finished.");
-				 }
-		 catch(Exception e) {
-			 e.printStackTrace();
-		 }}
-		 
-		 */
 			
 		 
-		 
+	private boolean onlyContainsNumbers (String text) {
+	    try {
+	        Long.parseLong(text);
+	    } catch (NumberFormatException ex) {
+	        return false;
+	    }
+	    return true;
+	} 
+	
+	private boolean onlyContainsDouble (String text) {
+	    try {
+	        Double.parseDouble(text);
+	    } catch (NumberFormatException ex) {
+	        return false;
+	    }
+	    return true;
+	}
+	
+	public List<Integer> patientsIds (){
+		List<Integer> listId= new ArrayList<Integer>();
+		try {	
+		Statement stmt = c.createStatement();
+		String sql = "SELECT ssn FROM Patients ";
+		ResultSet rs = stmt.executeQuery(sql); 
+
+		int id;
+			while (rs.next() ) {
+				id = rs.getInt("ssn");
+				listId.add(id);
+			}
+		 	rs.close();
+		 	stmt.close();}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+		 	return listId;
+	}
+	
+	public List<Integer> doctorsIds (){
+		List<Integer> listId= new ArrayList<Integer>();
+		try {	
+		Statement stmt = c.createStatement();
+		String sql = "SELECT id FROM Doctors ";
+		ResultSet rs = stmt.executeQuery(sql); 
+
+		int id;
+			while (rs.next() ) {
+				id = rs.getInt("id");
+				listId.add(id);
+			}
+		 	rs.close();
+		 	stmt.close();}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+		 	return listId;
+	}
+	
+	public List<Integer> nursesIds (){
+		List<Integer> listId= new ArrayList<Integer>();
+		try {	
+		Statement stmt = c.createStatement();
+		String sql = "SELECT id FROM Nurses ";
+		ResultSet rs = stmt.executeQuery(sql); 
+
+		int id;
+			while (rs.next() ) {
+				id = rs.getInt("id");
+				listId.add(id);
+			}
+		 	rs.close();
+		 	stmt.close();}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+		 	return listId;
+	}
+	
+	public List<Integer> boxesIds (){
+		List<Integer> listId= new ArrayList<Integer>();
+		try {	
+		Statement stmt = c.createStatement();
+		String sql = "SELECT id FROM Boxes ";
+		ResultSet rs = stmt.executeQuery(sql); 
+
+		int id;
+			while (rs.next() ) {
+				id = rs.getInt("id");
+				listId.add(id);
+			}
+		 	rs.close();
+		 	stmt.close();}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+		 	return listId;
+	}
+	
+	public List<Integer> drugsIds (){
+		List<Integer> listId= new ArrayList<Integer>();
+		try {	
+		Statement stmt = c.createStatement();
+		String sql = "SELECT id FROM Drugs ";
+		ResultSet rs = stmt.executeQuery(sql); 
+
+		int id;
+			while (rs.next() ) {
+				id = rs.getInt("id");
+				listId.add(id);
+			}
+		 	rs.close();
+		 	stmt.close();}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+		 	return listId;
+	}
 		 
 	
 }
+

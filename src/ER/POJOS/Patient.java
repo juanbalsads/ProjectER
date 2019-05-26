@@ -218,10 +218,15 @@ public class Patient implements Serializable {
 	}
 	
 	public String toString2() {
+		if(admission!=null) {
 		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" +
 	            weight + ", height=" + height + ", genre="+
 				genre + ", dob=" + dob + ", bloodType=" + bloodType 
-				 + ", admission=" + admission.getId() +"]";
+				 + ", admission=" + admission.getId() +"]";}
+		else {
+		return "Patient [SSN=" + ssn + ", name=" + name + ", weight=" +
+	           weight + ", height=" + height + ", genre="+
+	    	   genre + ", dob=" + dob + ", bloodType=" + bloodType;}
 	} 
 
 
