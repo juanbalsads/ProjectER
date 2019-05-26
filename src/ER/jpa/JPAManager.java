@@ -394,6 +394,7 @@ public Admission getAdmission (int id) {
 		
 		public void readDoctor() {
 			try {
+				listDoctors();
 				System.out.print("Write the doctor's id: ");
 				int d_id = Integer.parseInt(reader.readLine());
 				Query q = em.createNativeQuery("SELECT * FROM Doctors WHERE id = ?", Doctor.class);
@@ -408,6 +409,7 @@ public Admission getAdmission (int id) {
 		
 		public void readNurse() {
 			try {
+				listNurses();
 				System.out.print("Write the nurse`s id: ");
 				int n_id = Integer.parseInt(reader.readLine());
 				Query q = em.createNativeQuery("SELECT * FROM Nurses WHERE id = ?", Nurse.class);
@@ -477,7 +479,7 @@ public Admission getAdmission (int id) {
 				listDoctors();
 				System.out.print("Write the doctor's id: ");
 				int d_id = Integer.parseInt(reader.readLine());
-				Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
+				Query q1 = em.createNativeQuery("SELECT * FROM Admissions WHERE id = ?", Admission.class);
 				q1.setParameter(1, d_id);
 				List<Admission> adms = (List<Admission>) q1.getResultList();
 				for (Admission adm : adms) {

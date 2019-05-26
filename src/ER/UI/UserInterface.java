@@ -112,12 +112,17 @@ public class UserInterface {
 								
 							}
 							case 3: {
-								managerJPA.listAdmissions();
+								managerJDBC.listAdmissions();
 								break;
 								
 							}
 							case 4: {
 								managerJPA.createAdmissionToDrug();
+								break;
+								
+							}
+							case 5: {
+								managerJPA.readNurse();
 								break;
 								
 							}
@@ -161,6 +166,11 @@ public class UserInterface {
 							break;
 							
 						}
+						case 5: {
+							managerJPA.readDoctor();
+							break;
+														
+													}
 						case 0:{
 							System.out.println("See you!");
 							break;
@@ -312,7 +322,9 @@ public class UserInterface {
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
 				"3.- List Admissions\n"+
-				"4.- Add drug to an admissions\n\n"+
+				"4.- Add drug to an admissions\n"+
+				"5.- Read My Data\n\n"+
+
 				"0.- Exit\n"+
 				"Choose option:"+
 				"");	
@@ -322,8 +334,10 @@ public class UserInterface {
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
+
 				"3.- List Admissions\n\n"+
-				"4.- Add drug to an admissions\n\n"+
+				"4.- Add drug to an admissions\n"+
+				"5.- Read My Data\n\n"+
 				"0.- Exit \n"+
 				"Choose option:"+
 				"");	
