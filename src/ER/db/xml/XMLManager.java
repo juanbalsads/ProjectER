@@ -103,6 +103,10 @@ public class XMLManager {
 				
 				if(checkPatient(p.getSSN())) {
 				em.persist(p);
+				System.out.println("successful");
+				}
+				else {
+					System.out.println("The patient already exists");
 				}
 				em.getTransaction().commit();
 		        
