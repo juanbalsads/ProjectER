@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE Patient [
-  <!ELEMENT Patient (SSN)>
-  <!ELEMENT Name (#PCDATA)>
-  <!ELEMENT Weight (#PCDATA)>
-  <!ELEMENT Height (#PCDATA)>
-  <!ELEMENT Genre (#PCDATA)>
-  <!ELEMENT Blood_Type (#PCDATA)>
-  <!ELEMENT DOB (Day,Month,Year)>
-  <!ATTLIST Patient 
-      SSN CDATA #IMPLIED
-      Name CDATA #IMPLIED
-      Weight CDATA #IMPLIED
-      Height CDATA #IMPLIED
-      Genre CDATA #IMPLIED
-      BloodType CDATA #IMPLIED
-    >
-  <!ELEMENT DOB (#PCDATA)>
-  <!ELEMENT Admission (ArrivalTime,Release)>
-  <!ATTLIST Admission
-      ID CDATA #IMPLIED >
-  <!ELEMENT ArrivalTime (Day,Month,Year)>
-  <!ELEMENT Day (#PCDATA)>
-  <!ELEMENT Month (#PCDATA)>
-  <!ELEMENT Year (#PCDATA)>
-  <!ELEMENT Release (#PCDATA)>
-
+  <!ELEMENT Patient (weight,height,genre,bloodType,dob,admission)>
+  <!ATTLIST Patient name CDATA #REQUIRED ssn CDATA #REQUIRED>
+  <!ELEMENT weight (#PCDATA)>
+  <!ELEMENT height (#PCDATA)>
+  <!ELEMENT genre (#PCDATA)>
+  <!ELEMENT bloodType (#PCDATA)>
+  <!ELEMENT dob (#PCDATA)>
+  <!ELEMENT admission (ArrivalTime)>
+  <!ATTLIST admission id CDATA #REQUIRED>
+  <!ELEMENT ArrivalTime (#PCDATA)>
 ]>
-<Patient ssn="11">
-    <name>iago</name>
-    <weight>3.0</weight>
-    <height>3.0</height>
-    <genre>m</genre>
-    <dob>1998-01-01</dob>
-    <bloodType>a</bloodType>
-    <admission id="2">
-        <arrivalTime>2000-02-02 19:00:00.0</arrivalTime>
-        <tests>d</tests>
-        <release>false</release>
-    </admission>
+
+<Patient name="Iago cabaleiro" ssn = "123">
+	<weight>70</weight>
+	<height>1.90</height>
+	<genre>m</genre>
+	<bloodType>A+</bloodType>
+	<dob>01-01-2000</dob>
+	<admission id="10">
+		<ArrivalTime>21-05-2019 17:16</ArrivalTime>
+	</admission>
 </Patient>
+
 
 

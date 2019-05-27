@@ -24,7 +24,7 @@ import ER.db.xml.utils.SQLDateAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Patient")
-@XmlType(propOrder = {"ssn","name","weight","height","genre","dob","bloodType","admission"})
+@XmlType(propOrder = {"weight","height","genre","dob","bloodType","admission"})
 
 public class Patient implements Serializable {
 	private static final long serialVersionUID = -5716647307754030719L;
@@ -35,7 +35,7 @@ public class Patient implements Serializable {
 	
 	@XmlAttribute
 	private Integer ssn;
-	@XmlElement
+	@XmlAttribute
 	private String name;
 	@XmlElement
 	private Double weight;

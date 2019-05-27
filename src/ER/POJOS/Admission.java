@@ -21,8 +21,7 @@ import ER.db.xml.utils.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Admission")
-@XmlType(propOrder = {"id","arrivalTime", "tests", "release"})
-
+@XmlType(propOrder = {"arrivalTime"})
 public class Admission implements Serializable{
 	private static final long serialVersionUID = 5626892191426340232L;
 	@Id
@@ -43,9 +42,9 @@ public class Admission implements Serializable{
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
-	@XmlElement
+	@XmlTransient
 	private String tests;
-	@XmlElement
+	@XmlTransient
 	private boolean release;
 	
 	@XmlTransient

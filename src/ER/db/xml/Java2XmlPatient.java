@@ -35,14 +35,14 @@ public class Java2XmlPatient {
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
 				
-		// Create the JAXBContext
-		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
-		// Get the marshaller
-		Marshaller marshaller = jaxbContext.createMarshaller();
 		
+		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
+		System.out.println("pipi");
+		Marshaller marshaller = jaxbContext.createMarshaller();
+		System.out.println("pipi2");
 		// Pretty formatting
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-		
+		System.out.println("pipi3");
 		// Choose the report to turn into an XML
 		// Choose his new department
 		printReports();
