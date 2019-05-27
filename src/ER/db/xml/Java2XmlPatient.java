@@ -13,23 +13,18 @@ import ER.POJOS.Patient;
 
 public class Java2XmlPatient {
 
-	// Put entity manager and buffered reader here so it can be used
-	// in several methods
 	private static EntityManager em;
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 	private static void printReports() {
 		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 		List<Patient> patient = (List<Patient>) q1.getResultList();
-		// Print the departments
 		for (Patient p : patient) {
 			System.out.println(p);
 		}
 	}
 	
 	public static void main(String[] args) throws Exception {
-		// Get the entity manager
-		// Note that we are using the class' entity manager
 		em = Persistence.createEntityManagerFactory("projectER").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
@@ -40,11 +35,8 @@ public class Java2XmlPatient {
 		System.out.println("pipi");
 		Marshaller marshaller = jaxbContext.createMarshaller();
 		System.out.println("pipi2");
-		// Pretty formatting
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
 		System.out.println("pipi3");
-		// Choose the report to turn into an XML
-		// Choose his new department
 		printReports();
 		System.out.print("Choose a patient to turn into an XML file:");
 		int p_id = Integer.parseInt(reader.readLine());
@@ -52,10 +44,9 @@ public class Java2XmlPatient {
 		q2.setParameter(1, p_id);
 		Patient patient = (Patient) q2.getSingleResult();
 		
-		// Use the Marshaller to marshal the Java object to a file
 		File file = new File("./xmls/Example-Patient.xml");
 		marshaller.marshal(patient, file);
-		// Printout
+		
 		marshaller.marshal(patient, System.out);
 
 	}

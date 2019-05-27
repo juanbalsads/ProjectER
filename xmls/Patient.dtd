@@ -15,13 +15,11 @@
       BloodType CDATA #IMPLIED
     >
   <!ELEMENT DOB (#PCDATA)>
-  <!ELEMENT Admission (ArrivalTime,Release)>
-  <!ATTLIST Admission
+  <!ELEMENT Admission (ArrivalTime)>
       ID CDATA #REQUIRED >
   <!ELEMENT ArrivalTime (Day,Month,Year)>
   <!ELEMENT Day (#PCDATA)>
   <!ELEMENT Month (#PCDATA)>
   <!ELEMENT Year (#PCDATA)>
-  <!ELEMENT Release (#PCDATA)>
 
 ]>

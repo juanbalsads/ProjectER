@@ -28,8 +28,6 @@
    <table border="1">
       <th>id</th>
       <th>arrival time</th>
-      <th>test</th>
-      <th>release</th>
       <xsl:for-each select="//admission">
             <tr>
             <td><xsl:value-of select="@id" /></td>

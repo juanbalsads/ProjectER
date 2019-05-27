@@ -16,22 +16,19 @@ import ER.POJOS.Admission;
 
 public class Xml2JavaPatient{
 
-	private static final String PERSISTENCE_PROVIDER = "company-provider";
+	private static final String PERSISTENCE_PROVIDER = "ProjectER";
 	private static EntityManagerFactory factory;
 
 	public static void main(String[] args) throws JAXBException {
 
-		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
-		// Get the unmarshaller
+
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-		// Use the Unmarshaller to unmarshal the XML document from a file
 		File file = new File("./xmls/External-Patient.xml");
 		Patient p = (Patient) unmarshaller.unmarshal(file);
 		//List <Admission> admission;
 		
-		// Print the patient
 		System.out.println("Patient:");
 		System.out.println("SSN:"+ p.getSSN());
 		System.out.println("Name: " + p.getName());
