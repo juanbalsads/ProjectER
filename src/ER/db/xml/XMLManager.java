@@ -26,18 +26,18 @@ import javax.persistence.EntityManager;
 
 public class XMLManager {
 	
-	private static final String PERSISTENCE_PROVIDER = "ProjectER";
-	private static EntityManager em;
-	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	private static EntityManagerFactory factory;
-	private static File xmlFile;
+	private final String PERSISTENCE_PROVIDER = "ProjectER";
+	private EntityManager em;
+	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private EntityManagerFactory factory;
+	private File xmlFile;
 		
 		public XMLManager() {
 			super();
 			connect();
 		}
 		
-		public static void connect() {
+		public void connect() {
 			
 		    em = Persistence.createEntityManagerFactory("projectER").createEntityManager();
 		    em.getTransaction().begin();
@@ -50,7 +50,7 @@ public class XMLManager {
 			em.close();
 		}
 	
-	    public static void main (String []args) {
+	    public void main (String []args) {
 		try {
 		System.out.println("MENU");
 		System.out.println("1. Patient from XML to Java \n"
@@ -90,7 +90,7 @@ public class XMLManager {
 	   
 	  
 
-	  public static void Xml2JavaPatient(){
+	  public void Xml2JavaPatient(){
 		
 			try {
 
@@ -101,24 +101,24 @@ public class XMLManager {
 				File file = new File("./xmls/External-Patient.xml");
 				Patient p = (Patient) unmarshaller.unmarshal(file);
 				//List <Admission> admission;
-				System.out.println("Patient:");
-				System.out.println("SSN:"+ p.getSSN());
-				System.out.println("Name: " + p.getName());
-				System.out.println("Weight: " + p.getWeight());
-				System.out.println("Height: "+ p.getHeight());
-				System.out.println("Genre: " + p.getGenre());
-				System.out.println("DOB: " + p.getDob());
-				System.out.println("Blood_Type: "+ p.getBloodType());
+				System.out.println("   PATIENT:");
+				System.out.println("    SSN:"+ p.getSSN());
+				System.out.println("    Name: " + p.getName());
+				System.out.println("    Weight: " + p.getWeight());
+				System.out.println("    Height: "+ p.getHeight());
+				System.out.println("    Genre: " + p.getGenre());
+				System.out.println("    DOB: " + p.getDob());
+				System.out.println("    Blood_Type: "+ p.getBloodType()+"\n");
 			
 				connect();
 				em.getTransaction().begin();
 				
 				if(checkPatient(p.getSSN())) {
 				em.persist(p);
-				System.out.println("successful");
+				System.out.println("\n      successful");
 				}
 				else {
-					System.out.println("The patient already exists");
+					System.out.println("\n       WARNING: The patient already exists");
 				}
 				em.getTransaction().commit();
 		        
@@ -131,7 +131,7 @@ public class XMLManager {
 		}
 	
 	
-	private static boolean checkPatient(Integer id) {
+	private boolean checkPatient(Integer id) {
 		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 		List<Patient> patient = (List<Patient>) q1.getResultList();
 		for(Patient p: patient) {
@@ -142,14 +142,14 @@ public class XMLManager {
 		return true;	
 	}
 	
-	private static void printPatients() {
+	private void printPatients() {
 		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
 		List<Patient> patient = (List<Patient>) q1.getResultList();
 		for (Patient p : patient) {
 			System.out.println(p);
 		}
 	}
-	public static void Java2XmlPatient() {
+	public void Java2XmlPatient() {
 		try {
 			connect();
 			JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
@@ -159,7 +159,7 @@ public class XMLManager {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
 			
 			printPatients();
-			System.out.print("Choose a patient to turn into an XML file:");
+			System.out.print("\n  Choose a patient to turn into an XML file:");
 			int p_id = Integer.parseInt(reader.readLine());
 			Query q2 = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
 			q2.setParameter(1, p_id);
@@ -175,7 +175,7 @@ public class XMLManager {
 		}
 	}
 	
-	public static void dtdChecker() {
+	public void dtdChecker() {
 		   
 		xmlFile = new File("./xmls/External-Patient.xml"); 
 	        
@@ -190,11 +190,11 @@ public class XMLManager {
 	                System.out.println(xmlFile + " was valid!");
 	            }
 	        } catch (ParserConfigurationException ex) {
-	            System.out.println(xmlFile + " error while parsing!");
+	            System.out.println("\n  "+xmlFile + " error while parsing!");
 	        } catch (SAXException ex) {
-	            System.out.println(xmlFile + " was not well-formed!");
+	            System.out.println("\n  "+xmlFile + " was not well-formed!");
 	        } catch (IOException ex) {
-	            System.out.println(xmlFile + " was not accesible!");
+	            System.out.println("\n  "+xmlFile + " was not accesible!");
 	        }
 	}
 	

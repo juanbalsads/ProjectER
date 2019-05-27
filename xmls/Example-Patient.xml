@@ -5,7 +5,4 @@
     <genre>male</genre>
     <dob>2000-01-01</dob>
     <bloodType>a+</bloodType>
-    <admission id="2">
-        <arrivalTime>2010-01-01 17:00:00.0</arrivalTime>
-    </admission>
 </Patient>

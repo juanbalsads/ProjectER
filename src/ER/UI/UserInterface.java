@@ -6,18 +6,20 @@ import java.io.InputStreamReader;
 
 import ER.jdbc.JDBCManager;
 import ER.jpa.JPAManager;
+import ER.db.xml.*;
 
 public class UserInterface {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		JDBCManager managerJDBC = new JDBCManager();
 		JPAManager managerJPA = new JPAManager();
+		XMLManager managerXML= new XMLManager();
 		int option = 1;
 		BufferedReader cs = new BufferedReader(new InputStreamReader(System.in));
-		while(option > 0 && option <= 4) {
+		while(option > 0 && option <= 5) {
 				PrintHomeMenu();				
 				option = Integer.parseInt(cs.readLine());
-				while(option<0 || option>4) {
+				while(option<0 || option>5) {
 					System.out.println("Please select a valid option");
 					PrintHomeMenu();				
 					option = Integer.parseInt(cs.readLine());
@@ -84,7 +86,7 @@ public class UserInterface {
 							}
 							
 							case 0:{
-								System.out.println("See you!");
+								System.out.println("\nBack to Home");
 								break;
 							}
 						}
@@ -92,10 +94,10 @@ public class UserInterface {
 					break;
 				}
 				case 2:{
-					while(optioninside > 0 && optioninside <= 4 ) {
+					while(optioninside > 0 && optioninside <= 5 ) {
 						printMenuNurse();
 						optioninside = Integer.parseInt(cs.readLine());
-						while(optioninside<0 || optioninside>4) {
+						while(optioninside<0 || optioninside>5) {
 							System.out.println("Please select a valid option");
 							printMenuAssistant();
 							optioninside = Integer.parseInt(cs.readLine());
@@ -127,7 +129,7 @@ public class UserInterface {
 								
 							}
 							case 0:{
-								System.out.println("See you!");
+								System.out.println("\nBack to Home");
 								break;
 								
 							}
@@ -137,10 +139,10 @@ public class UserInterface {
 					break;
 				}
 				case 3:{
-					while(optioninside > 0 && optioninside <= 4 ) {
+					while(optioninside > 0 && optioninside <= 5 ) {
 						printMenuDoctor();
 						optioninside = Integer.parseInt(cs.readLine());
-						while(optioninside<0 || optioninside>4) {
+						while(optioninside<0 || optioninside>5) {
 							System.out.println("Please select a valid option");
 							printMenuAssistant();
 							optioninside = Integer.parseInt(cs.readLine());
@@ -172,7 +174,7 @@ public class UserInterface {
 														
 													}
 						case 0:{
-							System.out.println("See you!");
+							System.out.println("\nBack to Home");
 							break;
 							
 						}
@@ -240,7 +242,7 @@ public class UserInterface {
 								break;
 							}
 							case 0:{
-								System.out.println("See you!");
+								System.out.println("\nBack to Home");
 								break;
 							}
 						}
@@ -248,30 +250,90 @@ public class UserInterface {
 					}
 					break;
 				}
+				
+				
+				case 5:{
+					while(optioninside > 0 && optioninside <= 3 ) {
+						printMenuXML();
+						optioninside = Integer.parseInt(cs.readLine());
+						while(optioninside<0 || optioninside>3) {
+							System.out.println("Please select a valid option");
+							printMenuAssistant();
+							optioninside = Integer.parseInt(cs.readLine());
+						}
+						switch(optioninside) {
+							case 1: {
+								System.out.println("\n   XML to JAVA with ./xmls/External-Patient.xml: \n");
+						    	managerXML.Xml2JavaPatient();
+						    	break;
+								
+							}
+							case 2: {
+								System.out.println("\n   JAVA to XML (./xmls/Example-Patient.xml): \n");
+								managerXML.Java2XmlPatient();
+								break;
+								
+							}
+							case 3: {
+								System.out.println("\n   DTD check to ./xmls/External-Patient.xml: \n");
+								managerXML.dtdChecker();
+								break;
+							}
+							case 0:{
+								System.out.println("\nBack to Home");
+								break;
+								
+							}
+						}
+						
+					}
+					break;
+				}
+				
 				case 0:{
-					System.out.println("See you!");
+					System.out.println("Exit");
+					managerJDBC.disconnect();
+					managerJPA.disconnect();
 					break;
 				}
 			}
-				System.out.println("saleee");
+				
 		}
 	}
 	
 	public static void PrintHomeMenu() {
-		System.out.println("\nWELCOME TO ER DATABASE:");
+		System.out.println("\n\n\nWELCOME TO ER DATABASE:");
 		System.out.println("\nIDENTIFY:\n");
 		System.out.println(""+
-				"1.- ER Assistant\n\n"+
-				"2.- Nurse\n\n"+			
-				"3.- Doctor\n\n"+
+				"1.- ER Assistant\n"+
+				"2.- Nurse\n"+			
+				"3.- Doctor\n"+
 				"4.- Database Manager\n\n"+
+				"--EXTRA--\n"+
+				"5.- XML operations\n\n"+
+				
+				
 				"0.- Exit\n\n"+
 				"Choose option:"+
 				"");
 	}
 	
+	
+	public static void printMenuXML() {
+	System.out.println("\n\n\n\n-----XML OPERATIONS MENU-----\n");
+	System.out.println("1.- Patient from XML to Java \n"
+			+ "2.- Patient from Java to XML \n"
+			+ "3.- Check if the DTD is correct\n\n"
+			+ "0.- Exit\n"
+			);
+	
+	System.out.println("Choose option: ");
+	}
+	
+	
+	
 	public static void printMenuAssistant() {
-		System.out.println("\n\n-----ASSISTANT MENU-----\n");
+		System.out.println("\n\n\n\n-----ASSISTANT MENU-----\n");
 		System.out.println(""+
 				"1.- New Admission\n"+
 				"2.- Edit Admission\n"+
@@ -295,7 +357,7 @@ public class UserInterface {
 	}
 	
 	public static void printMenuDatabaseManager() {
-		System.out.println("\n\n-----DATABASE MANAGER MENU-----\n");
+		System.out.println("\n\n\n\n-----DATABASE MANAGER MENU-----\n");
 		System.out.println(""+
 				"1.- Create Doctor\n"+
 				"2.- Delete Doctor\n"+
@@ -317,7 +379,7 @@ public class UserInterface {
 				"");	
 	}
 	public static void printMenuDoctor() {
-		System.out.println("\n\n-----DOCTOR MENU-----\n");
+		System.out.println("\n\n\n\n-----DOCTOR MENU-----\n");
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
@@ -325,12 +387,12 @@ public class UserInterface {
 				"4.- Add drug to an admissions\n"+
 				"5.- Read My Data\n\n"+
 
-				"0.- Exit\n"+
+				"0.- Exit\n\n"+
 				"Choose option:"+
 				"");	
 	}
 	public static void printMenuNurse() {
-		System.out.println("\n\n-----NURSE MENU-----\n");
+		System.out.println("\n\n\n\n-----NURSE MENU-----\n");
 		System.out.println(""+
 				"1.- Change Availability\n"+
 				"2.- See My Admissions\n"+
