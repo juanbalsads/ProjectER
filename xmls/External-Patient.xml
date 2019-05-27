@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE Patient [
-  <!ELEMENT Patient (weight,height,genre,bloodType,dob,admission)>
+  <!ELEMENT Patient (weight,height,genre,bloodType,dob)>
   <!ATTLIST Patient name CDATA #REQUIRED ssn CDATA #REQUIRED>
   <!ELEMENT weight (#PCDATA)>
   <!ELEMENT height (#PCDATA)>
   <!ELEMENT genre (#PCDATA)>
   <!ELEMENT bloodType (#PCDATA)>
   <!ELEMENT dob (#PCDATA)>
-  <!ELEMENT admission (ArrivalTime)>
-  <!ATTLIST admission id CDATA #REQUIRED>
-  <!ELEMENT ArrivalTime (#PCDATA)>
+
 ]>
 
 <Patient name="Iago cabaleiro" ssn = "123">
@@ -18,9 +16,7 @@
 	<genre>m</genre>
 	<bloodType>A+</bloodType>
 	<dob>01-01-2000</dob>
-	<admission id="10">
-		<ArrivalTime>21-05-2019 17:16</ArrivalTime>
-	</admission>
+	
 </Patient>
 
 

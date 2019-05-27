@@ -19,50 +19,48 @@ import ER.db.xml.utils.*;
 @Entity
 @Table(name="Admissions")
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Admission")
-@XmlType(propOrder = {"arrivalTime"})
+
 public class Admission implements Serializable{
 	private static final long serialVersionUID = 5626892191426340232L;
 	@Id
 	@GeneratedValue(generator = "Admissions")
 	@TableGenerator(name = "Admissions", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Admissions")
-	@XmlAttribute
+	
 	private Integer id;	
 	
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="patient")	
-	@XmlTransient
+	
 	private Patient patient;
 	
 	@Column(name="arrival_time")
-	@XmlElement
-	@XmlJavaTypeAdapter(SQLTimestampAdapter.class)
+	
+	
 	private Timestamp arrivalTime;
 	
 	@Column(name="test")
-	@XmlTransient
+	
 	private String tests;
-	@XmlTransient
+	
 	private boolean release;
 	
-	@XmlTransient
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="nurse")
 	private Nurse nurse;
 	
-	@XmlTransient
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="doctor")
 	private Doctor doctor;
 	
-	@XmlTransient
+	
 	@OneToOne(fetch=FetchType.LAZY)    
 	@JoinColumn(name="box")
 	private Box box;
 	
-	@XmlTransient
+	
 	@ManyToMany(mappedBy="admission")
 	private List<Drug> drug;
 	
