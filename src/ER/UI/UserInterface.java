@@ -253,32 +253,38 @@ public class UserInterface {
 				
 				
 				case 5:{
-					while(optioninside > 0 && optioninside <= 3 ) {
+					while(optioninside > 0 && optioninside <= 4 ) {
 						printMenuXML();
 						optioninside = Integer.parseInt(cs.readLine());
-						while(optioninside<0 || optioninside>3) {
+						while(optioninside<0 || optioninside>4) {
 							System.out.println("Please select a valid option");
 							printMenuAssistant();
 							optioninside = Integer.parseInt(cs.readLine());
 						}
 						switch(optioninside) {
 							case 1: {
-								System.out.println("\n   XML to JAVA with ./xmls/External-Patient.xml: \n");
+								System.out.println("\nXML to JAVA with ./xmls/External-Patient.xml: \n");
 						    	managerXML.Xml2JavaPatient();
 						    	break;
 								
 							}
 							case 2: {
-								System.out.println("\n   JAVA to XML (./xmls/Example-Patient.xml): \n");
+								System.out.println("\nJAVA to XML (./xmls/Example-Patient.xml): \n");
 								managerXML.Java2XmlPatient();
 								break;
 								
 							}
 							case 3: {
-								System.out.println("\n   DTD check to ./xmls/External-Patient.xml: \n");
+								System.out.println("\nDTD check to ./xmls/External-Patient.xml: \n");
 								managerXML.dtdChecker();
 								break;
 							}
+							case 4: {
+								System.out.println("\nXML (./xmls/External-Patient.xml) to HTML (./xmls/External-Patient.html): \n");
+								managerXML.Xml2HtmlPatient();
+								break;
+							}
+							
 							case 0:{
 								System.out.println("\nBack to Home");
 								break;
@@ -323,7 +329,8 @@ public class UserInterface {
 	System.out.println("\n\n\n\n-----XML OPERATIONS MENU-----\n");
 	System.out.println("1.- Patient from XML to Java \n"
 			+ "2.- Patient from Java to XML \n"
-			+ "3.- Check if the DTD is correct\n\n"
+			+ "3.- Check if the DTD is correct\n"
+			+ "4.- Patient from XML to HTML\n\n"
 			+ "0.- Exit\n"
 			);
 	

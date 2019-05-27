@@ -1,43 +1,36 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" indent="yes" />
 
+
 <xsl:template match="/">
-   <html>
-   <p><b>Patient</b></p>
-   <p><b>Name: </b><xsl:value-of select="//name" /></p>
-   <p><b>Information:</b></p>
+ <html>
+   <head><title>patient</title></head>
+   <body>
+   <h2>PATIENT</h2>
+   <p><b>General information: </b></p>
    <table border="1">
+    <tr>
+      <th>name</th>
+      <th>ssn</th>
       <th>weight</th>
       <th>height</th>
-      <th>gender</th>
+      <th>genre</th>
       <th>blood type</th>
       <th>date of birth</th>
-      <xsl:for-each select="//name">
-      <xsl:sort select="@name" />
-            <tr>
-            <td><xsl:value-of select="//weight" /></td>
-            <td><xsl:value-of select="//height" /></td>
-            <td><xsl:value-of select="//genre" /></td>
-            <td><xsl:value-of select="//bloodType" /></td>
-            <td><xsl:value-of select="//dob" /></td>
-            </tr>
-      </xsl:for-each>
+    </tr>
+    <xsl:for-each select="Patient">
+    <tr>
+     <td><xsl:value-of select="@name"/></td>
+     <td><xsl:value-of select="@ssn"/></td>
+     <td><xsl:value-of select="weight"/></td>
+     <td><xsl:value-of select="height"/></td>
+     <td><xsl:value-of select="genre"/></td>
+     <td><xsl:value-of select="bloodType"/></td>
+     <td><xsl:value-of select="dob"/></td>
+    </tr>
+    </xsl:for-each>
    </table>
-   
-   <p><b>Admission:</b></p>
-   <table border="1">
-      <th>id</th>
-      <th>arrival time</th>
-      <xsl:for-each select="//admission">
-            <tr>
-            <td><xsl:value-of select="@id" /></td>
-            <td><xsl:value-of select="//arrivalTime" /></td>
-            <td><xsl:value-of select="//tests" /></td>
-            <td><xsl:value-of select="//release" /></td>
-            </tr>
-      </xsl:for-each>
-   </table>
-   </html>
+   </body>
+ </html>
 </xsl:template>
-
 </xsl:stylesheet>

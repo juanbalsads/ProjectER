@@ -15,6 +15,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -87,7 +91,17 @@ public class XMLManager {
 		}
 	}
 	    
-	   
+	 public void Xml2HtmlPatient() {
+		 
+		 TransformerFactory tFactory = TransformerFactory.newInstance();
+			try {
+				Transformer transformer = tFactory.newTransformer(new StreamSource(new File("./xmls/Patient-Style.xslt")));
+				transformer.transform(new StreamSource(new File("./xmls/External-Patient.xml")),new StreamResult(new File("./xmls/External-Patient.html")));
+				System.out.println("   successful, check External-Patient.html");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("   failed");
+			}}
 	  
 
 	  public void Xml2JavaPatient(){
