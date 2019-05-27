@@ -12,8 +12,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import ER.POJOS.Patient;
+import ER.db.xml.utils.CustomErrorHandler;
 import ER.POJOS.Admission;
 import javax.persistence.EntityManager;
 
@@ -23,7 +30,7 @@ public class XMLManager {
 	private static EntityManager em;
 	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static EntityManagerFactory factory;
-	
+	private static File xmlFile;
 		
 		public XMLManager() {
 			super();
@@ -47,7 +54,9 @@ public class XMLManager {
 		try {
 		System.out.println("MENU");
 		System.out.println("1. Patient from XML to Java \n"
-				+ "2. Patient from Java to XML \n");
+				+ "2. Patient from Java to XML \n"
+				+ "3. Check if the DTD is correct");
+		
 		System.out.println("Introduce an option: ");
 		int option = Integer.parseInt(reader.readLine());
 		while(option==0) {
@@ -64,7 +73,11 @@ public class XMLManager {
 		    	System.out.println("Option 2 has been selected: ");
 		    	Java2XmlPatient();
 		    	break;
-		    
+		    case 3:
+		    	System.out.println("Option 3 has been selected: ");
+		    	dtdChecker();
+		    	break;
+		    	
 		    default: break;
 		}
 		
@@ -88,7 +101,6 @@ public class XMLManager {
 				File file = new File("./xmls/External-Patient.xml");
 				Patient p = (Patient) unmarshaller.unmarshal(file);
 				//List <Admission> admission;
-				
 				System.out.println("Patient:");
 				System.out.println("SSN:"+ p.getSSN());
 				System.out.println("Name: " + p.getName());
@@ -157,12 +169,33 @@ public class XMLManager {
 			marshaller.marshal(patient, file);
 			marshaller.marshal(patient, System.out);
 			
-			
-
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void dtdChecker() {
+		   
+		xmlFile = new File("./xmls/External-Patient.xml"); 
+	        
+		   try {
+	            DocumentBuilderFactory dBF = DocumentBuilderFactory.newInstance();
+	            dBF.setValidating(true);
+	            DocumentBuilder builder = dBF.newDocumentBuilder();
+	            CustomErrorHandler customErrorHandler = new CustomErrorHandler();
+	            builder.setErrorHandler(customErrorHandler);
+	            Document doc = builder.parse(xmlFile);
+	            if (customErrorHandler.isValid()) {
+	                System.out.println(xmlFile + " was valid!");
+	            }
+	        } catch (ParserConfigurationException ex) {
+	            System.out.println(xmlFile + " error while parsing!");
+	        } catch (SAXException ex) {
+	            System.out.println(xmlFile + " was not well-formed!");
+	        } catch (IOException ex) {
+	            System.out.println(xmlFile + " was not accesible!");
+	        }
 	}
 	
 
