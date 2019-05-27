@@ -73,7 +73,9 @@ public class XMLManager {
 			e.printStackTrace();
 		}
 	}
-	
+	    
+	   
+	  
 
 	  public static void Xml2JavaPatient(){
 		
@@ -97,12 +99,13 @@ public class XMLManager {
 				System.out.println("Blood_Type: "+ p.getBloodType());
 			
 				connect();
-				EntityTransaction tx = em.getTransaction();
-				tx.begin();
-				em.persist(p);
-				tx.commit();
-							
+				em.getTransaction().begin();
 				
+				if(checkPatient(p.getSSN())) {
+				em.persist(p);
+				}
+				em.getTransaction().commit();
+		        
 			} catch (JAXBException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -111,6 +114,18 @@ public class XMLManager {
 			
 		}
 	
+	
+	private static boolean checkPatient(Integer id) {
+		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
+		List<Patient> patient = (List<Patient>) q1.getResultList();
+		for(Patient p: patient) {
+			if(id == p.getSSN()) {
+				System.out.println("The patient does exists");
+				return false;
+			}
+		}
+		return true;	
+	}
 	
 	private static void printPatients() {
 		Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
@@ -123,11 +138,11 @@ public class XMLManager {
 		try {
 			connect();
 			JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
-			//System.out.println("pipi");
+			
 			Marshaller marshaller = jaxbContext.createMarshaller();
-			//System.out.println("pipi2");
+			
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-			//System.out.println("pipi3");
+			
 			printPatients();
 			System.out.print("Choose a patient to turn into an XML file:");
 			int p_id = Integer.parseInt(reader.readLine());
@@ -137,8 +152,9 @@ public class XMLManager {
 			
 			File file = new File("./xmls/Example-Patient.xml");
 			marshaller.marshal(patient, file);
-			
 			marshaller.marshal(patient, System.out);
+			
+			
 
 		}
 		catch(Exception e) {
