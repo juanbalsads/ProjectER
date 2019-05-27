@@ -120,7 +120,6 @@ public class XMLManager {
 		List<Patient> patient = (List<Patient>) q1.getResultList();
 		for(Patient p: patient) {
 			if(id == p.getSSN()) {
-				System.out.println("The patient does exists");
 				return false;
 			}
 		}
