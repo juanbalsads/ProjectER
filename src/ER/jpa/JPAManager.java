@@ -44,9 +44,7 @@ public class JPAManager implements Manager {
 			em.close();
 		}
 	
-///CREATE: Patient(D-Notallergies),Nurse(D)
-		///,Doctor(D.attentionToAvailability),drug(D),box(D.Ive done changes),
-		///admission(D),dosage()??		
+//------------------------	CREATE  ------------------------------//
       	
 		public void createPatient() {		
       		Patient pat1 = askForPatient();			 
@@ -124,13 +122,7 @@ public class JPAManager implements Manager {
 		}
 		
 
-		////CREATE////
-		
-
-		
-		///ASKForDAta: Patient(),Nurse()
-	    ///,Doctor(),drug(),box(),
-	    ///admissionD),dosage()??
+		//------------------------	askfordata  ------------------------------//
 		
 		public Patient askForPatient() {
 			Patient pat = null;
@@ -325,7 +317,7 @@ public class JPAManager implements Manager {
 			
 		}
 		
-//GETS
+		//------------------------	GETS  ------------------------------//
 		
 public Patient getPatient(int id) {
 	Query q = em.createNativeQuery("SELECT * FROM Patients WHERE ssn = ?", Patient.class);
@@ -364,12 +356,7 @@ public Admission getAdmission (int id) {
 	return a;}
 
 			
-		//////ASKForData////////
-	
-	     ///READ: Patient(D),Nurse(D)
-	    ///,Doctor(D),drug(D),box(D),
-	    ///admission(D),dosage(NOtD)??
-		
+//------------------------	READ  ------------------------------//
 		public void readAdmission() {
 			try {
 				System.out.print("Write the admission's ID: ");
@@ -442,12 +429,7 @@ public Admission getAdmission (int id) {
 			}catch(IOException e) {
 				e.printStackTrace();}
 		}
-	     ///READ////
-		
-		///PRINTLIST: Patient(D),Nurse(D)
-	    ///,Doctor(D),drug(D),box(D),
-	    ///admission(D),dosage(NOtD)??
-		
+		//------------------------	LIST  ------------------------------//
 		public void listPatients() {
 			
 			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
@@ -579,18 +561,7 @@ public Admission getAdmission (int id) {
 			}	
 		}
 		
-		
-
-		
-		
-		// ArrayList<Admission> listaadm = listAdmissionsList();
-		
-		
-		/////////PRINTLIST///////
-		
-		///DELETE: Patient(D),Nurse(D)
-	    ///,Doctor(d),drug(d),box(D),
-	    ///admission(D),dosage(NOtD)??
+		//------------------------	DELETE  ------------------------------//
 		
 		public void deletePatient(){		
 			System.out.println("Patients list:");
@@ -745,7 +716,7 @@ public Admission getAdmission (int id) {
 		}
 		
 		
-		/*----------------------RELEASE-------------------*/
+		//------------------------	released  ------------------------------//
 		public void releasePatient() {
 
 			listAdmissions();
@@ -778,9 +749,7 @@ public Admission getAdmission (int id) {
 			
 		}
 			
-		///UPDATE: Patient(D--what to do with relation entity such as admission),Nurse(D)
-	    ///,Doctor(D),drug(),box(D),
-	    ///admission(),dosage(NOtD)??
+		//------------------------	UPDATE  ------------------------------//
 		
 		public void updateAdmission() {
 			listAdmissions2();
@@ -1128,7 +1097,7 @@ public Admission getAdmission (int id) {
 			
 		}
 		
-	
+		//------------------------	utils  ------------------------------//
 		
 		private boolean onlyContainsNumbers (String text) {
 		    try {

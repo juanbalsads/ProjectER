@@ -810,7 +810,7 @@ public class JDBCManager implements Manager{
 
 /*---------------------------------DELETE METHODS--------------------------------------*/
 	
-	//DELETE PATIENTS	
+		
 	
 	public void deletePatient() {
 		try {
@@ -835,7 +835,6 @@ public class JDBCManager implements Manager{
 		catch (Exception e) {
 			e.printStackTrace();}}
 
-	//DELETE DOCTORS
 	
 	public void deleteDoctor() {
 		try {
@@ -859,7 +858,6 @@ public class JDBCManager implements Manager{
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
-	//DELETE NURSES
 	
 	public void deleteNurse() {
 		try {
@@ -884,7 +882,6 @@ public class JDBCManager implements Manager{
 		catch (Exception e) {
 			e.printStackTrace();}}
 	
-	//DELETE BOX
 	
 	public void deleteBox() {
 		try {
@@ -912,7 +909,6 @@ public class JDBCManager implements Manager{
 		
 	}
 	
-	//DELETE DRUG
 	
 	public void deleteDrug() {
 		try {
@@ -944,7 +940,6 @@ public class JDBCManager implements Manager{
 		
 	}
 	
-	//DELETE ADMISSION
 	
 	public void deleteAdmission() {
 		try {
@@ -1068,9 +1063,7 @@ public class JDBCManager implements Manager{
 
 
 	@Override
-	public void updateBox() {
-		// TODO Auto-generated method stub
-		
+	public void updateBox() {	
 	}
 	
 
