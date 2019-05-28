@@ -27,10 +27,10 @@ public class UserInterface {
 				int optioninside = 1;
 				switch(option){
 				case 1:{
-					while(optioninside > 0 && optioninside <= 12 ) {
+					while(optioninside > 0 && optioninside <= 14 ) {
 						printMenuAssistant();
 						optioninside = Integer.parseInt(cs.readLine());
-						while(optioninside<0 || optioninside>12) {
+						while(optioninside<0 || optioninside>14) {
 							System.out.println("Please select a valid option");
 							printMenuAssistant();
 							optioninside = Integer.parseInt(cs.readLine());
@@ -84,7 +84,14 @@ public class UserInterface {
 								managerJPA.readDoctor();
 								break;
 							}
-							
+							case 13: {
+								managerJDBC.deletePatient();
+								break;
+							}
+							case 14: {
+								managerJPA.deleteAdmission();
+								break;
+							}
 							case 0:{
 								System.out.println("\nBack to Home");
 								break;
@@ -357,6 +364,8 @@ public class UserInterface {
 				
 				"11.- Search Patient by name\n"+
 				"12.- Read doctor (with photo) \n\n"+
+				"13.- Delete Patient\n"+
+				"14.- Delete Admission\n\n"+
 				
 				"0.- Exit\n\n"+
 				"Choose option:"+

@@ -1151,18 +1151,11 @@ public Admission getAdmission (int id) {
 		
 		public List<Integer> patientsIds (){
 			List<Integer> listId= new ArrayList<Integer>();
-			try {	
-			List<Patient> patList= new ArrayList<Patient>();
-			Query q =em.createNamedQuery("SELECT * FROM Patients ", Patient.class);
-			patList= (List<Patient>) q.getResultList();
 			
-			for (Patient pat: patList) {
-				listId.add(pat.getSSN());
-			}
-			}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+			Query q1 = em.createNativeQuery("SELECT * FROM Patients", Patient.class);
+			List<Patient> pats = (List<Patient>) q1.getResultList();
+			for (Patient pat : pats) {
+				listId.add(pat.getSSN());}
 			 	return listId;
 		}
 		
