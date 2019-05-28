@@ -1012,6 +1012,7 @@ public class JDBCManager implements Manager{
 	@Override
 	public void updateNurse() {
 		try {
+			listNurses();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Choose a nurse, type its ID: ");
 			

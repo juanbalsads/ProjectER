@@ -82,7 +82,6 @@ public class JPAManager implements Manager {
 		public void createBox() {			
 				Box b = askForBox();
 				System.out.println(b.equals(null));
-				System.out.println("traza");
 				em.getTransaction().begin();
 				em.persist(b);
 				em.getTransaction().commit();
