@@ -26,7 +26,6 @@ public class Admission implements Serializable{
 	@GeneratedValue(generator = "Admissions")
 	@TableGenerator(name = "Admissions", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "Admissions")
-	
 	private Integer id;	
 	
 	@OneToOne(fetch=FetchType.LAZY)    
@@ -114,8 +113,7 @@ public class Admission implements Serializable{
 		this.doctor= doctor;
 		this.release = true;
 		this.nurse = nurse;
-		this.box= box;
-		
+		this.box= box;		
 		this.drug= new ArrayList<Drug>();
 	}
 
@@ -237,6 +235,12 @@ public class Admission implements Serializable{
 	 ", tests=" + tests + ", release=" + release + ", \nnurse=" + nurse + ",\ndoctor=" + doctor
 				+ ", \nbox=" + box + ", \ndrugs=" + drug + "]";
 	}
+	public String toString2() {
+		return "\nAdmission [id=" + id + ", arrivalTime=" +arrivalTime.toString() + "patient=" + patient.getSSN() +  
+	 ", tests=" + tests + ", release=" + release + ", nurse=" + nurse.getId() + ",doctor=" + doctor.getId()
+				+ ", box=" + box.getId() + ", drugs=" + drug.toString() + "]";
+	}
+
 
 
 	

@@ -474,6 +474,15 @@ public Admission getAdmission (int id) {
 			}
 		
 		}
+		public void listAdmissions2() {
+			
+			Query q1 = em.createNativeQuery("SELECT * FROM Admissions", Admission.class);
+			List<Admission> adms = (List<Admission>) q1.getResultList();
+			for (Admission adm : adms) {
+				System.out.println(adm.toString2());
+			}
+		
+		}
 		public void listDoctorAdmissions() {
 			try {
 				listDoctors();
@@ -775,27 +784,28 @@ public Admission getAdmission (int id) {
 	    ///admission(),dosage(NOtD)??
 		
 		public void updateAdmission() {
-			listAdmissions();
+			listAdmissions2();
 			
 			try {
 				System.out.println("Choose admission to modify. Type its id:");
-				
 				String id=reader.readLine();
-				int adm_id=Integer.parseInt(id);	
-				while(!onlyContainsNumbers(id)|| !patientsIds().contains(adm_id)) {
+				
+				int adm_id=Integer.parseInt(id);
+				System.out.println("hahah");
+				while(!onlyContainsNumbers(id)|| !admissionsIds().contains(adm_id)) {
 					System.out.println("    Select a valid admission id: ");
 					id=reader.readLine();
-					adm_id = Integer.parseInt(id);	}
-				Admission adm = getAdmission(adm_id);
-			
+					adm_id = Integer.parseInt(id);}
+				System.out.println("traza");
+				Admission adm = getAdmission(adm_id);	
 				System.out.print("New doctor's id:\n");
 				listDoctors();
 				String doc_id=reader.readLine();
 				Doctor newDoc= adm.getDoctor();
 				if(!doc_id.equals("")){
 					int doctor_id = Integer.parseInt(doc_id);
-					while(!onlyContainsNumbers(doc_id)|| !patientsIds().contains(doctor_id)) {
-						System.out.println("    Select a valid admission id: ");
+					while(!onlyContainsNumbers(doc_id)|| !admissionsIds().contains(doctor_id)) {
+						System.out.println("    Select a valid doctos id: ");
 						doc_id=reader.readLine();
 						doctor_id = Integer.parseInt(doc_id);	}
 					newDoc= getDoctor(doctor_id);
@@ -807,8 +817,8 @@ public Admission getAdmission (int id) {
 				Nurse newNur= adm.getNurse();
 				if(!nur_id.equals("")){
 					int nurse_id = Integer.parseInt(nur_id);
-					while(!onlyContainsNumbers(nur_id)|| !patientsIds().contains(nurse_id)) {
-						System.out.println("    Select a valid admission id: ");
+					while(!onlyContainsNumbers(nur_id)|| !admissionsIds().contains(nurse_id)) {
+						System.out.println("    Select a valid nurse id: ");
 						nur_id=reader.readLine();
 						nurse_id = Integer.parseInt(doc_id);	}	
 					newNur= getNurse(nurse_id);
@@ -820,12 +830,11 @@ public Admission getAdmission (int id) {
 				Box newBox= adm.getBox();
 				if(!b_id.equals("")){
 					int box_id = Integer.parseInt(b_id);
-					while(!onlyContainsNumbers(b_id)|| !patientsIds().contains(box_id)) {
-						System.out.println("    Select a valid admission id: ");
+					while(!onlyContainsNumbers(b_id)|| !admissionsIds().contains(box_id)) {
+						System.out.println("    Select a valid con id: ");
 						doc_id=reader.readLine();
 						box_id = Integer.parseInt(b_id);	}
 					newBox= getBox(box_id);}
-				
 				System.out.println("n"+newNur);
 				em.getTransaction().begin();
 				if(adm.getDoctor()!=null) {
@@ -851,61 +860,7 @@ public Admission getAdmission (int id) {
 			}
 		
 		public void updatePatient() {
-			listPatients();
-			/*
-			 * public Patient askForPatient() {
-			Patient pat = null;
-			try {
-      			System.out.println("Please, input the patient data: ");
-    			System.out.println("Insert the patient's ssn:");
-    			String id=reader.readLine();
-    			while(!onlyContainsNumbers(id)) {
-    				System.out.println("Insert a valid patient's ssn:");
-        			 id=reader.readLine();
-    			}
-    			int ssn = Integer.parseInt(id);
-    			System.out.println("Insert the patient's name:");
-    				String name = reader.readLine();
-    			System.out.println("Insert weight:");
-    				String w=reader.readLine();
-    			while(!onlyContainsDouble(w)) {
-        			System.out.println("  Insert a valid patient's weight:");
-           			 w=reader.readLine();
-        		}
-    				Double weight = Double.parseDouble(w);
-    			System.out.println("Insert height(meters):");
-    			String h= reader.readLine();
-    			while(!onlyContainsDouble(h)) {
-        			System.out.println("  Insert a valid patient's height:");
-           			 h=reader.readLine();
-        		}
-    				Double height = Double.parseDouble(h);
-    			System.out.println("Insert gender (male|female): ");
-    				String genre = reader.readLine();
-    				
-    				while (!genre.equals("male")&&!genre.equals("MALE")&&!genre.equals("female")&&!genre.equals("FEMALE")) {
-    					System.out.println("Insert a valid gender (male|female): ");
-        				genre = reader.readLine();	
-    				}
-    					
-    			System.out.println("Insert date of birth (yyyy-MM-dd): ");
-    				String dob = reader.readLine();
-    				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    			    LocalDate date = LocalDate.parse(dob, formatter);
-    			    Date dob2= Date.valueOf(date);
-    			System.out.println("Insert the patient's blood type:");
-    				String bloodType = reader.readLine();
-    				System.out.println("Type the patient's allergies:");		
-    			pat = new Patient(ssn,name, weight, height,genre, dob2, bloodType);		
-				
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			return pat;		
-		}
-			 */
-			
-			
+			listPatients();		
 			System.out.print("Choose a patient to modify. Type its SSN:");
 			try {
 				String id=reader.readLine();
@@ -1174,7 +1129,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> patientsIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT ssn FROM Patients ", Integer.class);
+			Query q =em.createNativeQuery("SELECT ssn FROM Patients ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
@@ -1186,7 +1141,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> admissionsIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT id FROM Admissions ", Integer.class);
+			Query q =em.createNativeQuery("SELECT id FROM Admissions ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
@@ -1198,7 +1153,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> doctorsIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT id FROM Doctors ", Integer.class);
+			Query q =em.createNativeQuery("SELECT id FROM Doctors ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
@@ -1210,7 +1165,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> nursesIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT id FROM Nurses ", Integer.class);
+			Query q =em.createNativeQuery("SELECT id FROM Nurses ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
@@ -1222,7 +1177,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> boxesIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT id FROM Boxes ", Integer.class);
+			Query q =em.createNativeQuery("SELECT id FROM Boxes ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
@@ -1234,7 +1189,7 @@ public Admission getAdmission (int id) {
 		public List<Integer> drugsIds (){
 			List<Integer> listId= new ArrayList<Integer>();
 			try {	
-			Query q =em.createNamedQuery("SELECT id FROM Drugs ", Integer.class);
+			Query q =em.createNativeQuery("SELECT id FROM Drugs ", Integer.class);
 			listId= (List<Integer>) q.getResultList();
 			}
 		catch(Exception e) {
